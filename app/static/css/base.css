@@ -1,0 +1,68 @@
+:root {
+    --vermelho: #ac0011;
+    --cinzaEscuro: #3D3D3D;
+    --cinzaClaro: #898989;
+    --cinzaFundo: #F5F5F5;
+    --pretoLabel: #151515;
+    --cinzaTabela: #232323;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+.contentor {
+    height: 100%;
+    width: 100%;
+    display: flex;
+
+    background-color: var(--cinzaFundo);
+}
+
+.barraLateral {
+    width: 250px;
+
+    padding-top: 0px !important;
+
+    background-color: white;
+
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25) !important;
+}
+
+#logoBarra {
+    width: 192px;
+    height: 52px;
+
+    margin-top: 20px;
+}
+
+.barraSuperior {
+    width: 100%;
+    height: 90px;
+
+    background-color: var(--vermelho);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.divisaoLogo {
+    min-height: 90px;
+    min-width: 211px;
+
+    border-bottom: 2px solid var(--vermelho);
+}
+
+.navegacao {
+    width: 100%;
+    height: 100%;
+    display: block;
+
+    padding: 0px;
+
+    margin-top: 36px;
+}
+
+.navegacao div {
+    width: 100%;
+    height: 100px;
+}
