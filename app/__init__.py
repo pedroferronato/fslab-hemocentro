@@ -26,3 +26,4 @@ import app.models.doacao
 import app.models.captador
 
 from app.controllers import doadorController
+from app.controllers import captadorController
