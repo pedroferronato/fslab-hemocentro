@@ -1,10 +1,10 @@
 :root {
     --vermelho: #ac0011;
-    --cinzaEscuro: #3D3D3D;
-    --cinzaClaro: #898989;
     --cinzaFundo: #F5F5F5;
-    --pretoLabel: #151515;
+    --cinzaBotaoSecundario: #898989;
+    --cinzaBotao: #3D3D3D;
     --cinzaTabela: #232323;
+    --pretoLabel: #151515;
 }
 
 *{

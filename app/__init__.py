@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
+from flask_login import LoginManager
 from dotenv import load_dotenv
 import os
 
@@ -16,6 +17,12 @@ migrate = Migrate(flaskApp, db, compare_type=True)
 manager = Manager(flaskApp)
 manager.add_command('db', MigrateCommand)
 
+login_manager = LoginManager(flaskApp)
+login_manager.init_app(flaskApp)
+
+import app.models.hemocentro
 import app.models.doador
+import app.models.doacao
+import app.models.captador
 
 from app.controllers import doadorController
