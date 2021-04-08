@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
     <title>Sistema de hemocentro</title>
 </head>
 
@@ -24,106 +25,156 @@
             </a>
 
             <div class="navegacao">
-                <div class="sobrepor">
-                    <!-- CATEGOIRIA 1 -->
-                    <div id="categoriaUmFechada"
-                        class="categoria aberto">
-                        <div onClick="abrirCategoriaUm('categoriaUmFechada')" class="categoriaSimples">
+                <div id="sobrepor">
+
+                    <div class="categoria">
+                        <div class="categoriaTitulo" @click="toggle('doacoes')">
                             <div>
                                 <span class="material-icons icones" id="icone-doacao">add_location</span>
                                 <p>Doações</p>
                             </div>
-                            <span class="material-icons icones" id="opcoesDoacoesKeyDown">keyboard_arrow_down</span>
+                            <span v-if="!opcoes['doacoes']" class="material-icons icones">keyboard_arrow_down</span>
+                            <span v-if="opcoes['doacoes']" class="material-icons icones">keyboard_arrow_up</span>
+                        </div>
+
+                        <div v-if="opcoes['doacoes']" class="opcoes">
+                            <a href="">
+                                <div>
+                                    <span class="material-icons icones">add</span>
+                                    <p>Nova doação</p>
+                                </div>
+                            </a>
+                            <a href="">
+                                <div>
+                                    <span class="material-icons icones">today</span>
+                                    <p>Consultar por data</p>
+                                </div>
+                            </a>
                         </div>
                     </div>
-                    <div id="categoriaUmAberta"
-                        class="categoria fechado">
-                        <div onClick="abrirCategoriaUm('categoriaUmAberta')"  class="categoriaSimples">
-                            <div>
-                                <span class="material-icons icones" id="icone-doacao">add_location</span>
-                                <p>Doações</p>
-                            </div>
-                            <span class="material-icons icones" id="opcoesDoacoesKeyDown">keyboard_arrow_up</span>
-                        </div>
-                        <div class="opcoesDoacoes">
-                            <span class="material-icons icones">add</span>
-                            <p>Nova doação</p>
-                        </div>
-                        <div class="opcoesDoacoes">
-                            <span class="material-icons icones">today</span>
-                            <p>Consultar por data</p>
-                        </div>
-                    </div>
-                    <!-- CATEGOIRIA 2 -->
-                    <div id="categoriaDoisFechada"
-                        class="categoria aberto">
-                        <div onClick="abrirCategoriaDois('categoriaDoisFechada')" class="categoriaSimples">
+
+                    <div class="categoria">
+                        <div class="categoriaTitulo" @click="toggle('doadores')">
                             <div>
                                 <span class="material-icons icones">person_add</span>
                                 <p>Doadores</p>
                             </div>
-                            <span class="material-icons icones" id="opcoesDoacoesKeyDown">keyboard_arrow_down</span>
+                            <span v-if="!opcoes['doadores']" class="material-icons icones">keyboard_arrow_down</span>
+                            <span v-if="opcoes['doadores']" class="material-icons icones">keyboard_arrow_up</span>
+                        </div>
+
+                        <div v-if="opcoes['doadores']" class="opcoes">
+                            <a href="">
+                                <div>
+                                    <span class="material-icons icones">add</span>
+                                    <p>Novo doador</p>
+                                </div>
+                            </a>
+                            <a href="">
+                                <div>
+                                    <span class="material-icons icones">search</span>
+                                    <p>Consultar doadores</p>
+                                </div>
+                            </a>
+                            <a href="">
+                                <div>
+                                    <span class="material-icons icones">account_box</span>
+                                    <p>Relatório doador</p>
+                                </div>
+                            </a>
                         </div>
                     </div>
-                    <div id="categoriaDoisAberta"
-                        class="categoria fechado">
-                        <div onClick="abrirCategoriaDois('categoriaDoisAberta')" class="categoriaSimples">
-                            <div>
-                                <span class="material-icons icones">person_add</span>
-                                <p>Doadores</p>
-                            </div>
-                            <span class="material-icons icones" id="opcoesDoacoesKeyDown">keyboard_arrow_up</span>
-                        </div>
-                        <div class="opcoesDoacoes">
-                            <span class="material-icons icones">add</span>
-                            <p>Nova doador</p>
-                        </div>
-                        <div class="opcoesDoacoes">
-                            <span class="material-icons icones">search</span>
-                            <p>Consultar doadores</p>
-                        </div>
-                        <div class="opcoesDoacoes">
-                            <span class="material-icons icones">account_box</span>
-                            <p>Relatório doador</p>
-                        </div>
-                    </div>
-                    <!-- CATEGOIRIA 3 -->
-                    <div id="categoriaTresFechada"
-                        class="categoria aberto">
-                        <div onClick="abrirCategoriaTres('categoriaTresFechada')" class="categoriaSimples">
-                            <div>
-                                <span class="material-icons icones">assignment</span>
-                                <p>Chamadas</p>
-                            </div>
-                            <span class="material-icons icones" id="opcoesDoacoesKeyDown">keyboard_arrow_down</span>
-                        </div>
-                    </div>
-                    <div id="categoriaTresAberta"
-                        class="categoria fechado">
-                        <div onClick="abrirCategoriaTres('categoriaTresAberta')" class="categoriaSimples">
+
+                    <div class="categoria">
+                        <div class="categoriaTitulo" @click="toggle('chamadas')">
                             <div>
                                 <span class="material-icons icones">assignment</span>
                                 <p>Chamadas</p>
                             </div>
-                            <span class="material-icons icones" id="opcoesDoacoesKeyDown">keyboard_arrow_up</span>
+                            <span v-if="!opcoes['chamadas']" class="material-icons icones">keyboard_arrow_down</span>
+                            <span v-if="opcoes['chamadas']" class="material-icons icones">keyboard_arrow_up</span>
                         </div>
-                        <div class="opcoesDoacoes">
-                            <span class="material-icons icones">calendar_today</span>
-                            <p>Convocação tipada</p>
-                        </div>
-                        <div class="opcoesDoacoes">
-                            <span class="material-icons icones">assignment_late</span>
-                            <p>Emergencial</p>
-                        </div>
-                        <div class="opcoesDoacoes">
-                            <span class="material-icons icones">explore</span>
-                            <p>Localidades externas</p>
-                        </div>
-                        <div class="opcoesDoacoes">
-                            <span class="material-icons icones">phone_in_talk</span>
-                            <p>Convocados</p>
+
+                        <div v-if="opcoes['chamadas']" class="opcoes">
+                            <a href="">
+                                <div>
+                                    <span class="material-icons icones">calendar_today</span>
+                                    <p>Convocação tipada</p>
+                                </div>
+                            </a>
+                            <a href="">
+                                <div>
+                                    <span class="material-icons icones">assignment_late</span>
+                                    <p>Emergencial</p>
+                                </div>
+                            </a>
+                            <a href="">
+                                <div>
+                                    <span class="material-icons icones">explore</span>
+                                    <p>Localidades externas</p>
+                                </div>
+                            </a>
+                            <a href="">
+                                <div>
+                                    <span class="material-icons icones">phone_in_talk</span>
+                                    <p>Convocados</p>
+                                </div>
+                            </a>
                         </div>
                     </div>
+
+                    <div class="categoria">
+                        <div class="categoriaTitulo" @click="toggle('hemocentros')">
+                            <div>
+                                <span class="material-icons icones">local_hospital</span>
+                                <p>Hemocentros</p>
+                            </div>
+                            <span v-if="!opcoes['hemocentros']" class="material-icons icones">keyboard_arrow_down</span>
+                            <span v-if="opcoes['hemocentros']" class="material-icons icones">keyboard_arrow_up</span>
+                        </div>
+
+                        <div v-if="opcoes['hemocentros']" class="opcoes">
+                            <a href="">
+                                <div>
+                                    <span class="material-icons icones">add</span>
+                                    <p>Novo hemocentro</p>
+                                </div>
+                            </a>
+                            <a href="">
+                                <div>
+                                    <span class="material-icons icones">search</span>
+                                    <p>Consultar hemocentros</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="categoria">
+                        <div class="categoriaTitulo" @click="toggle('captadores')">
+                            <div>
+                                <span class="material-icons icones">portrait</span>
+                                <p>Captadores</p>
+                            </div>
+                            <span v-if="!opcoes['captadores']" class="material-icons icones">keyboard_arrow_down</span>
+                            <span v-if="opcoes['captadores']" class="material-icons icones">keyboard_arrow_up</span>
+                        </div>
+
+                        <div v-if="opcoes['captadores']" class="opcoes">
+                            <a href="">
+                                <div>
+                                    <span class="material-icons icones">add</span>
+                                    <p>Novo captador</p>
+                                </div>
+                            </a>
+                            <a href="">
+                                <div>
+                                    <span class="material-icons icones">search</span>
+                                    <p>Consultar captadores</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="hemocentro">
                     <p>Hemojipa</p>
@@ -152,8 +203,10 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dropdowns.js') }}"></script>
 </body>
 
 </html>
