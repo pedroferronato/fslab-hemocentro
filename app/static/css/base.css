@@ -164,11 +164,6 @@ html, body {
     margin-bottom: 14px;
 }
 
-.categoria::selection {
-    background-color: white;
-    color: black;
-}
-
 .opcoes div{
     font-size: 18px;
     font-weight: 500;
