@@ -26,7 +26,6 @@
 
             <div class="navegacao">
                 <div id="sobrepor">
-
                     <div class="categoria">
                         <div class="categoriaTitulo" @click="toggle('doacoes')">
                             <div>
@@ -196,9 +195,11 @@
                         <span class="material-icons icone">account_circle</span>
                     </div>
                 </div>
-                <main class="conteudoPagina">
-                    {% block conteudo %}
-                    {% endblock %}
+                <main>
+                    <div id="conteudoPagina">
+                        {% block conteudo %}
+                        {% endblock %}
+                    </div>
                 </main>
             </div>
         </div>
