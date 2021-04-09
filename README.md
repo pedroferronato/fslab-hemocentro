@@ -26,6 +26,12 @@ Desenvolvimento do sistema de hemocentros de Rondônia, em parceria com o Hemoji
   * GitLens
 
 ## Receita do bolo para formulários
+  * Importe o css base de formulários:
+  ```html
+  {% block cabecalho %}
+  <link href="{{ url_for('static', filename='css/baseConteudo.css') }}" rel="stylesheet">
+  {% endblock %}
+  ```
   * A estrutura básica de um formulário é: ( breadcrumb + cartão ( titulo + formulário ) )
   ```html
   <div class="contentorConteudo">
