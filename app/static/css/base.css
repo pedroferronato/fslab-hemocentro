@@ -1,6 +1,9 @@
 :root {
     --vermelho: #ac0011;
+    --vermelhoHover: #970110;
+    --vermelhoActive: #86010e;
     --cinzaFundo: #F5F5F5;
+    --cinzaDisabled: #CCCCCC;
     --cinzaBotaoSecundario: #898989;
     --cinzaBotaoSecundarioHover: #7a7a7a;
     --cinzaBotaoSecundarioActive: #686868;
@@ -86,7 +89,7 @@ html, body {
 
 .barraSuperior p {
     margin: 0;
-    margin-right: 8px;
+    margin-right: 16px;
     font-style: normal;
     font-weight: bold;
     line-height: 17px;
@@ -103,7 +106,7 @@ html, body {
 .linha {
     width: 1px;
     height: 48px;
-    margin-right: 8px;
+    margin-right: 16px;
     background-color: #FFFFFF;
 }
 

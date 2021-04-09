@@ -1,0 +1,15 @@
+#divTipo {
+    max-width: 100px;
+}
+
+#divRegistro {
+    max-width: 150px;
+}
+
+#divNome {
+    min-width: 300px;
+}
+
+#divItens {
+    max-width: 150px;
+}

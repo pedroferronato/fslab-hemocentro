@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block cabecalho %}
+<link href="{{ url_for('static', filename='css/baseConteudo.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/alterarInaptidao.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block conteudo %}
+<div class="contentorConteudo">
+
+    <div class="bread noselect">
+        <p>Inicial ></p>
+        <p>Doadores ></p>
+        <p>Pedro Luís Ferronato Barreto ></p>
+        <p>Alterar inaptidão</p>
+    </div>
+
+    <div class="cartao noselect">
+        <div class="titulo">
+            <h1>Alterar inaptidão</h1>
+        </div>
+            <div class="formulario">
+                <div class="linhaFormulario">
+                    <div class="dados">
+                        <label for="txt">Nome completo:</label>
+                        <p>Pedro Luis Ferronato Barreto</p>
+                    </div>
+                </div>
+                <div class="linhaFormulario">
+                    <div class="campo" id="divInapto">
+                        <label for="inapto">Inapto:</label>
+                        <input type="text" id="inapto" autocomplete="off">
+                    </div>
+                    <div class="campo" id="divData">
+                        <label for="data">Data final:</label>
+                        <input type="text" id="data" autocomplete="off">
+                    </div>
+                    <div>
+                        <button class="botao btn-principal">Atualizar estado</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
