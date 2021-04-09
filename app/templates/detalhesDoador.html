@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+
+{% block cabecalho %}
+<link href="{{ url_for('static', filename='css/baseConteudo.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/detalheDoadores.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block conteudo %}
+<div class="contentorConteudo">
+
+    <div class="bread noselect">
+        <p>Inicial ></p>
+        <p>Doadores ></p>
+        <p>Relatório doador ></p>
+        <p>Pedro Luís Ferronato Barreto</p>
+    </div>
+
+    <div class="cartao noselect">
+        <div class="titulo">
+            <div class="flexivel SpcBtw">
+                <div class="flexivel">
+                    <h1>Pedro Luís Ferronato Barreto</h1>
+                    <span class="material-icons iconesG">edit</span>
+                    <span class="material-icons iconesG">healing</span>
+                    <span class="material-icons iconesG">phone_in_talk</span>
+                </div>
+                <p class="tipoSanguineo">A+</p>
+            </div>
+        </div>
+        <div class="formulario">
+
+            <div class="linhaFormulario AlgSrt">
+                <div class="dados">
+                    <label>Núm. de regitro:</label>
+                    <p>65689</p>
+                </div>
+                <div class="dados">
+                    <div class="flexivel SpcBtw">
+                        <label>Telefone:</label>
+                        <span class="material-icons iconesS">content_copy</span>
+                    </div>
+                    <p>(69) 3321-1942</p>
+                </div>
+                <div class="dados">
+                    <div class="flexivel SpcBtw">
+                        <label>Celular:</label>
+                        <span class="material-icons iconesS">content_copy</span>
+                    </div>
+                    <p>(69) 9 9602-1323</p>
+                </div>
+                <div class="dados">
+                    <label>CPF:</label>
+                    <p>248.359.976-05</p>
+                </div>
+                <div class="dados">
+                    <label>Data de nascimento:</label>
+                    <p>Pedro Luis Ferronato Barreto</p>
+                </div>
+                <div class="dados">
+                    <label>Idade:</label>
+                    <p>20</p>
+                </div>
+                <div class="dados">
+                    <label>Sexo:</label>
+                    <p>Masculino</p>
+                </div>
+            </div>
+
+            <div class="linhaFormulario linhaSolitaria SpcBtw AlgSrt">
+                <div class="flexivel">
+                    <div class="dados">
+                        <label>Cadastro SUS:</label>
+                        <p>248 5789 9523 3578</p>
+                    </div>
+                    <div class="dados">
+                        <div class="flexivel SpcBtw">
+                            <label>E-mail:</label>
+                            <span class="material-icons iconesS">content_copy</span>
+                        </div>
+                        <p>pedroluisfbar@gmail.com</p>
+                    </div>
+                    <div class="dados">
+                        <label>Fidelidade:</label>
+                        <p>Fidelizado</p>
+                    </div>
+                    <div class="dados">
+                        <label>Total:</label>
+                        <p>6</p>
+                    </div>
+                    <div class="dados">
+                        <label>Cidade:</label>
+                        <p>Vilhena</p>
+                    </div>
+                </div>
+                <span class="material-icons iconesGG">info</span>
+                <span style="display: none;" class="material-icons iconesGG">keyboard_arrow_up</span>
+            </div>
+
+            <div style="display: none;" class="linhaFormulario AlgSrt">
+                <div class="dados">
+                    <label>Estado civil:</label>
+                    <p>Solteiro</p>
+                </div>
+                <div class="dados">
+                    <label>Profissão:</label>
+                    <p>Estudante</p>
+                </div>
+                <div class="dados">
+                    <label>Local:</label>
+                    <p>IFRO - Vilhena</p>
+                </div>
+                <div class="dados">
+                    <label>Mãe:</label>
+                    <p>Solange Ferronato Barreto</p>
+                </div>
+                <div class="dados">
+                    <label>Pai:</label>
+                    <p>Samuel Alves Barreto</p>
+                </div>
+                <div class="dados">
+                    <label>Notificado:</label>
+                    <p>Sim</p>
+                </div>
+                <div class="dados">
+                    <label>Contatado:</label>
+                    <p>Não</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="cartao noselect">
+        <table class="table table-striped tabela">
+            <thead>
+                <tr>
+                    <th scope="col">Data</th>
+                    <th scope="col">Convocação</th>
+                    <th scope="col">Local de coleta</th>
+                    <th scope="col">Observações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>24/12/2020</td>
+                    <td>Voluntário</td>
+                    <td>Vilhena</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>24/09/2020</td>
+                    <td>Voluntário</td>
+                    <td>Vilhena</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>23/06/2020</td>
+                    <td>Reposição</td>
+                    <td>Vilhena</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>21/03/2020</td>
+                    <td>Voluntário</td>
+                    <td>Vilhena</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>20/12/2019</td>
+                    <td>Voluntário</td>
+                    <td>Vilhena</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>15/08/2019</td>
+                    <td>Voluntário</td>
+                    <td>Vilhena</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

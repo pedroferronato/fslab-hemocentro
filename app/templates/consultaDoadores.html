@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block cabecalho %}
+<link href="{{ url_for('static', filename='css/baseConteudo.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/consultaDoadores.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block conteudo %}
+<div class="contentorConteudo">
+
+    <div class="bread noselect">
+        <p>Inicial ></p>
+        <p>Doadores ></p>
+        <p>Consultar doadores</p>
+    </div>
+
+    <div class="cartao noselect">
+        <div class="titulo">
+            <h1>Consulta de doadores</h1>
+        </div>
+        <div class="formulario">
+            <div class="linhaFormulario ultimaLinhaInput">
+                <div class="campo" id="divNome">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" autocomplete="off">
+                </div>
+                <div class="campo" id="divTipo">
+                    <label for="tipo">Tipo:</label>
+                    <input type="text" id="tipo" autocomplete="off">
+                </div>
+                <div class="campo" id="divRegistro">
+                    <label for="registro">Num. registro:</label>
+                    <input type="text" id="registro" autocomplete="off">
+                </div>
+                <div class="campo">
+                    <label for="municipio">Município:</label>
+                    <input type="text" id="municipio" autocomplete="off">
+                </div>
+                <div class="campo" id="divItens">
+                    <label for="itens">Itens por pág.:</label>
+                    <input type="text" id="itens" autocomplete="off">
+                </div>
+                <div>
+                    <button class="botao btn-principal linhaMRReset">Buscar</button>
+                </div>
+            </div>
+
+            {% if resultado %}
+
+            <div class="linhaFormulario">
+                <table class="table table-striped tabela">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Fidelidade</th>
+                            <th scope="col">Última doação</th>
+                            <th scope="col">Município</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Pedro Luís Ferronato Barreto</td>
+                            <td>A+</td>
+                            <td>Fidelizado</td>
+                            <td>18/12/2020</td>
+                            <td>Vilhena</td>
+                        </tr>
+                        <tr>
+                            <td>Bruno Delani Cirino dos Santos</td>
+                            <td>A+</td>
+                            <td>Fidelizado</td>
+                            <td>18/12/2020</td>
+                            <td>Vilhena</td>
+                        </tr>
+                        <tr>
+                            <td>João Vitor Lopes Alves</td>
+                            <td>A+</td>
+                            <td>Fidelizado</td>
+                            <td>18/12/2020</td>
+                            <td>Vilhena</td>
+                        </tr>
+                        <tr>
+                            <td>Larissa Lourenço Bingre</td>
+                            <td>O-</td>
+                            <td>Esporádico</td>
+                            <td>16/12/2020</td>
+                            <td>Vilhena</td>
+                        </tr>
+                        <tr>
+                            <td>Alina Madeira Roçadas</td>
+                            <td>AB-</td>
+                            <td>Fidelizado</td>
+                            <td>13/12/2020</td>
+                            <td>Vilhena</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="linhaFormulario paginador">
+                <nav>
+                    <ul class="pagination">
+                      <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                        </a>
+                      </li>
+                      <li class="page-item"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item"><a class="page-link" href="#">4</a></li>
+                      <li class="page-item"><a class="page-link" href="#">5</a></li>
+                      <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
+            </div>
+
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+</div>
+{% endblock %}
