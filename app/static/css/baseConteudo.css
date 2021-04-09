@@ -1,0 +1,134 @@
+.contentorConteudo {
+    max-width: 1200px;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    padding-top: 24px;
+}
+
+.bread {
+    display: flex;
+}
+
+.bread p {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.bread p:last-child {
+    color: var(--vermelho);
+}
+
+.bread p:not(:last-child) {
+    margin-right: 4px;
+}
+
+.cartao {
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    margin-top: 16px;
+    padding: 16px;
+}
+
+h1 {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 30px;
+}
+
+.formulario {
+    width: 100%;
+}
+
+.titulo {
+    margin-bottom: 20px;
+}
+
+.linhaFormulario {
+    display: flex;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.ultimaLinhaInput {
+    margin-bottom: 24px;
+}
+
+.formulario label {
+    font-style: normal;
+    color: var(--pretoLabel);
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 24px;
+    display: block;
+}
+
+.campo {
+    margin-right: 16px;
+    flex: 1 1 auto;
+}
+
+.campo :last-child {
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    color: black;
+    box-sizing: border-box;
+    border-radius: 5px;
+    height: 40px;
+    font-style: normal;
+    padding: 0px 8px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 0px;
+    width: 100%;
+}
+
+.linhaFormulario :last-child {
+    margin-right: 0px;
+}
+
+.campo :last-child:focus {
+    outline: none;
+}
+
+.botao {
+    padding: 8px 32px;
+    border-radius: 5px;
+    border: none;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    color: #ffffff;
+    margin: 0 !important;
+    margin-right: 16px !important;
+}
+
+.btn-principal {
+    background-color: var(--cinzaBotao);
+}
+
+.btn-secundario {
+    background-color: var(--cinzaBotaoSecundario);
+}
+
+.btn-principal:hover {
+    background-color: var(--cinzaBotaoHover);
+}
+
+.btn-secundario:hover {
+    background-color: var(--cinzaBotaoSecundarioHover);
+}
+
+.btn-principal:active {
+    background-color: var(--cinzaBotaoActive);
+}
+
+.btn-secundario:active {
+    background-color: var(--cinzaBotaoSecundarioActive);
+}
