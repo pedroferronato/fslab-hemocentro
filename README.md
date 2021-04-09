@@ -118,3 +118,22 @@ Desenvolvimento do sistema de hemocentros de Rondônia, em parceria com o Hemoji
 
   </div>
   ```
+## Receita do bolo para botões
+  * Botões atualmente utilizam a tag button, para ativa-los, utilize a classe css ".botao"
+  ```html
+  <button class="botao">Texto de ação</button>
+  ```
+  * As cores de um botão são definidas pelas classes ".btn-principal", para botões que desempenham a principal função na página, ".btn-secundario", para botões utiilitários, e futuramente ".btn-alerta" para operações de exclusão
+  ```html
+  <button class="botao btn-principal">Texto de ação</button>
+  <button class="botao btn-secundario">Texto de ação secundaria</button>
+  <button class="botao btn-alerta">Texto de ação exclusão</button>
+  ```
+  * Linhas de botões em formulários podem ser criadas com a classe ".linhaBotoes" em uma <div>
+  ```html
+  <div class="linhaBotoes">
+    <button class="botao btn-principal">Texto de ação</button>
+    <button class="botao btn-principal">Texto de ação</button>
+    <button class="botao btn-secundario">Texto de ação secundaria</button>
+  </div>
+  ```
