@@ -24,3 +24,97 @@ Desenvolvimento do sistema de hemocentros de Rondônia, em parceria com o Hemoji
   * Jinja2 Snippet Kit 2.0.0 - Wyatt Ferguson
   * Material Icon Theme 
   * GitLens
+
+## Receita do bolo para formulários
+  * A estrutura básica de um formulário é: ( breadcrumb + cartão ( titulo + formulário ) )
+  ```html
+  <div class="contentorConteudo">
+
+    <div class="bread noselect"> </div>
+
+    <div class="cartao noselect"> 
+      <div class="titulo">
+        <h1>Título</h1>
+        <div class="formulario"> </div>
+      </div>
+    </div>
+
+  </div>
+  ```
+  * Para cada linha, adicione uma div com a classe ".linhaFormulario"
+  ```html
+  <div class="contentorConteudo">
+
+    <div class="bread noselect"> </div>
+
+    <div class="cartao noselect"> 
+      <div class="titulo">
+        <h1>Título</h1>
+        <div class="formulario"> 
+          <div class="linhaFormulario"> </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  ```
+  * Para cada campo (label + input), adicione uma div com a classe ".campo"
+  ```html
+  <div class="contentorConteudo">
+
+    <div class="bread noselect"> </div>
+
+    <div class="cartao noselect"> 
+      <div class="titulo">
+        <h1>Título</h1>
+        <div class="formulario"> 
+          <div class="linhaFormulario"> 
+            <div class="campo">
+              <label for="txt">Label:</label>
+              <input type="text" id="txt" autocomplete="off">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  ```
+  * Repita quantas vezes forem nescessárias, campos irão buscar equalidade de largura, na última linha adicione a classe ".ultimaLinhaInput"
+  ```html
+  <div class="contentorConteudo">
+
+    <div class="bread noselect"> </div>
+
+    <div class="cartao noselect"> 
+      <div class="titulo">
+        <h1>Título</h1>
+        <div class="formulario"> 
+          <div class="linhaFormulario"> 
+            <div class="campo">
+              <label for="txt">Label:</label>
+              <input type="text" id="txt" autocomplete="off">
+            </div>
+            .
+            .
+            .
+            <div class="campo">
+              <label for="txt">Label:</label>
+              <input type="text" id="txt" autocomplete="off">
+            </div>
+          </div>
+          .
+          .
+          .
+          <div class="linhaFormulario ultimaLinhaInput"> 
+            <div class="campo">
+              <label for="numRegistro">Número de registro:</label>
+              <input type="text" id="numRegistro" autocomplete="off">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  ```

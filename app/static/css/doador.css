@@ -1,0 +1,15 @@
+#divNome {
+    min-width: 315px;
+}
+
+#nome {
+    width: 100%;
+} 
+
+#divMae {
+    max-width: 315px;
+}
+
+#divPai {
+    max-width: 315px;
+}

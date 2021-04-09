@@ -12,6 +12,8 @@
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet">
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    {% block cabecalho %}
+    {% endblock %}
     <title>Sistema de hemocentro</title>
 </head>
 
@@ -63,7 +65,7 @@
                         </div>
 
                         <div v-if="opcoes['doadores']" class="opcoes">
-                            <a href="">
+                            <a href="/novo-doador">
                                 <div>
                                     <span class="material-icons icones">add</span>
                                     <p>Novo doador</p>
@@ -211,6 +213,8 @@
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/base.js') }}"></script>
     <script src="{{ url_for('static', filename='js/dropdowns.js') }}"></script>
+    {% block codigos %}
+    {% endblock %}
 </body>
 
 </html>

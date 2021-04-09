@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block cabecalho %}
+<link href="{{ url_for('static', filename='css/baseConteudo.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/doador.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="contentorConteudo">
+    <div class="bread noselect">
+        <p>Inicial ></p>
+        <p>Doadores ></p>
+        <p>Novo doador</p>
+    </div>
+
+    <div class="cartao noselect">
+        <div class="titulo">
+            <h1>Novo doador</h1>
+        </div>
+        <div class="formulario">
+
+            <div class="linhaFormulario">
+                <div class="campo">
+                    <label for="numRegistro">Número de registro:</label>
+                    <input type="text" id="numRegistro" autocomplete="off">
+                </div>
+                <div class="campo divNome" id="divNome">
+                    <label for="nome">Nome Completo:</label>
+                    <input type="text" id="nome" autocomplete="off">
+                </div>
+                <div class="campo">
+                    <label for="cpf">CPF:</label>
+                    <input type="text" id="cpf" autocomplete="off">
+                </div>
+                <div class="campo">
+                    <label for="sexo">Sexo:</label>
+                    <input type="text" id="sexo">
+                </div>
+                <div class="campo">
+                    <label for="tipoSangue">Tipo sanguíneo:</label>
+                    <input type="text" id="tipoSangue">
+                </div>
+            </div>
+
+            <div class="linhaFormulario">
+                <div class="campo">
+                    <label for="nascimento">Data de Nascimento:</label>
+                    <input type="text" id="nascimento" autocomplete="off">
+                </div>
+                <div class="campo">
+                    <label for="sus">Cadastro do SUS:</label>
+                    <input type="text" id="sus" autocomplete="off">
+                </div>
+                <div class="campo">
+                    <label for="estadoCivil">Estado civil:</label>
+                    <input type="text" id="estadoCivil" autocomplete="off">
+                </div>
+                <div class="campo">
+                    <label for="celular">Celular:</label>
+                    <input type="text" id="celular" autocomplete="off">
+                </div>
+                <div class="campo">
+                    <label for="telefone">Telefone:</label>
+                    <input type="text" id="telefone" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="linhaFormulario">
+                <div class="campo">
+                    <label for="mail">E-mail:</label>
+                    <input type="text" id="mail" autocomplete="off">
+                </div>
+                <div class="campo">
+                    <label for="aviso">Receber aviso por:</label>
+                    <input type="text" id="aviso" autocomplete="off">
+                </div>
+                <div class="campo">
+                    <label for="municipio">Município:</label>
+                    <input type="text" id="municipio" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="linhaFormulario">
+                <div class="campo">
+                    <label for="profissao">Profissão:</label>
+                    <input type="text" id="profissao" autocomplete="off">
+                </div>
+                <div class="campo">
+                    <label for="localTrabalho">Local de trabalho:</label>
+                    <input type="text" id="localTrabalho" autocomplete="off">
+                </div>
+                <div class="campo">
+                    <label for="inapto">Inapto:</label>
+                    <input type="text" id="inapto" autocomplete="off">
+                </div>
+                <div class="campo">
+                    <label for="dataInaptidao">Data Inaptidão:</label>
+                    <input type="text" id="dataInaptidao" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="linhaFormulario ultimaLinhaInput">
+                <div class="campo" id="divMae">
+                    <label for="mae">Nome da mãe:</label>
+                    <input type="text" id="mae" autocomplete="off">
+                </div>
+                <div class="campo" id="divPai">
+                    <label for="pai">Nome do pai:</label>
+                    <input type="text" id="pai" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="linhaBotoes">
+                <button class="botao btn-principal">Inserir e continuar</button>
+                <button class="botao btn-principal">Inserir</button>
+                <button class="botao btn-secundario">Limpar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
