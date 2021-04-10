@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/baseConteudo.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/baseLogin.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <title>Sistema de hemocentro</title>
+</head>
+
+<body>
+    <div>
+        <div class="quadro noselect">
+            <span class="material-icons icones iconeLogin" id="icone-doacao">add_location</span>
+            <div class="titulo">Sistema de hemocentros</div>
+            {% block conteudo %}
+            {% endblock %}
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,104 @@
+body {
+    background: var(--vermelhoLogin);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body div {
+    max-height: 500px;
+    max-width: 600px;
+}
+
+.quadro {
+    background: var(--cinzaFundo);
+    border: 1px solid #CCCCCC;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.quadro div {
+    display: flex;
+    flex-flow: column;
+    margin-bottom: 20px;
+}
+
+.quadro div:last-child {
+    margin-bottom: 0px;
+}
+
+.iconeLogin {
+    font-size: 48px;
+    color: var(--vermelho);
+    margin-bottom: 20px;
+}
+
+.titulo {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    color: var(--vermelho);
+    margin-bottom: 40px;
+}
+
+.subtitulo {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.campoLogin {
+    height: 50px;
+    min-width: 300px;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    outline: none !important;
+    margin-bottom: 20px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.recuperacao {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    color: var(--vermelho);
+    text-align: end;
+}
+
+.descricao {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    color: #000000;
+    text-align: center;
+}
+
+.botao {
+    margin: 0 auto;
+    width: 200px;
+}
+
+.btn-recuperar {
+    margin-top: 20px;
+}
+
+@media screen and (min-width: 512px) {
+    .quadro {
+        padding: 50px;
+    }
+    .campoLogin {
+        min-width: 450px;
+    }
+}

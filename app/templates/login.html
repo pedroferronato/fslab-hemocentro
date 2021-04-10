@@ -1,0 +1,17 @@
+{% extends 'baseLogin.html' %}
+
+{% block conteudo %}
+
+<div class="subtitulo">Iniciar sessão</div>
+<div>
+    <input class="campoLogin" type="text" id="login" nome="login" autocomplete="off" placeholder="Usuário">
+    <input class="campoLogin" type="password" id="senha" nome="senha" autocomplete="off" placeholder="Senha">
+    <a href="/recuperar-senha">
+        <div class="recuperacao">Esqueci minha senha</div>
+    </a>
+</div>
+<div class="flexivel AlgCenter JstfyCenter">
+    <a href="/pagina-inicial"><button class="linhaMRReset botao btn-alerta">ENTRAR</button></a>
+</div>
+
+{% endblock %}

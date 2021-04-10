@@ -1,8 +1,19 @@
 from app import flaskApp
 from flask import render_template
 
+#TODO: CRIAR UM SYSTEMA CONTROLLER COM ROTAS BASE
 
-@flaskApp.route('/pagina-inicial')
+@flaskApp.route('/login')
+def login():
+    return render_template("login.html")
+
+
+@flaskApp.route('/recuperar-senha')
+def recuperar_senha():
+    return render_template("recuperarSenha.html")
+
+
+@flaskApp.route('/')
 def doador():
     return render_template("paginaInicial.html")
 
