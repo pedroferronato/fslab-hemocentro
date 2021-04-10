@@ -1,8 +1,10 @@
 #divInapto {
     max-width: 250px;
+    flex: 5;
 }
 
 #divData {
     max-width: 150px;
+    flex: 3;
 }
 

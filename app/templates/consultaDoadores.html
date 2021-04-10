@@ -32,7 +32,7 @@
                     <label for="registro">Num. registro:</label>
                     <input type="text" id="registro" autocomplete="off">
                 </div>
-                <div class="campo">
+                <div class="campo" id="divMunicipio">
                     <label for="municipio">Município:</label>
                     <input type="text" id="municipio" autocomplete="off">
                 </div>
@@ -41,7 +41,7 @@
                     <input type="text" id="itens" autocomplete="off">
                 </div>
                 <div>
-                    <button class="botao btn-principal linhaMRReset">Buscar</button>
+                    <a href="/consultar-inaptidao/resultado"><button class="botao btn-principal linhaMRReset">Buscar</button></a>
                 </div>
             </div>
 
@@ -101,23 +101,23 @@
             <div class="linhaFormulario paginador">
                 <nav>
                     <ul class="pagination">
-                      <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                          <span aria-hidden="true">&laquo;</span>
-                        </a>
-                      </li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item"><a class="page-link" href="#">4</a></li>
-                      <li class="page-item"><a class="page-link" href="#">5</a></li>
-                      <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                          <span aria-hidden="true">&raquo;</span>
-                        </a>
-                      </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                        <li class="page-item"><a class="page-link" href="#">5</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
                     </ul>
-                  </nav>
+                </nav>
             </div>
 
             {% endif %}

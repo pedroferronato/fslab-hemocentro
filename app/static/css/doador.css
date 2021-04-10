@@ -1,15 +1,27 @@
 #divNome {
-    min-width: 315px;
+    flex: 4;
 }
 
-#nome {
-    width: 100%;
-} 
+#divRegistro {
+    flex: 2;
+}
+
+#divCpf {
+    flex: 2;
+}
+
+#divSexo {
+    flex: 2;
+}
+
+#divSangue {
+    flex: 2;
+}
 
 #divMae {
-    max-width: 315px;
+    flex: 2;
 }
 
 #divPai {
-    max-width: 315px;
+    flex: 2;
 }

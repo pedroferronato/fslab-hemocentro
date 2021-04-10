@@ -1,15 +1,19 @@
 #divTipo {
-    max-width: 100px;
+    flex: 2;
 }
 
 #divRegistro {
-    max-width: 150px;
+    flex: 3;
 }
 
 #divNome {
-    min-width: 300px;
+    flex: 6;
 }
 
 #divItens {
-    max-width: 150px;
+    flex: 3;
+}
+
+#divMunicipio {
+    flex: 4;
 }

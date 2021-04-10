@@ -1,3 +1,11 @@
 #divNome {
     flex: 5;
 }
+
+#divRegistro {
+    flex: 3;
+}
+
+#divCpf {
+    flex: 3;
+}
