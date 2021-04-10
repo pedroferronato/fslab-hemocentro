@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block cabecalho %}
+<link href="{{ url_for('static', filename='css/baseConteudo.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/doacao.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block conteudo %}
+<div class="contentorConteudo">
+
+    <div class="bread noselect">
+        <p>Inicial ></p>
+        <p>Doações ></p>
+        {% if alterar %}
+        <p>Alterar doação</p>
+        {% else %}
+        <p>Nova doação</p>
+        {% endif %}
+    </div>
+
+    <div class="cartao noselect">
+        <div class="titulo">
+            {% if alterar %}
+            <h1>Alterar doação</h1>
+            {% else %}
+            <h1>Nova doação</h1>
+            {% endif %}
+        </div>
+        <div class="formulario">
+
+            <div class="linhaFormulario">
+                <div class="campo" id="divRegistro">
+                    <label for="numRegistro">Nº registro:</label>
+                    <input type="text" id="numRegistro" autocomplete="off">
+                </div>
+                <div class="campo" id="divNome">
+                    <label for="nome">Nome do doador:</label>
+                    <input type="text" id="nome" autocomplete="off">
+                </div>
+                <div class="campo" id="divTipo">
+                    <label for="tipoSangue">Tipo:</label>
+                    <input type="text" id="tipoSangue" autocomplete="off">
+                </div>
+                <div class="campo" id="divData">
+                    <label for="data">Data:</label>
+                    <input type="text" id="data" autocomplete="off">
+                </div>
+                <div class="campo" id="divConvocacao">
+                    <label for="convocacao">Convocação:</label>
+                    <input type="text" id="convocacao" autocomplete="off">
+                </div>
+                <div class="campo" id="divFidelidade">
+                    <label for="fidelidade">Fidelidade:</label>
+                    <input type="text" id="fidelidade" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="linhaFormulario ultimaLinhaInput">
+                <div class="campo" id="divInapto">
+                    <label for="inapto">Inapto:</label>
+                    <input type="text" id="inapto" autocomplete="off">
+                </div>
+                <div class="campo" id="divDataFinal">
+                    <label for="dataFinal">Data final:</label>
+                    <input type="text" id="dataFinal" autocomplete="off">
+                </div>
+                <div class="campo" id="divObservacoes">
+                    <label for="observacoes">Observações:</label>
+                    <input type="text" id="observacoes" autocomplete="off" placeholder="Caso não tenha, deixe em branco.">
+                </div>
+            </div>
+
+            <div class="linhaBotoes">
+                {% if alterar %}
+                <button class="botao btn-principal">Alterar</button>
+                {% else %}
+                <button class="botao btn-principal">Inserir e continuar</button>
+                <button class="botao btn-principal">Inserir</button>
+                <button class="botao btn-secundario">Limpar</button>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

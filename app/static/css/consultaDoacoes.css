@@ -1,0 +1,15 @@
+#divPredefinicoes {
+    flex: 3;
+}
+
+#divData {
+    flex: 2;
+}
+
+#divDataFinal {
+    flex: 2;
+}
+
+#divItens {
+    flex: 1;
+}
