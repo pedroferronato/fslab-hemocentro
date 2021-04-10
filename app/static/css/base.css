@@ -115,6 +115,7 @@ html, body {
     margin-right: 16px;
     color: #FFFFFF;
     font-size: 48px;
+    cursor: pointer;
 }
 
 .divisaoLogo {
@@ -271,6 +272,12 @@ main {
 
 .barraLateral::-webkit-scrollbar {
     width: 0px;
+}
+
+#logout {
+    margin-right: 12px;
+    color: #FFFFFF;
+    font-size: 32px;
 }
 
 @media screen and (max-width: 1024px) {
