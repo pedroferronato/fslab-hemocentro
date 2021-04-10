@@ -291,6 +291,11 @@ h1 {
     line-height: 30px;
 }
 
+.notificado{
+    font-size: 24px;
+    color: green;
+}
+
 .flexivelColumn{
     flex-direction: column;
 }
