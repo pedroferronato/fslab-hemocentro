@@ -83,7 +83,7 @@ h1 {
     flex: 1 1 auto;
 }
 
-.campo :last-child {
+.campo input {
     background: #FFFFFF;
     border: 1px solid #000000;
     color: black;
@@ -98,7 +98,7 @@ h1 {
     width: 100%;
 }
 
-.campo :last-child:disabled {
+.campo input:disabled {
     border-color: var(--cinzaDisabled);
     color: var(--cinzaDisabled);
 }
@@ -240,9 +240,19 @@ h1 {
     padding-bottom: 12px !important;
 }
 
+.tabela th:not(:first-child) {
+    padding: 12px 8px !important;
+}
+
+.tabela tbody td:first-child {
+    text-align: center;
+    font-size: 18px;
+}
+
 .paginador {
     justify-content: center;
     margin-top: 32px;
+    margin-bottom: 0px;
 }
 
 .paginador li a {
@@ -310,4 +320,24 @@ h1 {
 
 ::placeholder {
     color: var(--cinzaDisabled);
+}
+
+.input-icons i {
+    position: absolute;
+}
+  
+.input-icons {
+    width: 100%;
+    margin-bottom: 10px;
+}
+  
+.icon {
+    padding: 10px;
+    min-width: 40px;
+}
+  
+.input-field {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
 }
