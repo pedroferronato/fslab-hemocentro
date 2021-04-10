@@ -291,6 +291,10 @@ h1 {
     line-height: 30px;
 }
 
+.flexivelColumn{
+    flex-direction: column;
+}
+
 ::-webkit-input-placeholder {
     color: var(--cinzaDisabled);
 }
