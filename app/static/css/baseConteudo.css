@@ -244,11 +244,6 @@ h1 {
     padding: 12px 8px !important;
 }
 
-.tabela tbody td:first-child {
-    text-align: center;
-    font-size: 18px;
-}
-
 .paginador {
     justify-content: center;
     margin-top: 32px;
