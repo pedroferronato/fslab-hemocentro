@@ -1,0 +1,48 @@
+#divTipagem {
+    max-width: 150px;
+    flex: 2;
+}
+
+#divIP {
+    max-width: 150px;
+    flex: 2;
+}
+
+.linhaFormulario{
+    align-items: flex-end;
+    margin-bottom: 24px;
+}
+
+.flexivel{
+    align-items: flex-end;
+}
+
+.tabela th:not(:first-child) {
+    padding: 12px 8px !important;
+}
+
+.tabela tbody td:first-child {
+    text-align: center;
+    font-size: 18px;
+}
+
+.form-check-input{
+    cursor: pointer;
+}
+
+.form-check-input:focus, .form-check-input:active {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.icones{
+    display: block;
+    text-align: center;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.notificado{
+    font-size: 24px;
+    color: green;
+}

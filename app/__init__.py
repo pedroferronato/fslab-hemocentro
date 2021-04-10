@@ -28,3 +28,5 @@ import app.models.captador
 from app.controllers import doadorController
 from app.controllers import captadorController
 from app.controllers import serverController
+
+from app.controllers import chamadaController
