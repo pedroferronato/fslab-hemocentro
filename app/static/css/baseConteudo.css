@@ -50,6 +50,10 @@ h1 {
     margin-bottom: 20px;
 }
 
+.tituloSecundario {
+    font-size: 22px !important;
+}
+
 .linhaFormulario {
     display: flex;
     align-items: flex-end;
@@ -287,22 +291,18 @@ h1 {
     line-height: 30px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .flexivelColumn{
     flex-direction: column;
+}
+
+::-webkit-input-placeholder {
+    color: var(--cinzaDisabled);
+}
+
+:-ms-input-placeholder {
+    color: var(--cinzaDisabled);
+}
+
+::placeholder {
+    color: var(--cinzaDisabled);
 }

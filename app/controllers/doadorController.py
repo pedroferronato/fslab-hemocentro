@@ -4,12 +4,12 @@ from flask import render_template
 
 @flaskApp.route('/novo-doador')
 def novo_doador():
-    return render_template("doadorNovo.html")
+    return render_template("doador.html")
 
 
 @flaskApp.route('/alterar-doador')
 def alterar_doador():
-    return render_template("doadorNovo.html", alterar=True)
+    return render_template("doador.html", alterar=True)
 
 
 @flaskApp.route('/alterar-inaptidao') # '/alterar_inatidao/<id>'
