@@ -9,3 +9,13 @@ def get_user(id):
 @flaskApp.route('/novo-captador')
 def novo_captador():
     return render_template("captador.html")
+
+
+@flaskApp.route('/consultar-captadores') 
+def consultar_captador():
+    return render_template("consultaCaptador.html")
+
+
+@flaskApp.route('/consultar-captadores/resultado') 
+def consultar_captador_resultado():
+    return render_template("consultaCaptador.html", resultado=True)
