@@ -12,110 +12,73 @@
     <div class="bread noselect">
         <p>Inicial ></p>
         <p>Chamadas ></p>
-        {% if tipo == "Convocados" %}
-        <p>Convocados</p>
-        {% else %}
         <p>Convocação {{ tipo }}</p>
-        {% endif %}
     </div>
     <div class="cartao noselect">
         <div class="titulo">
-            {% if tipo == "convocados" %}
-            <h1>Convocados</h1>
-            {% else %}
             <h1>Convocação {{ tipo }}</h1>
-            {% endif %}
         </div>
         <div class="formulario">
             {% if resultado %}
             <div class="linhaFormulario ultimaLinhaInput SpcBtw">
-                {% else %}
-                <div class="linhaFormulario linhaSolitaria SpcBtw">
-                    {% endif%}
-                    <div class="flexivel">
-                        {% if tipo == "localidades-externas" or tipo == "convocados" %}
-                        <div class="campo" id="divCidade">
-                            <label for="cidade">Cidade:</label>
-                            <input type="text" id="cidade" autocomplete="off">
-                        </div>
-                        {% if tipo == "convocados" %}
-                        <div class="campo" id="divTelefone">
-                            <label for="telefone">Telefone:</label>
-                            <input type="text" id="telefone" autocomplete="off">
-                        </div>
-                        {% endif %}
-                        {% endif %}
-                        <div class="campo" id="divTipagem">
-                            <label for="tipagem">Tipo sanguíneo:</label>
-                            <input type="text" id="tipagem" autocomplete="off">
-                        </div>
-                        <div class="campo" id="divIP">
-                            <label for="itenspp">Itens por página:</label>
-                            <input type="number" id="itenspp" autocomplete="off" value=5 max="50">
-                        </div>
-                        <a href="/convocacao-{{ tipo }}/resultado"><button
-                                class="botao btn-principal linhaMRReset">Buscar</button></a>
+            {% else %}
+            <div class="linhaFormulario linhaSolitaria SpcBtw">
+            {% endif%}
+                <div class="flexivel">
+                    <div class="campo" id="divTipagem">
+                        <label for="tipagem">Tipo sanguíneo:</label>
+                        <input type="text" id="tipagem" autocomplete="off">
                     </div>
-                    {% if tipo != "convocados" %}
+                    <div class="campo" id="divIP">
+                        <label for="itenspp">Itens por página:</label>
+                        <input type="number" id="itenspp" autocomplete="off" value=5 max="50">
+                    </div>
+                    <a href="/convocacao-{{ tipo }}/resultado"><button class="botao btn-principal linhaMRReset">Buscar</button></a>
+                </div>
                     <button class="botao btn-secundario linhaMRReset">Marcar Telefonados</button>
-                    {% endif %}
                 </div>
             </div>
             {% if resultado %}
-            {% if tipo == "convocados" %}
-            <table class="table table-striped tabela">
-                {% else %}
-                <table class="table table-striped tabela tabelaFC">
-                    {% endif %}
-                    <thead>
-                        <tr>
-                            {% if tipo != "convocados" %}
-                            <th scope="col"><span class="material-icons icones">check_circle</span></th>
-                            {% endif %}
-                            <th scope="col">Nome</th>
-                            <th scope="col">Telefone</th>
-                            {% if tipo != "convocados" %}
-                            <th scope="col">Notificado</th>
-                            {% endif %}
-                            {% if tipo == "convocados" %}
-                            <th scope="col">Cidade</th>
-                            {% endif %}
-                            <th scope="col">Tipo</th>
-                            <th scope="col">Última doação</th>
-                        </tr>
-                    </thead>
-                    {% if tipo == "convocados" %}
-                    <tbody class="textStart">
-                    {% else %}
-                    <tbody>
-                    {% endif %}
-                        {% block infoTabela %}
-
-                        {% endblock %}
-                    </tbody>
-                </table>
-                <div class="linhaFormulario paginador">
-                    <nav>
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-                {% endif %}
+            <table class="table table-striped tabela tabelaFC">
+                <thead>
+                    <tr>
+                        <th scope="col"><span class="material-icons icones">check_circle</span></th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Telefone</th>
+                        <th scope="col">Notificado</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Última doação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% block infoTabela %}
+            
+                    {% endblock %}
+                </tbody>
+            </table>
+            <div class="linhaFormulario paginador">
+                <nav>
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                        <li class="page-item"><a class="page-link" href="#">5</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            {% endif %}
         </div>
     </div>
-    {% endblock %}
+</div>
+{% endblock %}
