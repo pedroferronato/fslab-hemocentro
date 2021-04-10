@@ -1,0 +1,35 @@
+#divRegistro {
+    flex: 3;
+}
+
+#divNome {
+    flex: 5;
+}
+
+#divTipo {
+    flex: 1;
+}
+
+#divData {
+    flex: 2;
+}
+
+#divConvocacao {
+    flex: 3;
+}
+
+#divFidelidade {
+    flex: 3;
+}
+
+#divInapto {
+    flex: 3;
+}
+
+#divDataFinal {
+    flex: 2;
+}
+
+#divObservacoes {
+    flex: 6;
+}
