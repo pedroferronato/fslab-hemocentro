@@ -30,3 +30,4 @@ from app.controllers import captadorController
 from app.controllers import serverController
 from app.controllers import chamadaController
 from app.controllers import doacoesController
+from app.controllers import hemocentroController

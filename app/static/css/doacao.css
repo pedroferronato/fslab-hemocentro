@@ -1,5 +1,6 @@
 #divRegistro {
     flex: 3;
+    margin-right: 12px;
 }
 
 #divNome {
@@ -32,4 +33,9 @@
 
 #divObservacoes {
     flex: 6;
+}
+
+#searchIco {
+    margin-left: 12px;
+    font-size: 28px;
 }

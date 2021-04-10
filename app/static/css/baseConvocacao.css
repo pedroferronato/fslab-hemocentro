@@ -27,15 +27,6 @@
     align-items: flex-end;
 }
 
-.tabela th:not(:first-child) {
-    padding: 12px 8px !important;
-}
-
-.tabelaFC tbody td:first-child {
-    text-align: center;
-    font-size: 18px;
-}
-
 .form-check-input{
     cursor: pointer;
 }
