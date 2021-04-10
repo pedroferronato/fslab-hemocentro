@@ -2,7 +2,6 @@
 
 {% block cabecalho %}
 <link href="{{ url_for('static', filename='css/baseConteudo.css') }}" rel="stylesheet">
-<link href="{{ url_for('static', filename='css/captador.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
@@ -10,14 +9,14 @@
 <div class="contentorConteudo">
     <div class="bread noselect">
         <p>Inicial ></p>
-        <p>Captadores ></p>
+        <p>Hemocentros ></p>
         {% if alterar %}
 
-        <p>Alterar captador</p>
+        <p>Alterar hemocentro</p>
             
         {% else %}
 
-        <p>Novo captador</p>
+        <p>Novo hemocentro</p>
             
         {% endif %}
     </div>
@@ -27,21 +26,21 @@
         {% if alterar %}
 
         <div class="titulo">
-            <h1>Alterar captador</h1>
+            <h1>Alterar hemocentro</h1>
         </div>
             
         {% else %}
 
         <div class="titulo">
-            <h1>Novo captador</h1>
+            <h1>Novo hemocentro</h1>
         </div>
             
         {% endif %}
         <div class="formulario">
 
-            <div class="linhaFormulario">
+            <div class="linhaFormulario ultimaLinhaInput">
                 <div class="campo" id="divNome">
-                    <label for="nome">Nome Completo:</label>
+                    <label for="nome">Nome:</label>
                     <input type="text" id="nome" autocomplete="off">
                 </div>
                 <div class="campo">
@@ -49,35 +48,11 @@
                     <input type="text" id="telefone" autocomplete="off">
                 </div>
                 <div class="campo">
-                    <label for="hemocentro">Hemocentro:</label>
-                    <input type="text" id="hemocentro" autocomplete="off">
-                </div>
-                <div class="form-check administrador">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                      Administrador
-                    </label>
+                    <label for="municipio">Município:</label>
+                    <input type="text" id="municipio" autocomplete="off">
                 </div>
             </div>
 
-            <div class="linhaFormulario ultimaLinhaInput">
-                <div class="campo">
-                    <label for="mail">E-mail:</label>
-                    <input type="text" id="mail" autocomplete="off">
-                </div>
-                <div class="campo">
-                    <label for="login">Login:</label>
-                    <input type="text" id="login" autocomplete="off">
-                </div>
-                <div class="campo">
-                    <label for="senha">Senha:</label>
-                    <input type="password" id="senha" autocomplete="off">
-                </div>
-                <div class="campo">
-                    <label for="senha">Confirmar senha:</label>
-                    <input type="password" id="confirmarSenha" autocomplete="off">
-                </div>
-            </div>
             {% if alterar %}
 
             <div class="linhaBotoes SpcBtw">
