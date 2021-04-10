@@ -16,3 +16,8 @@ def recuperar_senha():
 def inicial():
     return render_template("paginaInicial.html")
 
+
+@flaskApp.route('/perfil')
+def perfil():
+    return render_template("perfil.html")
+

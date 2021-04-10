@@ -247,7 +247,11 @@ h1 {
 .paginador {
     justify-content: center;
     margin-top: 32px;
-    margin-bottom: 0px;
+    margin-bottom: 0px !important;
+}
+
+ul {
+    margin-bottom: 16px !important;
 }
 
 .paginador li a {

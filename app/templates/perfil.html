@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block cabecalho %}
+<link href="{{ url_for('static', filename='css/baseConteudo.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/perfil.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block conteudo %}
+<div class="contentorConteudo">
+
+    <div class="bread noselect">
+        <p>Inicial ></p>
+        <p>Perfil</p>
+    </div>
+
+    <div class="cartao noselect">
+        <div class="titulo">
+            <h1>Perfil</h1>
+        </div>
+        <div class="formulario">
+
+            <div class="linhaFormulario">
+                <div class="campo" id="divNome">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" autocomplete="off">
+                </div>
+                <div class="campo" id="divTelefone">
+                    <label for="telefone">Nº registro:</label>
+                    <input type="text" id="telefone" autocomplete="off">
+                </div>
+                <div class="campo" id="divHemocentro">
+                    <label for="hemocentro">Hemocentro:</label>
+                    <input type="text" id="hemocentro" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="linhaFormulario ultimaLinhaInput">
+                <div class="campo" id="divEmail">
+                    <label for="email">E-mail:</label>
+                    <input type="text" id="email" autocomplete="off">
+                </div>
+                <div class="campo" id="divLogin">
+                    <label for="login">Login:</label>
+                    <input type="text" id="login" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="linhaBotoes SpcBtw">
+                <div>
+                    <button class="botao btn-principal">Atualizar cadastro</button>
+                    <button class="botao btn-secundario">Alterar senha</button>
+                </div>
+                <button class="botao btn-alerta">Excluir cadastro</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
