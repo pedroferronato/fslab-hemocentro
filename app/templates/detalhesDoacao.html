@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block cabecalho %}
+<link href="{{ url_for('static', filename='css/baseConteudo.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block conteudo %}
+<div class="contentorConteudo">
+
+    <div class="bread noselect">
+        <p>Inicial ></p>
+        <p>Doações ></p>
+        <p>35849</p>
+    </div>
+
+    <div class="cartao noselect">
+        <div class="titulo">
+            <h1>Detalhes da doação 35849</h1>
+        </div>
+        <div class="formulario">
+            <div class="linhaFormulario AlgSrt linhaSolitaria">
+                <div class="dados">
+                    <label>Núm. de regitro:</label>
+                    <p>65689</p>
+                </div>
+                <div class="dados">
+                    <div class="flexivel SpcBtw">
+                        <label>Doador:</label>
+                        <span class="material-icons iconesS">person</span>
+                    </div>
+                    <p>Pedro Luis Ferronato Barreto</p>
+                </div>
+                <div class="dados">
+                    <label>Tipo:</label>
+                    <p>A+</p>
+                </div>
+                <div class="dados">
+                    <label>Fidelidade:</label>
+                    <p>Fidelizado</p>
+                </div>
+                <div class="dados">
+                    <label>Convocação:</label>
+                    <p>Voluntário</p>
+                </div>
+                <div class="dados">
+                    <label>Unidade de coleta:</label>
+                    <p>Vilhena</p>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="cartao noselect">
+        <div class="titulo">
+            <h1 class="tituloSecundario">Observações</h1>
+        </div>
+        <div class="formulario">
+            <div class="linhaFormulario AlgSrt linhaSolitaria">
+                <div class="dados">
+                    <label>Inapto:</label>
+                    <p>Inapto</p>
+                </div>
+                <div class="dados">
+                    <label>Data:</label>
+                    <p>13/04/2021</p>
+                </div>
+                <div class="dados">
+                    <label>Observações:</label>
+                    <p>Nenhuma observação</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
