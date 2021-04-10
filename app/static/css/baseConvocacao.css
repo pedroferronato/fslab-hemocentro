@@ -1,11 +1,21 @@
+#divCidade {
+    max-width: 300px;
+    flex: 5;
+}
+
+#divTelefone {
+    max-width: 200px;
+    flex: 4;
+}
+
 #divTipagem {
     max-width: 150px;
-    flex: 2;
+    flex: 3;
 }
 
 #divIP {
     max-width: 150px;
-    flex: 2;
+    flex: 3;
 }
 
 .linhaFormulario{
