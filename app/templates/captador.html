@@ -9,34 +9,30 @@
 
 <div class="contentorConteudo">
     <div class="bread noselect">
+
         <p>Inicial ></p>
         <p>Captadores ></p>
+
         {% if alterar %}
-
         <p>Alterar captador</p>
-            
         {% else %}
-
         <p>Novo captador</p>
-            
         {% endif %}
+
     </div>
 
     <div class="cartao noselect">
 
-        {% if alterar %}
-
         <div class="titulo">
+
+            {% if alterar %}
             <h1>Alterar captador</h1>
-        </div>
-            
-        {% else %}
-
-        <div class="titulo">
+            {% else %}
             <h1>Novo captador</h1>
+            {% endif %}
+
         </div>
-            
-        {% endif %}
+
         <div class="formulario">
 
             <div class="linhaFormulario">
@@ -55,7 +51,7 @@
                 <div class="form-check administrador">
                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                     <label class="form-check-label" for="flexCheckDefault">
-                      Administrador
+                        Administrador
                     </label>
                 </div>
             </div>
@@ -78,24 +74,20 @@
                     <input type="password" id="confirmarSenha" autocomplete="off">
                 </div>
             </div>
+
             {% if alterar %}
-
             <div class="linhaBotoes SpcBtw">
-                <div>
-                    <button class="botao btn-principal">Alterar</button>
-                </div>
-                <button class="botao btn-alerta">Excluir cadastro</button>
+                <button class="botao btn-principal linhaMRReset">Alterar</button>
+                <button class="botao btn-alerta linhaMRReset">Excluir cadastro</button>
             </div>
-                
             {% else %}
-
             <div class="linhaBotoes">
                 <button class="botao btn-principal">Inserir e continuar</button>
                 <button class="botao btn-principal">Inserir</button>
-                <button class="botao btn-secundario">Limpar</button>
+                <button class="botao btn-secundario linhaMRReset">Limpar</button>
             </div>
-            
             {% endif %}
+
         </div>
     </div>
 </div>

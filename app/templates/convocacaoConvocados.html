@@ -7,21 +7,29 @@
 
 {% block conteudo %}
 <div class="contentorConteudo">
+
     <div class="bread noselect">
+
         <p>Inicial ></p>
         <p>Chamadas ></p>
         <p>Convocados</p>
+
     </div>
+
     <div class="cartao noselect">
+
         <div class="titulo">
             <h1>Convocados</h1>
         </div>
+
         <div class="formulario">
+
             {% if resultado %}
             <div class="linhaFormulario ultimaLinhaInput SpcBtw">
             {% else %}
             <div class="linhaFormulario linhaSolitaria SpcBtw">
             {% endif%}
+
                 <div class="flexivel">
                     <div class="campo" id="divCidade">
                         <label for="cidade">Cidade:</label>
@@ -43,8 +51,10 @@
                 </div>
             </div>
         </div>
+
         {% if resultado %}
         <table class="table table-striped tabela">
+
             <thead>
                 <tr>
                     <th scope="col">Nome</th>
@@ -54,6 +64,7 @@
                     <th scope="col">Última doação</th>
                 </tr>
             </thead>
+
             <tbody class="textStart">
                 <tr>
                     <td>Salvatore Sawayn</td>
@@ -91,7 +102,9 @@
                     <td>08/04/2021</td>
                 </tr>
             </tbody>
+            
         </table>
+
         <div class="linhaFormulario paginador">
             <nav>
                 <ul class="pagination">
@@ -113,7 +126,9 @@
                 </ul>
             </nav>
         </div>
+
         {% endif %}
+
     </div>
 </div>
 {% endblock %}

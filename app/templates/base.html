@@ -17,7 +17,7 @@
     <title>Sistema de hemocentro</title>
 </head>
 
-<body class="bg-danger">
+<body>
     <div class="contentor">
         <div class="d-flex flex-column p-3 barraLateral">
             <a href="/">
@@ -124,10 +124,7 @@
                         </div>
                     </div>
 
-                    <!-- Descomentar somente para testes, elementos destinados a usuarios especiais, sendo assim, 
-                    para visualizar primeiro devemos implementar autenticação -->
-
-                    <!-- <div class="categoria">
+                    <div class="categoria">
                         <div class="categoriaTitulo" @click="toggle('hemocentros')">
                             <div>
                                 <span class="material-icons icones">local_hospital</span>
@@ -138,13 +135,13 @@
                         </div>
 
                         <div v-if="opcoes['hemocentros']" class="opcoes">
-                            <a href="">
+                            <a href="/novo-hemocentro">
                                 <div>
                                     <span class="material-icons icones">add</span>
                                     <p>Novo hemocentro</p>
                                 </div>
                             </a>
-                            <a href="">
+                            <a href="/consultar-hemocentros">
                                 <div>
                                     <span class="material-icons icones">search</span>
                                     <p>Consultar hemocentros</p>
@@ -164,27 +161,30 @@
                         </div>
 
                         <div v-if="opcoes['captadores']" class="opcoes">
-                            <a href="">
+                            <a href="/novo-captador">
                                 <div>
                                     <span class="material-icons icones">add</span>
                                     <p>Novo captador</p>
                                 </div>
                             </a>
-                            <a href="">
+                            <a href="/consultar-captadores">
                                 <div>
                                     <span class="material-icons icones">search</span>
                                     <p>Consultar captadores</p>
                                 </div>
                             </a>
                         </div>
-                    </div> -->
+                    </div>
 
                 </div>
+
                 <div class="hemocentro">
                     <p>Hemojipa</p>
                 </div>
+
             </div>
         </div>
+
         <div class="caixaAuxiliar">
             <div class="caixaFlex">
                 <div class="barraSuperior">
@@ -211,13 +211,16 @@
                 </main>
             </div>
         </div>
+
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/base.js') }}"></script>
     <script src="{{ url_for('static', filename='js/dropdowns.js') }}"></script>
     {% block codigos %}
     {% endblock %}
+    
 </body>
 
 </html>

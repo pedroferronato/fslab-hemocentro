@@ -19,6 +19,7 @@
     </div>
 
     <div class="cartao noselect">
+
         <div class="titulo">
             {% if alterar %}
             <h1>Alterar doação</h1>
@@ -26,6 +27,7 @@
             <h1>Nova doação</h1>
             {% endif %}
         </div>
+
         <div class="formulario">
 
             <div class="linhaFormulario">
@@ -76,11 +78,11 @@
 
             <div class="linhaBotoes">
                 {% if alterar %}
-                <button class="botao btn-principal">Alterar</button>
+                <button class="botao btn-principal linhaMRReset">Alterar</button>
                 {% else %}
                 <button class="botao btn-principal">Inserir e continuar</button>
                 <button class="botao btn-principal">Inserir</button>
-                <button class="botao btn-secundario">Limpar</button>
+                <button class="botao btn-secundario linhaMRReset">Limpar</button>
                 {% endif %}
             </div>
 

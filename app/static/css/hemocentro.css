@@ -1,23 +1,12 @@
-.divSeparador{
-    display: flex !important;
-    margin-bottom: 0px !important;
+#divResultados {
+    margin-left: 24px;
 }
 
-.editar{
-    display: flex !important;
-    justify-content: flex-end !important;
-    max-height: 24px !important;
-    cursor: pointer;
+.mt16 {
+    margin-top: 16px;
 }
 
-#divResultados{
-    margin-left: 24px !important;
-
-}
-
-.redirecionar{
+#divResultados a{
     text-decoration: underline;
     cursor: pointer;
-
 }
-

@@ -11,6 +11,11 @@ def novo_captador():
     return render_template("captador.html")
 
 
+@flaskApp.route('/alterar-captador')
+def alterar_captador():
+    return render_template("captador.html", alterar=True)
+
+
 @flaskApp.route('/consultar-captadores') 
 def consultar_captador():
     return render_template("consultaCaptador.html")
@@ -19,3 +24,4 @@ def consultar_captador():
 @flaskApp.route('/consultar-captadores/resultado') 
 def consultar_captador_resultado():
     return render_template("consultaCaptador.html", resultado=True)
+
