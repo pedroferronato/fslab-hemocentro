@@ -46,13 +46,19 @@
                 </div>
                 <div class="campo">
                     <label for="hemocentro">Hemocentro:</label>
-                    <input type="text" id="hemocentro" autocomplete="off">
+                    <select name="hemocentro" id="hemocentro">
+                        <option value="null" selected="selected">Selecione</option>
+                        <option value="jipa">Admin</option>
+                        <option value="vha">Servidor</option>
+                    </select>
                 </div>
-                <div class="form-check administrador">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Administrador
-                    </label>
+                <div class="campo">
+                    <label for="hemocentro">Administrador:</label>
+                    <select name="adm" id="adm">
+                        <option value="cap" selected="selected">Captador</option>
+                        <option value="jipa">Hemojipa</option>
+                        <option value="vha">Vilhena</option>
+                    </select>
                 </div>
             </div>
 

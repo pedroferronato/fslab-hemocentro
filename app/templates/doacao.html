@@ -63,7 +63,11 @@
             <div class="linhaFormulario ultimaLinhaInput">
                 <div class="campo" id="divInapto">
                     <label for="inapto">Inapto:</label>
-                    <input type="text" id="inapto" autocomplete="off">
+                    <select name="estadoAptidao" id="estadoAptidao">
+                        <option value="null" selected="selected" disabled>Selecione</option>
+                        <option value="inapto">Inapto</option>
+                        <option value="apto">Apto</option>
+                    </select>
                 </div>
                 <div class="campo" id="divDataFinal">
                     <label for="dataFinal">Data final:</label>

@@ -26,7 +26,12 @@
                 </div>
                 <div class="campo" id="divMunicipio">
                     <label for="municipio">Município:</label>
-                    <input type="text" id="municipio" autocomplete="off">
+                    <select name="cidade" id="cidade">
+                        <option value="null" selected="selected" disabled>Selecione</option>
+                        <option value="jipa">Ji-Paraná</option>
+                        <option value="vha">Vilhena</option>
+                        <option value="pvh">Porto Velho</option>
+                    </select>
                 </div>
                 <a href="/consultar-hemocentros/resultado"><button
                         class="botao btn-principal">Consultar</button></a>
