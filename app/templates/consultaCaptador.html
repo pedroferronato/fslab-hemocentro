@@ -18,7 +18,7 @@
             <h1>Consulta de captadores</h1>
         </div>
         <div class="formulario">
-            <div class="linhaFormulario ultimaLinhaInput">
+            <div class="linhaFormulario linhaSolitaria">
                 <div class="campo" id="divNomeHemocentro">
                     <label for="hemocentro">Nome hemocentro:</label>
                     <input type="text" id="hemocentro" autocomplete="off">
@@ -36,89 +36,94 @@
                     <input type="text" id="itens" autocomplete="off">
                 </div>
                 <div>
-                    <a href="/consultar-captadores/resultado"><button class="botao btn-principal linhaMRReset">Buscar</button></a>
+                    <a href="/consultar-captadores/resultado"><button
+                            class="botao btn-principal linhaMRReset">Buscar</button></a>
                 </div>
             </div>
 
-            {% if resultado %}
-
-            <div class="linhaFormulario">
-                <table class="table table-striped tabela">
-                    <thead>
-                        <tr>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Telefone</th>
-                            <th scope="col">Admin.</th>
-                            <th scope="col">Hemocentro</th>
-                            <th scope="col">Município</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Cleide</td>
-                            <td>(69)99999-9999</td>
-                            <td><span class="material-icons notificado">check_circle</span></td>
-                            <td>Hemojipa</td>
-                            <td>Ji-paraná</td>
-                        </tr>
-                        <tr>
-                            <td>Cleberson</td>
-                            <td>(69)99999-9999</td>
-                            <td></td>
-                            <td>Hemojipa</td>
-                            <td>Ji-paraná</td>
-                        </tr>
-                        <tr>
-                            <td>Janaina</td>
-                            <td>(69)99999-9999</td>
-                            <td><span class="material-icons notificado">check_circle</span></td>
-                            <td>Hemocentro</td>
-                            <td>Vilhena</td>
-                        </tr>
-                        <tr>
-                            <td>Alina Madeira Roçadas</td>
-                            <td>(69)99999-9999</td>
-                            <td></td>
-                            <td>Hemocentro</td>
-                            <td>Vilhena</td>
-                        </tr>
-                        <tr>
-                            <td>Catia</td>
-                            <td>(69)99999-9999</td>
-                            <td></td>
-                            <td>Hemojipa</td>
-                            <td>Ji-paraná</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="linhaFormulario paginador">
-                <nav>
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">4</a></li>
-                        <li class="page-item"><a class="page-link" href="#">5</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-
-            {% endif %}
-
         </div>
     </div>
+
+    {% if resultado %}
+    <div class="cartao">
+
+        <div class="linhaFormulario">
+            <table class="table table-striped tabela">
+                <thead>
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Telefone</th>
+                        <th scope="col">Admin.</th>
+                        <th scope="col">Hemocentro</th>
+                        <th scope="col">Município</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>José Adalberto Fernandes</td>
+                        <td>(69) 9 8453-1615</td>
+                        <td><span class="material-icons notificado">check_circle</span></td>
+                        <td>Hemojipa</td>
+                        <td>Ji-paraná</td>
+                    </tr>
+                    <tr>
+                        <td>Cleberson Heltz Martins</td>
+                        <td>(69) 9 6875-4895</td>
+                        <td></td>
+                        <td>Hemojipa</td>
+                        <td>Ji-paraná</td>
+                    </tr>
+                    <tr>
+                        <td>Janaina Alves Medeiros</td>
+                        <td>(69) 9 8857-6521</td>
+                        <td><span class="material-icons notificado">check_circle</span></td>
+                        <td>Hemocentro</td>
+                        <td>Vilhena</td>
+                    </tr>
+                    <tr>
+                        <td>Alina Madeira Roçadas</td>
+                        <td>(69) 9 8597-4689</td>
+                        <td></td>
+                        <td>Hemocentro</td>
+                        <td>Vilhena</td>
+                    </tr>
+                    <tr>
+                        <td>Catia Rafaella Tyller</td>
+                        <td>(69) 9 8795-6824</td>
+                        <td></td>
+                        <td>Hemojipa</td>
+                        <td>Ji-paraná</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="linhaFormulario paginador">
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">4</a></li>
+                    <li class="page-item"><a class="page-link" href="#">5</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+
+    {% endif %}
+    
 </div>
 
 </div>

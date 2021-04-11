@@ -19,7 +19,7 @@
             <h1>Consultar hemocentro</h1>
         </div>
         <div class="formulario">
-            <div class="linhaFormulario ultimaLinhaInput">
+            <div class="linhaFormulario linhaSolitaria">
                 <div class="campo" id="divNome">
                     <label for="nome">Nome:</label>
                     <input type="text" id="nome" autocomplete="off">
@@ -28,35 +28,42 @@
                     <label for="municipio">Município:</label>
                     <input type="text" id="municipio" autocomplete="off">
                 </div>
-                <div>
-                    <a href="/consultar-hemocentros/resultado"><button class="botao btn-principal linhaMRReset">Buscar</button></a>
-                </div>
+                <a href="/consultar-hemocentros/resultado"><button
+                        class="botao btn-principal">Consultar</button></a>
+                <button class="botao btn-secundario linhaMRReset">Limpar</button>
             </div>
         </div>
     </div>
-    <div class="cartao noselect">
-        {% if resultado %}
+
+    {% if resultado %}
+
+    <div class="cartao">
 
         <div class="formulario linhaSolitaria">
-            <div class="divSeparador SpcBtw">
+            <div class="flexivel SpcBtw">
                 <div class="flexivel">
-                    <div id="divCampos">
-                        <label class="labelConsulta" for="nome">Nome:</label>
-                        <label class="labelConsulta" for="municipio">Município:</label>
-                        <label class="labelConsulta" for="telefone">Telefone:</label>
-                        <label class="labelConsulta" for="captadores">Captadores:</label>
+                    <div>
+                        <label>Nome:</label>
+                        <label class="mt16">Município:</label>
+                        <label class="mt16">Telefone:</label>
+                        <label class="mt16">Captadores:</label>
                     </div>
                     <div id="divResultados">
-                        <label class="labelConsulta">Hemojipa</label>
-                        <label class="labelConsulta">Ji-Paraná</label>
-                        <label class="labelConsulta">(69) 3421-1615</label>
-                        <a href="/consultar-captadores/resultado"><label class="labelConsulta redirecionar">Consultar...</label></a>
+                        <p class="hemocentroResultado">Hemojipa</p>
+                        <p class="hemocentroResultado mt16">Ji-Paraná</p>
+                        <p class="hemocentroResultado mt16">(69) 3421-1615</p>
+                        <a href="">
+                            <p class="hemocentroResultado mt16">Consultar</p>
+                        </a>
                     </div>
                 </div>
-                    <span class="material-icons editar">edit</span> 
-            </div>   
+                <a href="/alterar-hemocentro"><span class="material-icons editar">edit</span></a>
+                
+            </div>
         </div>
-        {% endif %}
     </div>
+
+    {% endif %}
+    
 </div>
 {% endblock %}

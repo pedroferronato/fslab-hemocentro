@@ -7,35 +7,27 @@
 {% block conteudo %}
 
 <div class="contentorConteudo">
+
     <div class="bread noselect">
         <p>Inicial ></p>
         <p>Hemocentros ></p>
         {% if alterar %}
-
         <p>Alterar hemocentro</p>
-            
         {% else %}
-
         <p>Novo hemocentro</p>
-            
         {% endif %}
     </div>
 
     <div class="cartao noselect">
 
-        {% if alterar %}
-
         <div class="titulo">
+            {% if alterar %}
             <h1>Alterar hemocentro</h1>
-        </div>
-            
-        {% else %}
-
-        <div class="titulo">
+            {% else %}
             <h1>Novo hemocentro</h1>
+            {% endif %}
         </div>
-            
-        {% endif %}
+
         <div class="formulario">
 
             <div class="linhaFormulario ultimaLinhaInput">
@@ -56,20 +48,18 @@
             {% if alterar %}
 
             <div class="linhaBotoes SpcBtw">
-                <div>
-                    <button class="botao btn-principal">Alterar</button>
-                </div>
-                <button class="botao btn-alerta">Excluir cadastro</button>
+                <button class="botao btn-principal">Alterar</button>
+                <button class="botao btn-alerta linhaMRReset">Excluir cadastro</button>
             </div>
-                
+
             {% else %}
 
             <div class="linhaBotoes">
                 <button class="botao btn-principal">Inserir e continuar</button>
                 <button class="botao btn-principal">Inserir</button>
-                <button class="botao btn-secundario">Limpar</button>
+                <button class="botao btn-secundario linhaMRReset">Limpar</button>
             </div>
-            
+
             {% endif %}
         </div>
     </div>

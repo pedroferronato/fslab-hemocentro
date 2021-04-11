@@ -8,35 +8,29 @@
 {% block conteudo %}
 
 <div class="contentorConteudo">
+    
     <div class="bread noselect">
         <p>Inicial ></p>
         <p>Doadores ></p>
+
         {% if alterar %}
-
         <p>Alterar doador</p>
-            
         {% else %}
-
         <p>Novo doador</p>
-            
         {% endif %}
+
     </div>
 
     <div class="cartao noselect">
 
-        {% if alterar %}
-
         <div class="titulo">
+            {% if alterar %}
             <h1>Alterar doador</h1>
-        </div>
-            
-        {% else %}
-
-        <div class="titulo">
+            {% else %}
             <h1>Novo doador</h1>
+            {% endif %}
         </div>
-            
-        {% endif %}
+
         <div class="formulario">
 
             <div class="linhaFormulario">
@@ -137,7 +131,7 @@
                     <button class="botao btn-principal">Alterar</button>
                     <button class="botao btn-principal">Alterar inaptidão</button>
                 </div>
-                <button class="botao btn-alerta">Excluir cadastro</button>
+                <button class="botao btn-alerta linhaMRReset">Excluir cadastro</button>
             </div>
                 
             {% else %}
@@ -145,7 +139,7 @@
             <div class="linhaBotoes">
                 <button class="botao btn-principal">Inserir e continuar</button>
                 <button class="botao btn-principal">Inserir</button>
-                <button class="botao btn-secundario">Limpar</button>
+                <button class="botao btn-secundario linhaMRReset">Limpar</button>
             </div>
             
             {% endif %}

@@ -20,11 +20,7 @@
         </div>
 
         <div class="formulario">
-            {% if resultado %}
-            <div class="linhaFormulario ultimaLinhaInput">
-            {% else %}
             <div class="linhaFormulario linhaSolitaria">
-            {% endif%}
                 <div class="campo" id="divNome">
                     <label for="nome">Nome:</label>
                     <input type="text" id="nome" autocomplete="off">
@@ -46,89 +42,93 @@
                     <input type="text" id="itens" autocomplete="off">
                 </div>
                 <div>
-                    <a href="/consultar-inaptidao/resultado"><button class="botao btn-principal linhaMRReset">Buscar</button></a>
+                    <a href="/consultar-inaptidao/resultado"><button
+                            class="botao btn-principal linhaMRReset">Buscar</button></a>
                 </div>
             </div>
 
-            {% if resultado %}
-
-            <div class="linhaFormulario">
-                <table class="table table-striped tabela">
-                    <thead>
-                        <tr>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Tipo</th>
-                            <th scope="col">Fidelidade</th>
-                            <th scope="col">Última doação</th>
-                            <th scope="col">Município</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Pedro Luís Ferronato Barreto</td>
-                            <td>A+</td>
-                            <td>Fidelizado</td>
-                            <td>18/12/2020</td>
-                            <td>Vilhena</td>
-                        </tr>
-                        <tr>
-                            <td>Bruno Delani Cirino dos Santos</td>
-                            <td>A+</td>
-                            <td>Fidelizado</td>
-                            <td>18/12/2020</td>
-                            <td>Vilhena</td>
-                        </tr>
-                        <tr>
-                            <td>João Vitor Lopes Alves</td>
-                            <td>A+</td>
-                            <td>Fidelizado</td>
-                            <td>18/12/2020</td>
-                            <td>Vilhena</td>
-                        </tr>
-                        <tr>
-                            <td>Larissa Lourenço Bingre</td>
-                            <td>O-</td>
-                            <td>Esporádico</td>
-                            <td>16/12/2020</td>
-                            <td>Vilhena</td>
-                        </tr>
-                        <tr>
-                            <td>Alina Madeira Roçadas</td>
-                            <td>AB-</td>
-                            <td>Fidelizado</td>
-                            <td>13/12/2020</td>
-                            <td>Vilhena</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="linhaFormulario paginador">
-                <nav>
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">4</a></li>
-                        <li class="page-item"><a class="page-link" href="#">5</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-
-            {% endif %}
 
         </div>
     </div>
+
+    {% if resultado %}
+    <div class="cartao">
+        <div class="linhaFormulario">
+            <table class="table table-striped tabela">
+                <thead>
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Fidelidade</th>
+                        <th scope="col">Última doação</th>
+                        <th scope="col">Município</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pedro Luís Ferronato Barreto</td>
+                        <td>A+</td>
+                        <td>Fidelizado</td>
+                        <td>18/12/2020</td>
+                        <td>Vilhena</td>
+                    </tr>
+                    <tr>
+                        <td>Bruno Delani Cirino dos Santos</td>
+                        <td>A+</td>
+                        <td>Fidelizado</td>
+                        <td>18/12/2020</td>
+                        <td>Vilhena</td>
+                    </tr>
+                    <tr>
+                        <td>João Vitor Lopes Alves</td>
+                        <td>A+</td>
+                        <td>Fidelizado</td>
+                        <td>18/12/2020</td>
+                        <td>Vilhena</td>
+                    </tr>
+                    <tr>
+                        <td>Larissa Lourenço Bingre</td>
+                        <td>O-</td>
+                        <td>Esporádico</td>
+                        <td>16/12/2020</td>
+                        <td>Vilhena</td>
+                    </tr>
+                    <tr>
+                        <td>Alina Madeira Roçadas</td>
+                        <td>AB-</td>
+                        <td>Fidelizado</td>
+                        <td>13/12/2020</td>
+                        <td>Vilhena</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="linhaFormulario paginador">
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">4</a></li>
+                    <li class="page-item"><a class="page-link" href="#">5</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    {% endif %}
+    
 </div>
 
 </div>
