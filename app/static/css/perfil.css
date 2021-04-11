@@ -1,7 +1,24 @@
+#divNome {
+    flex: 4;
+    max-width: 100%;
+}
+
+#divTelefone {
+    flex: 3;
+    max-width: 250px;
+}
+
+#divHemocentro {
+    flex:3;
+    max-width: 250px;
+}
+
 #divEmail {
+    flex: 3;
     max-width: 300px;
 }
 
 #divLogin {
-    max-width: 300px;
+    flex:2;
+    max-width: 200px;
 }

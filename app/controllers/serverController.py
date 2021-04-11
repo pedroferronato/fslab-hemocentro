@@ -21,3 +21,8 @@ def inicial():
 def perfil():
     return render_template("perfil.html")
 
+
+@flaskApp.route('/alterar-senha') # TODO: USAR ALGUMA FORMA DE IDENTIFICAÇÃO
+def alterar_senha():
+    return render_template("alterarSenha.html")
+

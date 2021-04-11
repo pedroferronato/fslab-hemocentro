@@ -23,20 +23,20 @@ def chamada_emergencial_resultado():
 
 @flaskApp.route('/convocacao-localidades-externas')
 def chamada_localidades_externas():
-    return render_template("convocacaoLocalidadesExternas.html", tipo="localidades-externas")
+    return render_template("convocacaoLocalidadesExternas.html")
 
 
 @flaskApp.route('/convocacao-localidades-externas/resultado')
 def chamada_localidades_externas_resultado():
-    return render_template("convocacaoLocalidadesExternas.html", tipo="localidades-externas", resultado=True)
+    return render_template("convocacaoLocalidadesExternas.html", resultado=True)
 
 
 @flaskApp.route('/convocacao-convocados')
 def chamada_convocados():
-    return render_template("convocacaoConvocados.html", tipo="convocados")
+    return render_template("convocacaoConvocados.html")
 
 
 @flaskApp.route('/convocacao-convocados/resultado')
 def chamada_convocados_resultado():
-    return render_template("convocacaoConvocados.html", tipo="convocados", resultado=True)
+    return render_template("convocacaoConvocados.html", resultado=True)
 
