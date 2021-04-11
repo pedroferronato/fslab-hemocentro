@@ -23,7 +23,14 @@
             <div class="linhaFormulario linhaSolitaria">
                 <div class="campo" id="divPredefinicoes">
                     <label for="predefinicao">Predefinições:</label>
-                    <input type="text" id="predefinicao" autocomplete="off">
+                    <select name="predefinicoes" id="predefinicoes">
+                        <option value="null" selected="selected" disabled>Selecione</option>
+                        <option value="ontem">Ontem</option>
+                        <option value="anteontem">Anteontem</option>
+                        <option value="dois">Últimos 2 dias</option>
+                        <option value="sete">Últimos 7 dias</option>
+                        <option value="dez">Últimos 10 dias</option>
+                    </select>
                 </div>
                 <div class="campo" id="divData">
                     <label for="data">Data:</label>

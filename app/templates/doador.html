@@ -48,11 +48,25 @@
                 </div>
                 <div class="campo" id="divSexo">
                     <label for="sexo">Sexo:</label>
-                    <input type="text" id="sexo">
+                    <select name="sexo" id="sexo">
+                        <option value="null" selected="selected" disabled>Selecione</option>
+                        <option value="fem">Feminino</option>
+                        <option value="mas">Masculino</option>
+                    </select>
                 </div>
                 <div class="campo" id="divSangue">
                     <label for="tipoSangue">Tipo sanguíneo:</label>
-                    <input type="text" id="tipoSangue">
+                    <select name="tipoSangue" id="tipoSangue">
+                        <option value="null" selected="selected" disabled>Selecione</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
                 </div>
             </div>
 
@@ -86,11 +100,21 @@
                 </div>
                 <div class="campo">
                     <label for="aviso">Receber aviso por:</label>
-                    <input type="text" id="aviso" autocomplete="off">
+                    <select name="aviso" id="aviso">
+                        <option value="null" selected="selected" disabled>Selecione</option>
+                        <option value="email">E-mail</option>
+                        <option value="sms">SMS</option>
+                        <option value="email&sms">E-mail + SMS</option>
+                    </select>
                 </div>
                 <div class="campo">
                     <label for="municipio">Município:</label>
-                    <input type="text" id="municipio" autocomplete="off">
+                    <select name="municipio" id="municipio">
+                        <option value="null" selected="selected" disabled>Selecione</option>
+                        <option value="jipa">Ji-Paraná</option>
+                        <option value="vha">Vilhena</option>
+                        <option value="pvh">Porto Velho</option>
+                    </select>
                 </div>
             </div>
 
@@ -105,7 +129,11 @@
                 </div>
                 <div class="campo">
                     <label for="inapto">Inapto:</label>
-                    <input type="text" id="inapto" autocomplete="off" {% if alterar %} disabled {% endif %}>
+                    <select name="estadoAptidao" id="estadoAptidao" {% if alterar %} disabled {% endif %}>
+                        <option value="null" selected="selected" disabled>Selecione</option>
+                        <option value="inapto">Inapto</option>
+                        <option value="apto">Apto</option>
+                    </select>
                 </div>
                 <div class="campo">
                     <label for="dataInaptidao">Data Inaptidão:</label>

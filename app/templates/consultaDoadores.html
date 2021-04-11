@@ -27,7 +27,17 @@
                 </div>
                 <div class="campo" id="divTipo">
                     <label for="tipo">Tipo:</label>
-                    <input type="text" id="tipo" autocomplete="off">
+                    <select name="tipoSangue" id="tipoSangue">
+                        <option value="null" selected="selected" disabled>Selecione</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
                 </div>
                 <div class="campo" id="divRegistro">
                     <label for="registro">Num. registro:</label>
@@ -35,7 +45,12 @@
                 </div>
                 <div class="campo" id="divMunicipio">
                     <label for="municipio">Município:</label>
-                    <input type="text" id="municipio" autocomplete="off">
+                    <select name="municipio" id="municipio">
+                        <option value="null" selected="selected" disabled>Selecione</option>
+                        <option value="jipa">Ji-Paraná</option>
+                        <option value="vha">Vilhena</option>
+                        <option value="pvh">Porto Velho</option>
+                    </select>
                 </div>
                 <div class="campo" id="divItens">
                     <label for="itens">Itens por pág.:</label>

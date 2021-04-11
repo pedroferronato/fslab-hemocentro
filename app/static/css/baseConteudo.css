@@ -83,7 +83,7 @@ h1 {
     flex: 1 1 auto;
 }
 
-.campo input {
+.campo input, .campo select {
     background: #FFFFFF;
     border: 1px solid #000000;
     color: black;
@@ -99,13 +99,21 @@ h1 {
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
 }
 
-.campo input:focus {
+.campo input:focus, .campo select:focus {
     outline: none;
     background-color: #fcfcfc;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.30);
 }
 
-.campo input:disabled {
+option {
+    font-size: 20px;
+}
+
+option:hover {
+    background-color: var(--cinzaDisabled) !important;
+}
+
+.campo input:disabled, .campo select:disabled {
     border-color: var(--cinzaDisabled);
     color: var(--cinzaDisabled);
 }

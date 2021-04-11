@@ -33,7 +33,12 @@
                 <div class="flexivel">
                     <div class="campo" id="divCidade">
                         <label for="cidade">Cidade:</label>
-                        <input type="text" id="cidade" autocomplete="off">
+                        <select name="cidade" id="cidade">
+                            <option value="null" selected="selected" disabled>Selecione</option>
+                            <option value="jipa">Ji-Paraná</option>
+                            <option value="vha">Vilhena</option>
+                            <option value="pvh">Porto Velho</option>
+                        </select>
                     </div>
                     <div class="campo" id="divTelefone">
                         <label for="telefone">Telefone:</label>
@@ -41,7 +46,17 @@
                     </div>
                     <div class="campo" id="divTipagem">
                         <label for="tipagem">Tipo sanguíneo:</label>
-                        <input type="text" id="tipagem" autocomplete="off">
+                        <select name="tipagem" id="tipagem">
+                            <option value="null" selected="selected" disabled>Selecione</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
                     </div>
                     <div class="campo" id="divIP">
                         <label for="itenspp">Itens por página:</label>
