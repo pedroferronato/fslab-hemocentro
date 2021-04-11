@@ -1,0 +1,14 @@
+{% extends 'baseLogin.html' %}
+
+{% block conteudo %}
+
+<div class="subtitulo">Alteração de senha</div>
+
+<input class="campoLogin" type="password" id="password1" nome="password1" autocomplete="off" placeholder="Nova senha">
+<input class="campoLogin" type="password" id="password2" nome="password2" autocomplete="off" placeholder="Confirme sua senha">
+
+<div class="flexivel AlgCenter JstfyCenter btn-recuperar">
+    <a href="/login"><button class="linhaMRReset botao btn-alerta">CONFIRMAR</button></a>
+</div>
+
+{% endblock %}
