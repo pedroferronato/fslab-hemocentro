@@ -24,6 +24,7 @@ import app.models.hemocentro
 import app.models.doador
 import app.models.doacao
 import app.models.captador
+import app.models.utilidadeSistema
 
 from app.controllers import doadorController
 from app.controllers import captadorController
