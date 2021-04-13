@@ -20,7 +20,7 @@
 <body>
     <div class="contentor">
         <div class="d-flex flex-column p-3 barraLateral">
-            <a href="/">
+            <a href="/inicio">
                 <div class="divisaoLogo d-flex justify-content-center">
                     <img id="logoBarra" src="{{ url_for('static', filename='images/hemojipa3.png') }}">
                 </div>
@@ -135,13 +135,13 @@
                         </div>
 
                         <div v-if="opcoes['hemocentros']" class="opcoes">
-                            <a href="/novo-hemocentro">
+                            <a href="/hemocentro">
                                 <div>
                                     <span class="material-icons icones">add</span>
                                     <p>Novo hemocentro</p>
                                 </div>
                             </a>
-                            <a href="/consultar-hemocentros">
+                            <a href="/hemocentro/consultar">
                                 <div>
                                     <span class="material-icons icones">search</span>
                                     <p>Consultar hemocentros</p>
@@ -212,6 +212,8 @@
             </div>
         </div>
 
+        
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
@@ -220,7 +222,7 @@
     <script src="{{ url_for('static', filename='js/dropdowns.js') }}"></script>
     {% block codigos %}
     {% endblock %}
-    
+
 </body>
 
 </html>

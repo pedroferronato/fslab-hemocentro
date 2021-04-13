@@ -315,12 +315,12 @@ ul {
     line-height: 30px;
 }
 
-.notificado{
+.notificado {
     font-size: 24px;
     color: green;
 }
 
-.flexivelColumn{
+.flexivelColumn {
     flex-direction: column;
 }
 
@@ -339,19 +339,29 @@ ul {
 .input-icons i {
     position: absolute;
 }
-  
+
 .input-icons {
     width: 100%;
     margin-bottom: 10px;
 }
-  
+
 .icon {
     padding: 10px;
     min-width: 40px;
 }
-  
+
 .input-field {
     width: 100%;
     padding: 10px;
     text-align: center;
+}
+
+.borda-alerta {
+    border-color: var(--vermelho) !important;
+    background-color: #fdeeee !important;
+    color: var(--vermelho) !important;
+}
+
+.txt-alerta {
+    color: var(--vermelho) !important;
 }

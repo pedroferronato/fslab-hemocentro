@@ -8,4 +8,4 @@ class Utilidades(db.Model):
     cidade_registrada = db.Column(db.String(200), nullable=False, unique=True)
 
     def __repr__(self):
-        return f"Hemocentro: {self.cidade_registrada}"
+        return f"Cidade: {self.cidade_registrada}"

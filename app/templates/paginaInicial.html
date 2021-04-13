@@ -5,5 +5,11 @@
 <div class="imagemPaginaInicial noselect">
     <img src="{{ url_for('static', filename='images/hemojipaCentral.png') }}">
 </div> 
+{% endblock %}
 
+{% block codigos %}
+{% if sucesso == "sucesso" %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/mensagensSucesso.js') }}"></script>
+{% endif %}
 {% endblock %}
