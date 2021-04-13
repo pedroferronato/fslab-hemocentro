@@ -29,45 +29,75 @@
         </div>
 
         <div class="formulario">
-
-            <div class="linhaFormulario ultimaLinhaInput">
-                <div class="campo" id="divNome">
-                    <label for="nome">Nome:</label>
-                    <input type="text" id="nome" autocomplete="off">
+            <form action="/hemocentro" method="POST">
+                {% if sucesso %}
+                <div class="alert alert-success" role="alert">
+                    Hemocentro registrado com sucesso
                 </div>
-                <div class="campo">
-                    <label for="telefone">Telefone:</label>
-                    <input type="text" id="telefone" autocomplete="off">
+                {% endif %}
+                <div class="linhaFormulario ultimaLinhaInput">
+                    <div class="campo" id="divNome">
+                        <label id="lbNome" for="nome">Nome:</label>
+                        <input type="text" id="nome" name="nome" autocomplete="off"
+                            onfocus="removerClasseAlerta('nome')" {% if alterar %} value="{{ hemocentro.nome }}" 
+                            {% endif %}>
+                    </div>
+                    <div class="campo">
+                        <label id="lbTelefone" for="telefone">Telefone:</label>
+                        <input type="text" id="telefone" name="telefone" autocomplete="off" {% if alterar %}
+                            value="{{ hemocentro.telefone }}" {% endif %} onfocus="removerClasseAlerta('telefone')">
+                    </div>
+                    <div class="campo">
+                        <label id="lbMunicipio" for="municipio">Município:</label>
+                        <select name="municipio" id="municipio" onfocus="removerClasseAlerta('municipio')" {% if alterar %}
+                            disabled
+                        {% endif %}>
+                            <option value="selecione" {% if not alterar %} selected="selected" {% endif %} >Selecione</option>
+                            {% if alterar %}
+                            <option value="{{hemocentro.municipio}}" selected="selected">{{hemocentro.municipio}}</option>
+                            {% else %}
+                            {% for cidade in cidades %}
+                            <option value="{{cidade.cidade_registrada}}">{{cidade.cidade_registrada}}</option>
+                            {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="campo">
+                        <label for="img">Imagem:</label>
+                        <input type="text" id="img" name="img" autocomplete="off" {% if alterar %}
+                            value="{{hemocentro.urlImg}}"
+                        {% endif %}>
+                    </div>
                 </div>
-                <div class="campo">
-                    <label for="municipio">Município:</label>
-                    <select name="cidade" id="cidade">
-                        <option value="null" selected="selected" disabled>Selecione</option>
-                        <option value="jipa">Ji-Paraná</option>
-                        <option value="vha">Vilhena</option>
-                        <option value="pvh">Porto Velho</option>
-                    </select>
+
+                {% if alterar %}
+
+                <div class="linhaBotoes SpcBtw">
+                    <button class="botao btn-principal">Alterar</button>
+                    <button class="botao btn-alerta linhaMRReset">Excluir cadastro</button>
                 </div>
-            </div>
 
-            {% if alterar %}
+                {% else %}
 
-            <div class="linhaBotoes SpcBtw">
-                <button class="botao btn-principal">Alterar</button>
-                <button class="botao btn-alerta linhaMRReset">Excluir cadastro</button>
-            </div>
+                <div class="linhaBotoes">
+                    <input onclick="validarCampos(event)" type="submit" name="inserir" class="botao btn-principal"
+                        value="Inserir e continuar" />
+                    <input onclick="validarCampos(event)" type="submit" name="inserir" class="botao btn-principal"
+                        value="Inserir" />
+                    <button type="button" class="botao btn-secundario linhaMRReset" onclick="limpar()">Limpar</button>
+                </div>
 
-            {% else %}
-
-            <div class="linhaBotoes">
-                <button class="botao btn-principal">Inserir e continuar</button>
-                <button class="botao btn-principal">Inserir</button>
-                <button class="botao btn-secundario linhaMRReset">Limpar</button>
-            </div>
-
-            {% endif %}
+                {% endif %}
+            </form>
         </div>
     </div>
 </div>
 
+{% endblock %}
+
+{% block codigos %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+<script src="{{ url_for('static', filename='js/mascaras.js') }}"></script>
+<script src="{{ url_for('static', filename='js/validarHemocentro.js') }}"></script>
 {% endblock %}
