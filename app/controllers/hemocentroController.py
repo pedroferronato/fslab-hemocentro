@@ -46,15 +46,48 @@ def alterar_hemocentro(hemocentro_id):
         hemocentro = Hemocentro.query.filter_by(id=hemocentro_id).first()
         return render_template("hemocentro.html", alterar=True, hemocentro=hemocentro, cidades=cidade_registradas)
     elif request.method == 'POST':
-        pass
+        nome = request.form['nome']
+        telefone = request.form['telefone']
+        img = request.form['img']
+        hemocentro = Hemocentro.query.filter_by(id=hemocentro_id).first()
+        hemocentro.nome = nome
+        hemocentro.telefone = telefone
+        hemocentro.img = img
+
+        db.session.add(hemocentro)
+        db.session.commit()
+
+        return redirect(url_for('consultar_hemocentro', sucesso="sucesso"))
 
 
 @flaskApp.route('/hemocentro/consultar') 
 def consultar_hemocentro():
-    return render_template("consultaHemocentro.html")
+    nome = request.args.get('nome')
+    municipio = request.args.get('cidade')
+
+    sucesso = request.args.get('sucesso')
+
+    if nome and municipio:
+        nome = '%' + nome + '%'
+        municipio = '%' + municipio + '%'
+        lista_hemocentro = Hemocentro.query.filter(Hemocentro.nome.like(nome), Hemocentro.municipio.like(municipio))
+        return render_template("consultaHemocentro.html", resultado=True, lista_hemocentro=lista_hemocentro)
+    elif nome:
+        nome = '%' + nome + '%'
+        lista_hemocentro = Hemocentro.query.filter(Hemocentro.nome.like(nome))
+        return render_template("consultaHemocentro.html", resultado=True, lista_hemocentro=lista_hemocentro)
+    elif municipio:
+        municipio = '%' + municipio + '%'
+        lista_hemocentro = Hemocentro.query.filter(Hemocentro.municipio.like(municipio))
+        return render_template("consultaHemocentro.html", resultado=True, lista_hemocentro=lista_hemocentro)
+    else:
+        return render_template("consultaHemocentro.html", sucesso=sucesso)
 
 
-@flaskApp.route('/hemocentro/consultar/resultado') 
-def consultar_hemocentro_resultado():
-    return render_template("consultaHemocentro.html", resultado=True)
+@flaskApp.route('/hemocentro/deletar/<hemocentro_id>') 
+def deletar_hemocentro(hemocentro_id):
+    hemocentro = Hemocentro.query.filter_by(id=hemocentro_id).first()
+    db.session.delete(hemocentro)
+    db.session.commit()
+    return redirect(url_for('consultar_hemocentro', sucesso="sucesso"))
 

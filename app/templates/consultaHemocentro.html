@@ -19,31 +19,32 @@
             <h1>Consultar hemocentro</h1>
         </div>
         <div class="formulario">
-            <div class="linhaFormulario linhaSolitaria">
-                <div class="campo" id="divNome">
-                    <label for="nome">Nome:</label>
-                    <input type="text" id="nome" autocomplete="off">
+            <form action="/hemocentro/consultar" method="GET">
+                <div class="linhaFormulario linhaSolitaria">
+                    <div class="campo" id="divNome">
+                        <label for="nome">Nome:</label>
+                        <input type="text" id="nome" name="nome" autocomplete="off">
+                    </div>
+                    <div class="campo" id="divMunicipio">
+                        <label for="municipio">Município:</label>
+                        <select name="cidade" id="cidade">
+                            <option value="null" selected="selected" disabled>Selecione</option>
+                            <option value="Ji-Paraná">Ji-Paraná</option>
+                            <option value="Vilhena">Vilhena</option>
+                            <option value="Porto Velho">Porto Velho</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="botao btn-principal">Consultar</button>
+                    <button class="botao btn-secundario linhaMRReset">Limpar</button>
                 </div>
-                <div class="campo" id="divMunicipio">
-                    <label for="municipio">Município:</label>
-                    <select name="cidade" id="cidade">
-                        <option value="null" selected="selected" disabled>Selecione</option>
-                        <option value="jipa">Ji-Paraná</option>
-                        <option value="vha">Vilhena</option>
-                        <option value="pvh">Porto Velho</option>
-                    </select>
-                </div>
-                <a href="/consultar-hemocentros/resultado"><button
-                        class="botao btn-principal">Consultar</button></a>
-                <button class="botao btn-secundario linhaMRReset">Limpar</button>
-            </div>
+            </form>
         </div>
     </div>
 
     {% if resultado %}
 
+    {% for hemocentro in lista_hemocentro %}
     <div class="cartao">
-
         <div class="formulario linhaSolitaria">
             <div class="flexivel SpcBtw">
                 <div class="flexivel">
@@ -54,21 +55,29 @@
                         <label class="mt16">Captadores:</label>
                     </div>
                     <div id="divResultados">
-                        <p class="hemocentroResultado">Hemojipa</p>
-                        <p class="hemocentroResultado mt16">Ji-Paraná</p>
-                        <p class="hemocentroResultado mt16">(69) 3421-1615</p>
+                        <p class="hemocentroResultado">{{ hemocentro.nome }}</p>
+                        <p class="hemocentroResultado mt16">{{ hemocentro.municipio }}</p>
+                        <p class="hemocentroResultado mt16">{{ hemocentro.telefone }}</p>
                         <a href="">
-                            <p class="hemocentroResultado mt16">Consultar</p>
+                            <p class="hemocentroResultado mt16">Consultar...</p>
                         </a>
                     </div>
                 </div>
-                <a href="/alterar-hemocentro"><span class="material-icons editar">edit</span></a>
+                <a href="/hemocentro/alterar/{{ hemocentro.id }}"><span class="material-icons editar">edit</span></a>
                 
             </div>
         </div>
     </div>
-
+    {% endfor %}
+    
     {% endif %}
     
 </div>
+{% endblock %}
+
+{% block codigos %}
+{% if sucesso == "sucesso" %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/mensagensSucesso.js') }}"></script>
+{% endif %}
 {% endblock %}
