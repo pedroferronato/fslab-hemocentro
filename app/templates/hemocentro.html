@@ -29,7 +29,11 @@
         </div>
 
         <div class="formulario">
+            {% if alterar %}
+            <form action="/hemocentro/alterar/{{hemocentro.id}}" method="POST">
+            {% else %}
             <form action="/hemocentro" method="POST">
+            {% endif %}
                 {% if sucesso %}
                 <div class="alert alert-success" role="alert">
                     Hemocentro registrado com sucesso
@@ -73,8 +77,25 @@
                 {% if alterar %}
 
                 <div class="linhaBotoes SpcBtw">
-                    <button class="botao btn-principal">Alterar</button>
-                    <button class="botao btn-alerta linhaMRReset">Excluir cadastro</button>
+                    <button type="submit" class="botao btn-principal">Alterar</button>
+                    <button type="button" class="botao btn-alerta linhaMRReset" data-bs-toggle="modal" data-bs-target="#exampleModal">Excluir cadastro</button>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Confirmar exclusão</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              Deseja realmente deletar o hemocentro {{ hemocentro.nome }} da base de dados?!
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                              <a href="/hemocentro/deletar/{{ hemocentro.id }}"><button type="button" class="btn btn-danger">Confirmar</button></a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                 </div>
 
                 {% else %}
