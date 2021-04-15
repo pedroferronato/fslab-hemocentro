@@ -41,7 +41,7 @@ def novo_hemocentro():
             db.session.commit()
         except:
             print("An exception occurred")
-            return render_template("paginaInicial.html", sucesso="") # TODO gerar uma página de erro
+            return render_template("paginaInicial.html", sucesso="") # TODO Gerar uma página de erro
 
         if continuar:
             return redirect(url_for("novo_hemocentro", sucesso=True))
