@@ -166,6 +166,10 @@ option:hover {
     justify-content: center;
 }
 
+.AlgEnd {
+    align-items: flex-end;
+}
+
 .dados {
     margin-right: 24px;
 }
@@ -298,6 +302,13 @@ ul {
     color: var(--cinzaBotao);
     font-size: 32px;
     margin-left: 16px;
+    cursor: pointer;
+}
+
+.iconesM {
+    color: var(--cinzaBotao);
+    padding-bottom: 2px;
+    font-size: 24px;
     cursor: pointer;
 }
 

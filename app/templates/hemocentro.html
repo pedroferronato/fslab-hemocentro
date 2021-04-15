@@ -31,85 +31,136 @@
         <div class="formulario">
             {% if alterar %}
             <form action="/hemocentro/alterar/{{hemocentro.id}}" method="POST">
-            {% else %}
-            <form action="/hemocentro" method="POST">
-            {% endif %}
-                {% if sucesso %}
-                <div class="alert alert-success" role="alert">
-                    Hemocentro registrado com sucesso
-                </div>
-                {% endif %}
-                <div class="linhaFormulario ultimaLinhaInput">
-                    <div class="campo" id="divNome">
-                        <label id="lbNome" for="nome">Nome:</label>
-                        <input type="text" id="nome" name="nome" autocomplete="off"
-                            onfocus="removerClasseAlerta('nome')" {% if alterar %} value="{{ hemocentro.nome }}" 
-                            {% endif %}>
-                    </div>
-                    <div class="campo">
-                        <label id="lbTelefone" for="telefone">Telefone:</label>
-                        <input type="text" id="telefone" name="telefone" autocomplete="off" {% if alterar %}
-                            value="{{ hemocentro.telefone }}" {% endif %} onfocus="removerClasseAlerta('telefone')">
-                    </div>
-                    <div class="campo">
-                        <label id="lbMunicipio" for="municipio">Município:</label>
-                        <select name="municipio" id="municipio" onfocus="removerClasseAlerta('municipio')" {% if alterar %}
-                            disabled
-                        {% endif %}>
-                            <option value="selecione" {% if not alterar %} selected="selected" {% endif %} >Selecione</option>
-                            {% if alterar %}
-                            <option value="{{hemocentro.municipio}}" selected="selected">{{hemocentro.municipio}}</option>
-                            {% else %}
-                            {% for cidade in cidades %}
-                            <option value="{{cidade.cidade_registrada}}">{{cidade.cidade_registrada}}</option>
-                            {% endfor %}
-                            {% endif %}
-                        </select>
-                    </div>
-                    <div class="campo">
-                        <label for="img">Imagem:</label>
-                        <input type="text" id="img" name="img" autocomplete="off" {% if alterar %}
-                            value="{{hemocentro.urlImg}}"
-                        {% endif %}>
-                    </div>
-                </div>
-
-                {% if alterar %}
-
-                <div class="linhaBotoes SpcBtw">
-                    <button type="submit" class="botao btn-principal">Alterar</button>
-                    <button type="button" class="botao btn-alerta linhaMRReset" data-bs-toggle="modal" data-bs-target="#exampleModal">Excluir cadastro</button>
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Confirmar exclusão</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                              Deseja realmente deletar o hemocentro "{{ hemocentro.nome }}" da base de dados?!
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                              <a href="/hemocentro/deletar/{{ hemocentro.id }}"><button type="button" class="btn btn-danger">Confirmar</button></a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                </div>
-
                 {% else %}
+                <form action="/hemocentro" method="POST">
+                    {% endif %}
+                    {% if sucesso %}
+                    <div class="alert alert-success" role="alert">
+                        Hemocentro registrado com sucesso
+                    </div>
+                    {% endif %}
+                    <div class="linhaFormulario ultimaLinhaInput">
+                        <div class="campo" id="divNome">
+                            <label id="lbNome" for="nome">Nome:</label>
+                            <input type="text" id="nome" name="nome" autocomplete="off"
+                                onfocus="removerClasseAlerta('nome')" 
+                                {% if reload %}
+                                value="{{ nomeBKP }}" 
+                                {% endif %} 
+                                {% if alterar %} 
+                                value="{{ hemocentro.nome }}" 
+                                {% endif %}>
+                        </div>
+                        <div class="campo">
+                            <label id="lbTelefone" for="telefone">Telefone:</label>
+                            <input type="text" id="telefone" name="telefone" autocomplete="off"
+                            {% if reload %}
+                                value="{{ telefoneBKP }}" 
+                            {% endif %} 
+                            {% if alterar %}
+                                value="{{ hemocentro.telefone }}" 
+                            {% endif %} onfocus="removerClasseAlerta('telefone')">
+                        </div>
+                        <div class="campo">
+                            <div class="flexivel SpcBtw AlgEnd">
+                                <label id="lbMunicipio" for="municipio">Município:</label>
+                                <span onclick="adicionarCidade()" class="material-icons iconesM">add_location_alt</span>
+                            </div>
+                            <select name="municipio" id="municipio" onfocus="removerClasseAlerta('municipio')" {% if
+                                alterar %} disabled {% endif %}>
+                                <option value="selecione" {% if not alterar %} selected="selected" {% endif %}>Selecione
+                                </option>
+                                {% if alterar %}
+                                <option value="{{hemocentro.municipio}}" selected="selected">{{hemocentro.municipio}}
+                                </option>
+                                {% else %}
+                                {% for cidade in cidades %}
+                                <option value="{{cidade.cidade_registrada}}" {% if cidade.cidade_registrada == cidade_adicionada %}
+                                    selected="selected"
+                                {% endif %}>{{cidade.cidade_registrada}}</option>
+                                {% endfor %}
+                                {% endif %}
+                            </select>
+                        </div>
+                        <div class="campo">
+                            <label for="img">Imagem:</label>
+                            <input type="text" id="img" name="img" autocomplete="off"
+                            {% if reload %}
+                                value="{{ imgBKP }}" 
+                            {% endif %}  
+                            {% if alterar %}
+                            value="{{hemocentro.urlImg}}" 
+                            {% endif %}>
+                        </div>
+                    </div>
 
-                <div class="linhaBotoes">
-                    <input onclick="validarCampos(event)" type="submit" name="inserir" class="botao btn-principal"
-                        value="Inserir e continuar" />
-                    <input onclick="validarCampos(event)" type="submit" name="inserir" class="botao btn-principal"
-                        value="Inserir" />
-                    <button type="button" class="botao btn-secundario linhaMRReset" onclick="limpar()">Limpar</button>
+                    {% if alterar %}
+
+                    <div class="linhaBotoes SpcBtw">
+                        <button type="submit" class="botao btn-principal">Alterar</button>
+                        <button type="button" class="botao btn-alerta linhaMRReset" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">Excluir cadastro</button>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Confirmar exclusão</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Deseja realmente deletar o hemocentro "{{ hemocentro.nome }}" da base de dados?!
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Fechar</button>
+                                        <a href="/hemocentro/deletar/{{ hemocentro.id }}"><button type="button"
+                                                class="btn btn-danger">Confirmar</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% else %}
+
+                    <div class="linhaBotoes">
+                        <input onclick="validarCampos(event)" type="submit" name="inserir" class="botao btn-principal"
+                            value="Inserir e continuar" />
+                        <input onclick="validarCampos(event)" type="submit" name="inserir" class="botao btn-principal"
+                            value="Inserir" />
+                        <button type="button" class="botao btn-secundario linhaMRReset"
+                            onclick="limpar()">Limpar</button>
+                    </div>
+
+                    {% endif %}
+                </form>
+        </div>
+    </div>
+    <div class="modal fade" id="addCidade" tabindex="-1" aria-labelledby="addCidadeLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCidadeLabel">Adicionar cidade</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-
-                {% endif %}
-            </form>
+                <form action="/cidade/nova" method="POST">
+                    <div class="modal-body">
+                        <div class="campo">
+                            <input type="hidden" id="nomeSafe" name="nomeSafe">
+                            <input type="hidden" id="telefoneSafe" name="telefoneSafe">
+                            <input type="hidden" id="imgSafe" name="imgSafe">
+                            <label for="novaCidade">Cidade:</label>
+                            <input type="text" id="novaCidade" name="novaCidade" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary">Adicionar</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -120,5 +171,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 <script src="{{ url_for('static', filename='js/mascaras.js') }}"></script>
-<script src="{{ url_for('static', filename='js/validarHemocentro.js') }}"></script>
+<script src="{{ url_for('static', filename='js/hemocentro.js') }}"></script>
 {% endblock %}

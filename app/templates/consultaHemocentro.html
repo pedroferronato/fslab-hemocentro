@@ -27,19 +27,26 @@
                     </div>
                     <div class="campo" id="divMunicipio">
                         <label for="municipio">Município:</label>
-                        <select name="cidade" id="cidade">
+                        <select name="municipio" id="municipio">
                             <option value="null" selected="selected" disabled>Selecione</option>
-                            <option value="Ji-Paraná">Ji-Paraná</option>
-                            <option value="Vilhena">Vilhena</option>
-                            <option value="Porto Velho">Porto Velho</option>
+                            {% for cidade in cidades %}
+                            <option value="{{cidade.cidade_registrada}}">{{cidade.cidade_registrada}}</option>
+                            {% endfor %}
                         </select>
                     </div>
-                    <button type="submit" class="botao btn-principal">Consultar</button>
-                    <button class="botao btn-secundario linhaMRReset">Limpar</button>
+                    <button type="submit" class="botao btn-principal" onclick="validarCampos(event)">Consultar</button>
+                    <button type="button" class="botao btn-secundario linhaMRReset">Limpar</button>
+
                 </div>
             </form>
         </div>
     </div>
+
+    {% if lista_vazia %}
+        <div class="cartao">
+            <strong>Nenhum resultado encontrado</strong>
+        </div>
+    {% endif %}
 
     {% if resultado %}
 
@@ -64,18 +71,35 @@
                     </div>
                 </div>
                 <a href="/hemocentro/alterar/{{ hemocentro.id }}"><span class="material-icons editar">edit</span></a>
-                
+
             </div>
         </div>
     </div>
     {% endfor %}
-    
+
     {% endif %}
-    
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Campos inválidos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Pelo menos um dos campos deve ser preenchido para realizar a busca
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
 
 {% block codigos %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/validarConsultaHemocentro.js') }}"></script>
 {% if sucesso == "sucesso" %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="{{ url_for('static', filename='js/mensagensSucesso.js') }}"></script>

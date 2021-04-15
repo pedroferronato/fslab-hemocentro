@@ -18,23 +18,23 @@ function validarCampos(evento) {
             lbNome.classList.add('txt-alerta')
         }
         alerta = true;
-    };
+    }
     if (telefone.value == undefined || telefone.value == null || telefone.value == "" || telefone.value == " ") {
         if (!telefone.classList.contains('borda-alerta')) {
             telefone.classList.add('borda-alerta')
             lbTelefone.classList.add('txt-alerta')
         }
         alerta = true;
-    };
+    }
     if (municipio.value == 'selecione') {
         if (!municipio.classList.contains('borda-alerta')) {
             municipio.classList.add('borda-alerta')
             lbMunicipio.classList.add('txt-alerta')
         }
         alerta = true;
-    };
+    }
 
-    if (alerta) evento.preventDefault();
+    if (alerta) evento.preventDefault()
 }
 
 function removerClasseAlerta(elemento){
@@ -57,4 +57,14 @@ function limpar() {
     telefone.value = ""
     document.getElementById("img").value = ""
     municipio.value = "selecione"
+}
+
+function adicionarCidade() {
+    let nomeSafe = document.getElementById("nomeSafe")
+    let telefoneSafe = document.getElementById("telefoneSafe")
+    let imgSafe = document.getElementById("imgSafe")
+    nomeSafe.value = nome.value
+    telefoneSafe.value = telefone.value
+    imgSafe.value = document.getElementById("img").value
+    $(addCidade).modal('show');
 }

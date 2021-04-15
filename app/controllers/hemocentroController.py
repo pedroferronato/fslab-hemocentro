@@ -10,8 +10,18 @@ def novo_hemocentro():
     cidade_registradas = Utilidades.query.order_by(Utilidades.id).all()
     sucesso = request.args.get('sucesso')
 
+    recarregar = request.args.get('reload')
+
+    nomeBKP = request.args.get('nomeBKP')
+    telefoneBKP = request.args.get('telefoneBKP')
+    imgBKP = request.args.get('imgBKP')
+    cidade_adicionada = request.args.get('cidade_adicionada')
+
     if request.method == 'GET':
-        return render_template("hemocentro.html", cidades=cidade_registradas, sucesso=sucesso)
+        if recarregar:
+            return render_template("hemocentro.html", reload=recarregar, cidades=cidade_registradas, nomeBKP=nomeBKP, telefoneBKP=telefoneBKP, imgBKP=imgBKP, cidade_adicionada=cidade_adicionada)
+        else:
+            return render_template("hemocentro.html", cidades=cidade_registradas, sucesso=sucesso)
 
     elif request.method == 'POST':
         continuar = False
@@ -62,8 +72,9 @@ def alterar_hemocentro(hemocentro_id):
 
 @flaskApp.route('/hemocentro/consultar') 
 def consultar_hemocentro():
+    cidade_registradas = Utilidades.query.order_by(Utilidades.id).all()
     nome = request.args.get('nome')
-    municipio = request.args.get('cidade')
+    municipio = request.args.get('municipio')
 
     sucesso = request.args.get('sucesso')
 
@@ -71,17 +82,19 @@ def consultar_hemocentro():
         nome = '%' + nome + '%'
         municipio = '%' + municipio + '%'
         lista_hemocentro = Hemocentro.query.filter(Hemocentro.nome.like(nome), Hemocentro.municipio.like(municipio))
-        return render_template("consultaHemocentro.html", resultado=True, lista_hemocentro=lista_hemocentro)
     elif nome:
         nome = '%' + nome + '%'
         lista_hemocentro = Hemocentro.query.filter(Hemocentro.nome.like(nome))
-        return render_template("consultaHemocentro.html", resultado=True, lista_hemocentro=lista_hemocentro)
     elif municipio:
         municipio = '%' + municipio + '%'
         lista_hemocentro = Hemocentro.query.filter(Hemocentro.municipio.like(municipio))
-        return render_template("consultaHemocentro.html", resultado=True, lista_hemocentro=lista_hemocentro)
     else:
-        return render_template("consultaHemocentro.html", sucesso=sucesso)
+        return render_template("consultaHemocentro.html", sucesso=sucesso, cidades=cidade_registradas)
+
+    if lista_hemocentro.count() > 0:
+        return render_template("consultaHemocentro.html", resultado=True, lista_hemocentro=lista_hemocentro, cidades=cidade_registradas)
+    else:
+        return render_template("consultaHemocentro.html", lista_vazia=True, cidades=cidade_registradas)
 
 
 @flaskApp.route('/hemocentro/deletar/<hemocentro_id>') 
