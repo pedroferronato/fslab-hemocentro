@@ -2,6 +2,7 @@ from app import flaskApp, db
 from app.models.utilidadeSistema import Utilidades
 from app.models.hemocentro import Hemocentro
 from flask import render_template, redirect, request, url_for
+from flask_login import login_required
 
 
 @flaskApp.route('/hemocentro', methods=['GET', 'POST'])

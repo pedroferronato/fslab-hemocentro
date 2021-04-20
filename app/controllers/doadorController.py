@@ -3,6 +3,7 @@ from app.models.utilidadeSistema import Utilidades
 from app.models.doador import Doador
 from flask import render_template, redirect, request, url_for
 from datetime import datetime, date
+from flask_login import login_required
 
 
 @flaskApp.route('/doador', methods=['GET', 'POST'])

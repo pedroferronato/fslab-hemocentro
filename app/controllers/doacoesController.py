@@ -1,5 +1,6 @@
 from app import flaskApp
 from flask import render_template
+from flask_login import login_required
 
 
 @flaskApp.route('/nova-doacao')
