@@ -5,11 +5,12 @@ from app.models.captador import Captador
 
 
 @login_manager.user_loader
-def get_user(id):
-    return Captador.query.filter_by(id=id).first()
+def get_user(captador_id):
+    return Captador.query.filter_by(id=captador_id).first()
 
 
 @flaskApp.route('/captador', methods=['GET', 'POST'])
+@login_required
 def novo_captador():
     sucesso = request.args.get('sucesso')
     senhasDiferentes = request.args.get('senhas')
@@ -57,16 +58,19 @@ def novo_captador():
 
 
 @flaskApp.route('/alterar-captador')
+@login_required
 def alterar_captador():
     return render_template("captador.html", alterar=True)
 
 
 @flaskApp.route('/consultar/captador') 
+@login_required
 def consultar_captador():
     return render_template("consultaCaptador.html")
 
 
-@flaskApp.route('/consultar-captadores/resultado') 
+@flaskApp.route('/consultar-captadores/resultado')
+@login_required 
 def consultar_captador_resultado():
     return render_template("consultaCaptador.html", resultado=True)
 

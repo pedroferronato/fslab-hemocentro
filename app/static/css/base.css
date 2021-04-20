@@ -280,6 +280,10 @@ main {
     font-size: 32px;
 }
 
+#cargo {
+    text-align: end;
+}
+
 @media screen and (max-width: 1024px) {
     .imagemPaginaInicial img {
         max-width: 400px;
