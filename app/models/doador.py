@@ -8,8 +8,8 @@ from dateutil.relativedelta import relativedelta
 class Doador(db.Model):
     __tablename__ = 'doadores'
 
-    numero_registro = db.Column(db.Integer, primary_key=True)
-    hemocentro_id = db.Column(db.Integer, db.ForeignKey('hemocentros.id'), primary_key=True)
+    numero_registro = db.Column(db.Integer, primary_key=True, autoincrement=False)
+    hemocentro_id = db.Column(db.Integer, db.ForeignKey('hemocentros.id'), primary_key=True, autoincrement=False)
     nome = db.Column(db.String(200), nullable=False)
     cpf = db.Column(db.String(200), nullable=False)
     data_de_nascimento = db.Column(db.Date(), nullable=False)
