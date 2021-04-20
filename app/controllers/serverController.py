@@ -84,3 +84,18 @@ def nova_cidade():
     else:
         return redirect(url_for('novo_hemocentro', nomeBKP=nome, telefoneBKP=telefone, imgBKP=img))
 
+
+# @flaskApp.route("/cidades/nova", methods=['POST'])
+# def nova_cidade():
+#     nome_cidade = request.form['novaCidade']
+#     registradas = Utilidades.query.filter_by(cidade_registrada=nome_cidade)
+#     nome = request.form['nomeSafe']
+#     telefone = request.form['telefoneSafe']
+#     img = request.form['imgSafe']
+#     if registradas.count() == 0:
+#         cidade_nova = Utilidades(cidade_registrada=nome_cidade)
+#         db.session.add(cidade_nova)
+#         db.session.commit()
+#         return redirect(url_for('novo_hemocentro', reload=True, nomeBKP=nome, telefoneBKP=telefone, imgBKP=img, cidade_adicionada=nome_cidade))
+#     else:
+#         return redirect(url_for('novo_hemocentro', nomeBKP=nome, telefoneBKP=telefone, imgBKP=img))

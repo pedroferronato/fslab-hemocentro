@@ -8,11 +8,10 @@
 {% block conteudo %}
 
 <div class="contentorConteudo">
-    
+
     <div class="bread noselect">
         <p>Inicial ></p>
         <p>Doadores ></p>
-
         {% if alterar %}
         <p>Alterar doador</p>
         {% else %}
@@ -32,148 +31,276 @@
         </div>
 
         <div class="formulario">
-
-            <div class="linhaFormulario">
-                <div class="campo" id="divRegistro">
-                    <label for="numRegistro">Nº registro:</label>
-                    <input type="text" id="numRegistro" autocomplete="off">
-                </div>
-                <div class="campo" id="divNome">
-                    <label for="nome">Nome Completo:</label>
-                    <input type="text" id="nome" autocomplete="off">
-                </div>
-                <div class="campo" id="divCpf">
-                    <label for="cpf">CPF:</label>
-                    <input type="text" id="cpf" autocomplete="off">
-                </div>
-                <div class="campo" id="divSexo">
-                    <label for="sexo">Sexo:</label>
-                    <select name="sexo" id="sexo">
-                        <option value="null" selected="selected" disabled>Selecione</option>
-                        <option value="fem">Feminino</option>
-                        <option value="mas">Masculino</option>
-                    </select>
-                </div>
-                <div class="campo" id="divSangue">
-                    <label for="tipoSangue">Tipo sanguíneo:</label>
-                    <select name="tipoSangue" id="tipoSangue">
-                        <option value="null" selected="selected" disabled>Selecione</option>
-                        <option value="A+">A+</option>
-                        <option value="A-">A-</option>
-                        <option value="B+">B+</option>
-                        <option value="B-">B-</option>
-                        <option value="AB+">AB+</option>
-                        <option value="AB-">AB-</option>
-                        <option value="O+">O+</option>
-                        <option value="O-">O-</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="linhaFormulario">
-                <div class="campo">
-                    <label for="nascimento">Data de Nascimento:</label>
-                    <input type="text" id="nascimento" autocomplete="off">
-                </div>
-                <div class="campo">
-                    <label for="sus">Cadastro do SUS:</label>
-                    <input type="text" id="sus" autocomplete="off">
-                </div>
-                <div class="campo">
-                    <label for="estadoCivil">Estado civil:</label>
-                    <input type="text" id="estadoCivil" autocomplete="off">
-                </div>
-                <div class="campo">
-                    <label for="celular">Celular:</label>
-                    <input type="text" id="celular" autocomplete="off">
-                </div>
-                <div class="campo">
-                    <label for="telefone">Telefone:</label>
-                    <input type="text" id="telefone" autocomplete="off">
-                </div>
-            </div>
-
-            <div class="linhaFormulario">
-                <div class="campo">
-                    <label for="mail">E-mail:</label>
-                    <input type="text" id="mail" autocomplete="off">
-                </div>
-                <div class="campo">
-                    <label for="aviso">Receber aviso por:</label>
-                    <select name="aviso" id="aviso">
-                        <option value="null" selected="selected" disabled>Selecione</option>
-                        <option value="email">E-mail</option>
-                        <option value="sms">SMS</option>
-                        <option value="email&sms">E-mail + SMS</option>
-                    </select>
-                </div>
-                <div class="campo">
-                    <label for="municipio">Município:</label>
-                    <select name="municipio" id="municipio">
-                        <option value="null" selected="selected" disabled>Selecione</option>
-                        <option value="jipa">Ji-Paraná</option>
-                        <option value="vha">Vilhena</option>
-                        <option value="pvh">Porto Velho</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="linhaFormulario">
-                <div class="campo">
-                    <label for="profissao">Profissão:</label>
-                    <input type="text" id="profissao" autocomplete="off">
-                </div>
-                <div class="campo">
-                    <label for="localTrabalho">Local de trabalho:</label>
-                    <input type="text" id="localTrabalho" autocomplete="off">
-                </div>
-                <div class="campo">
-                    <label for="inapto">Inapto:</label>
-                    <select name="estadoAptidao" id="estadoAptidao" {% if alterar %} disabled {% endif %}>
-                        <option value="null" selected="selected" disabled>Selecione</option>
-                        <option value="inapto">Inapto</option>
-                        <option value="apto">Apto</option>
-                    </select>
-                </div>
-                <div class="campo">
-                    <label for="dataInaptidao">Data Inaptidão:</label>
-                    <input type="text" id="dataInaptidao" autocomplete="off" {% if alterar %} disabled {% endif %}>
-                </div>
-            </div>
-
-            <div class="linhaFormulario ultimaLinhaInput">
-                <div class="campo" id="divMae">
-                    <label for="mae">Nome da mãe:</label>
-                    <input type="text" id="mae" autocomplete="off">
-                </div>
-                <div class="campo" id="divPai">
-                    <label for="pai">Nome do pai:</label>
-                    <input type="text" id="pai" autocomplete="off">
-                </div>
-            </div>
-
             {% if alterar %}
+            <form action="/doador/alterar/{{doador.numero_registro}}" method="POST">
+                {% else %}
+                <form action="/doador" method="POST">
+                    {% endif %}
+                    {% if sucesso %}
+                    <div class="alert alert-success" role="alert">
+                        Doador registrado com sucesso
+                    </div>
+                    {% endif %}
+                    <div class="linhaFormulario">
+                        <div class="campo" id="divRegistro">
+                            <label id="lbNumRegistro" for="numRegistro">Nº registro:</label>
+                            <input name="numRegistro" type="text" id="numRegistro" autocomplete="off"
+                                onfocus="removerClasseAlerta('numRegistro')" {% if reload %}
+                                value="{{ numRegistroBKP }}" {% endif %} {% if alterar %}
+                                value="{{ doador.numero_registro }}" {% endif %}>
 
-            <div class="linhaBotoes SpcBtw">
-                <div>
-                    <button class="botao btn-principal">Alterar</button>
-                    <button class="botao btn-principal">Alterar inaptidão</button>
+                        </div>
+                        <div class="campo" id="divNome">
+                            <label id="lbNome" for="nome">Nome Completo:</label>
+                            <input name="nome" type="text" id="nome" autocomplete="off"
+                                onfocus="removerClasseAlerta('nome')" {% if reload %} value="{{ nomeBKP }}" {% endif %}
+                                {% if alterar %} value="{{ doador.nome }}" {% endif %}>
+                        </div>
+                        <div class="campo" id="divCpf">
+                            <label id="lbCpf" for="cpf">CPF:</label>
+                            <input name="cpf" type="text" id="cpf" autocomplete="off"
+                                onfocus="removerClasseAlerta('cpf')" {% if reload %} value="{{ cpfBKP }}" {% endif %} {%
+                                if alterar %} value="{{ doador.cpf }}" {% endif %}>
+                        </div>
+                        <div class="campo" id="divSexo">
+                            <label id="lbSexo" for="sexo">Sexo:</label>
+                            <select name="sexo" id="sexo" onfocus="removerClasseAlerta('sexo')" {% if reload %}
+                                value="{{ sexoBKP }}" {% endif %} {% if alterar %} value="{{ doador.sexo }}" {% endif
+                                %}>
+                                <option value="null" selected="selected" disabled>Selecione</option>
+                                <option value="fem">Feminino</option>
+                                <option value="mas">Masculino</option>
+                            </select>
+
+                        </div>
+                        <div class="campo" id="divSangue">
+                            <label id="lbTipoSangue" for="tipoSangue">Tipo sanguíneo:</label>
+                            <select name="tipoSangue" id="tipoSangue" onfocus="removerClasseAlerta('tipoSangue')" {% if
+                                reload %} value="{{ tipoSangueBKP }}" {% endif %} {% if alterar %}
+                                value="{{ doador.tipo_sanguineo }}" {% endif %}>
+                                <option value="null" selected="selected" disabled>Selecione</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="linhaFormulario">
+                        <div class="campo">
+                            <label id="lbNascimento" for="nascimento">Data de Nascimento:</label>
+                            <input name="nascimento" type="text" id="nascimento" autocomplete="off"
+                                onfocus="removerClasseAlerta('nascimento')" {% if reload %} value="{{ nascimentoBKP }}"
+                                {% endif %} {% if alterar %} value="{{ doador.data_de_nascimento }}" {% endif %}>
+                        </div>
+                        <div class="campo">
+                            <label id="lbSus" for="sus">Cadastro do SUS:</label>
+                            <input name="sus" type="text" id="sus" autocomplete="off"
+                                onfocus="removerClasseAlerta('sus')" {% if reload %} value="{{ susBKP }}" {% endif %} {%
+                                if alterar %} value="{{ doador.cadastro_SUS }}" {% endif %}>
+                        </div>
+                        <div class="campo">
+                            <label id="lbEstadoCivil" for="estadoCivil">Estado civil:</label>
+                            <input name="estadoCivil" type="text" id="estadoCivil" autocomplete="off" {% if reload %}
+                                value="{{ estadoCivilBKP }}" {% endif %} {% if alterar %}
+                                value="{{ doador.estado_civil }}" {% endif %}>
+                        </div>
+                        <div class="campo">
+                            <label id="lbCelular" for="celular">Celular:</label>
+                            <input name="celular" type="text" id="celular" autocomplete="off" {% if reload %}
+                                value="{{ celularBKP }}" {% endif %} {% if alterar %} value="{{ doador.celular }}" {%
+                                endif %}>
+                        </div>
+                        <div class="campo">
+                            <label id="lbTelefone" for="telefone">Telefone:</label>
+                            <input name="telefone" type="text" id="telefone" autocomplete="off"
+                                onfocus="removerClasseAlerta('telefone')" {% if reload %} value="{{ telefoneBKP }}" {%
+                                endif %} {% if alterar %} value="{{ doador.telefone }}" {% endif %}>
+                        </div>
+                    </div>
+
+                    <div class="linhaFormulario">
+                        <div class="campo">
+                            <label id="lbMail" for="mail">E-mail:</label>
+                            <input name="mail" type="text" id="mail" autocomplete="off" {% if reload %}
+                                value="{{ mailBKP }}" {% endif %} {% if alterar %} value="{{ doador.email }}" {% endif
+                                %}>
+                        </div>
+                        <div class="campo">
+                            <label id="lbAviso" for="aviso">Receber aviso por:</label>
+                            <select name="aviso" id="aviso" {% if reload %} value="{{ avisoBKP }}" {% endif %} {% if
+                                alterar %} value="{{ doador.contatos_preferidos }}" {% endif %}>
+                                <option value="null" selected="selected" disabled>Selecione</option>
+                                <option value="email">E-mail</option>
+                                <option value="sms">SMS</option>
+                                <option value="email&sms">E-mail + SMS</option>
+                            </select>
+                        </div>
+                        <div class="campo">
+                            <div class="flexivel SpcBtw AlgEnd">
+                                <label id="lbMunicipio" for="municipio">Município:</label>
+                                <span onclick="adicionarCidade()" class="material-icons iconesM">add_location_alt</span>
+                            </div>
+                            <select name="municipio" id="municipio" onfocus="removerClasseAlerta('municipio')" {% if
+                                alterar %} disabled {% endif %}>
+                                <option value="selecione" {% if not alterar %} selected="selected" {% endif %}>Selecione
+                                </option>
+                                {% if alterar %}
+                                <option value="{{doador.municipio}}" selected="selected">{{doador.municipio}}
+                                </option>
+                                {% else %}
+                                {% for cidade in cidades %}
+                                <option value="{{cidade.cidade_registrada}}" {% if
+                                    cidade.cidade_registrada==cidade_adicionada %} selected="selected" {% endif %}>
+                                    {{cidade.cidade_registrada}}</option>
+                                {% endfor %}
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="linhaFormulario">
+                        <div class="campo">
+                            <label id="lbProfissao" for="profissao">Profissão:</label>
+                            <input name="profissao" type="text" id="profissao" autocomplete="off" {% if reload %}
+                                value="{{ profissaoBKP }}" {% endif %} {% if alterar %} value="{{ doador.profissao }}"
+                                {% endif %}>
+                        </div>
+                        <div class="campo">
+                            <label id="lbLocalTrabalho" for="localTrabalho">Local de trabalho:</label>
+                            <input name="localTrabalho" type="text" id="localTrabalho" autocomplete="off" {% if reload
+                                %} value="{{ localTrabalhoBKP }}" {% endif %} {% if alterar %}
+                                value="{{ doador.local_trabalho }}" {% endif %}>
+                        </div>
+                        <div class="campo">
+                            <label id="lbInapto" for="inapto">Inapto:</label>
+                            <select name="estadoAptidao" id="estadoAptidao" {% if reload %}
+                                value="{{ estadoAptidaoBKP }}" {% endif %} {% if alterar %} disabled
+                                value="{{ doador.inaptidao }}" {% endif %}>
+                                <option value="null" selected="selected" disabled>Selecione</option>
+                                <option value="inapto">Inapto</option>
+                                <option value="apto">Apto</option>
+                            </select>
+                        </div>
+                        <div class="campo">
+                            <label id="lbDataInaptidao" for="dataInaptidao">Data Inaptidão:</label>
+                            <input name="dataInaptidao" type="text" id="dataInaptidao" autocomplete="off" {% if reload
+                                %} value="{{ dataInaptidaoBKP }}" {% endif %} {% if alterar %}
+                                value="{{ doador.final_inaptidao }}" {% endif %}>
+                        </div>
+                    </div>
+
+                    <div class="linhaFormulario ultimaLinhaInput">
+                        <div class="campo" id="divMae">
+                            <label id="lbMae" for="mae">Nome da mãe:</label>
+                            <input name="mae" type="text" id="mae" autocomplete="off" {% if reload %}
+                                value="{{ maeBKP }}" {% endif %} {% if alterar %} value="{{ doador.nome_mae }}" {% endif
+                                %}>
+                        </div>
+                        <div class="campo" id="divPai">
+                            <label id="lbPai" for="pai">Nome do pai:</label>
+                            <input name="pai" type="text" id="pai" autocomplete="off" {% if reload %}
+                                value="{{ paiBKP }}" {% endif %} {% if alterar %} value="{{ doador.nome_pai }}" {% endif
+                                %}>
+                        </div>
+                    </div>
+
+                    {% if alterar %}
+
+                    <div class="linhaBotoes SpcBtw">
+                        <button type="submit" class="botao btn-principal">Alterar</button>
+                        <button type="button" class="botao btn-alerta linhaMRReset" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">Excluir cadastro</button>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Confirmar exclusão</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Deseja realmente deletar o doador "{{ doador.nome }}" da base de dados?!
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Fechar</button>
+                                        <a href="/doador/deletar/{{ doador.numero_registro }}"><button type="button"
+                                                class="btn btn-danger">Confirmar</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% else %}
+
+                    <div class="linhaBotoes">
+                        <input onclick="validarCampos(event)" type="submit" name="inserir" class="botao btn-principal"
+                            value="Inserir e continuar" />
+                        <input onclick="validarCampos(event)" type="submit" name="inserir" class="botao btn-principal"
+                            value="Inserir" />
+                        <button type="button" class="botao btn-secundario linhaMRReset"
+                            onclick="limpar()">Limpar</button>
+                    </div>
+
+                    {% endif %}
+
+                </form>
+        </div>
+    </div>
+    <div class="modal fade" id="addCidade" tabindex="-1" aria-labelledby="addCidadeLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCidadeLabel">Adicionar cidade</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <button class="botao btn-alerta linhaMRReset">Excluir cadastro</button>
+                <form action="/cidade/nova" method="POST">
+                    <div class="modal-body">
+                        <div class="campo">
+                            <input type="hidden" id="numRegistroSafe" name="numRegistroSafe">
+                            <input type="hidden" id="nomeSafe" name="nomeSafe">
+                            <input type="hidden" id="cpfSafe" name="cpfSafe">
+                            <input type="hidden" id="sexoSafe" name="sexoSafe">
+                            <input type="hidden" id="tipoSangueSafe" name="tipoSangueSafe">
+                            <input type="hidden" id="nascimentoSafe" name="nascimentoSafe">
+                            <input type="hidden" id="susSafe" name="susSafe">
+                            <input type="hidden" id="estadoCivilSafe" name="estadoCivilSafe">
+                            <input type="hidden" id="celularSafe" name="celularSafe">
+                            <input type="hidden" id="telefoneSafe" name="telefoneSafe">
+                            <input type="hidden" id="mailSafe" name="mailSafe">
+                            <input type="hidden" id="avisoSafe" name="avisoSafe">
+                            <input type="hidden" id="profissaoSafe" name="profissaoSafe">
+                            <input type="hidden" id="localTrabalhoSafe" name="localTrabalhoSafe">
+                            <input type="hidden" id="estadoAptidaoSafe" name="estadoAptidaoSafe">
+                            <input type="hidden" id="dataInaptidaoSafe" name="dataInaptidaoSafe">
+                            <input type="hidden" id="maeSafe" name="maeSafe">
+                            <input type="hidden" id="paiSafe" name="paiSafe">
+                            <label for="novaCidade">Cidade:</label>
+                            <input type="text" id="novaCidade" name="novaCidade" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary">Adicionar</button>
+                    </div>
+                </form>
             </div>
-                
-            {% else %}
-
-            <div class="linhaBotoes">
-                <button class="botao btn-principal">Inserir e continuar</button>
-                <button class="botao btn-principal">Inserir</button>
-                <button class="botao btn-secundario linhaMRReset">Limpar</button>
-            </div>
-            
-            {% endif %}
-
         </div>
     </div>
 </div>
 
+{% endblock %}
+{% block codigos %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+<script src="{{ url_for('static', filename='js/mascaras.js') }}"></script>
+<script src="{{ url_for('static', filename='js/doador.js') }}"></script>
 {% endblock %}

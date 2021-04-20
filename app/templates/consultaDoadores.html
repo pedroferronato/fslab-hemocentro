@@ -19,106 +19,85 @@
             <h1>Consulta de doadores</h1>
         </div>
 
+
         <div class="formulario">
-            <div class="linhaFormulario linhaSolitaria">
-                <div class="campo" id="divNome">
-                    <label for="nome">Nome:</label>
-                    <input type="text" id="nome" autocomplete="off">
+            <form action="/doador/consultar" method="GET">
+                <div class="linhaFormulario linhaSolitaria">
+                    <div class="campo" id="divNome">
+                        <label for="nome">Nome:</label>
+                        <input name="nome" type="text" id="nome" autocomplete="off">
+                    </div>
+                    <div class="campo" id="divTipo">
+                        <label for="tipo">Tipo:</label>
+                        <select name="tipoSangue" id="tipoSangue">
+                            <option value="null" selected="selected" disabled>Selecione</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
+                    </div>
+                    <div class="campo" id="divRegistro">
+                        <label for="registro">Num. registro:</label>
+                        <input name="registro" type="text" id="registro" autocomplete="off">
+                    </div>
+                    <div class="campo" id="divMunicipio">
+                        <label for="municipio">Município:</label>
+                        <select name="municipio" id="municipio">
+                            <option value="null" selected="selected" disabled>Selecione</option>
+                            {% for cidade in cidades %}
+                            <option value="{{cidade.cidade_registrada}}">{{cidade.cidade_registrada}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="campo" id="divItens">
+                        <label for="itens">Itens por pág.:</label>
+                        <input type="text" id="itens" autocomplete="off">
+                    </div>
+                    <div>
+                        <button type="submit" class="botao btn-principal" onclick="validarCampos(event)">Buscar</button>
+                    </div>
                 </div>
-                <div class="campo" id="divTipo">
-                    <label for="tipo">Tipo:</label>
-                    <select name="tipoSangue" id="tipoSangue">
-                        <option value="null" selected="selected" disabled>Selecione</option>
-                        <option value="A+">A+</option>
-                        <option value="A-">A-</option>
-                        <option value="B+">B+</option>
-                        <option value="B-">B-</option>
-                        <option value="AB+">AB+</option>
-                        <option value="AB-">AB-</option>
-                        <option value="O+">O+</option>
-                        <option value="O-">O-</option>
-                    </select>
-                </div>
-                <div class="campo" id="divRegistro">
-                    <label for="registro">Num. registro:</label>
-                    <input type="text" id="registro" autocomplete="off">
-                </div>
-                <div class="campo" id="divMunicipio">
-                    <label for="municipio">Município:</label>
-                    <select name="municipio" id="municipio">
-                        <option value="null" selected="selected" disabled>Selecione</option>
-                        <option value="jipa">Ji-Paraná</option>
-                        <option value="vha">Vilhena</option>
-                        <option value="pvh">Porto Velho</option>
-                    </select>
-                </div>
-                <div class="campo" id="divItens">
-                    <label for="itens">Itens por pág.:</label>
-                    <input type="text" id="itens" autocomplete="off">
-                </div>
-                <div>
-                    <a href="/consultar-inaptidao/resultado"><button
-                            class="botao btn-principal linhaMRReset">Buscar</button></a>
-                </div>
-            </div>
-
-
+            </form>
         </div>
-    </div>
+        {% if lista_vazia %}
+        <div class="cartao">
+            <strong>Nenhum resultado encontrado</strong>
+        </div>
+        {% endif %}
 
-    {% if resultado %}
-    <div class="cartao">
+        {% if resultado %}
+
+        <div class="formulario"></div>
         <div class="linhaFormulario">
-            <table class="table table-striped tabela">
+            <table class="table table-striped tabela ">
                 <thead>
                     <tr>
                         <th scope="col">Nome</th>
                         <th scope="col">Tipo</th>
                         <th scope="col">Fidelidade</th>
                         <th scope="col">Última doação</th>
-                        <th scope="col">Município</th>
+                        <th scope="col">Municipio</th>
                     </tr>
                 </thead>
                 <tbody>
+                    {% for doador in lista_doador %}
                     <tr>
-                        <td>Pedro Luís Ferronato Barreto</td>
-                        <td>A+</td>
-                        <td>Fidelizado</td>
-                        <td>18/12/2020</td>
-                        <td>Vilhena</td>
+                        <td>{{ doador.nome }}</td>
+                        <td>{{ doador.tipo_sanguineo }}</td>
+                        <td>{{ doador.fidelidade }}</td>
+                        <!-- #TODO: pegar data ultima doação -->
+                        <td>doação</td>
+                        <td>{{ doador.municipio}}</td>
                     </tr>
-                    <tr>
-                        <td>Bruno Delani Cirino dos Santos</td>
-                        <td>A+</td>
-                        <td>Fidelizado</td>
-                        <td>18/12/2020</td>
-                        <td>Vilhena</td>
-                    </tr>
-                    <tr>
-                        <td>João Vitor Lopes Alves</td>
-                        <td>A+</td>
-                        <td>Fidelizado</td>
-                        <td>18/12/2020</td>
-                        <td>Vilhena</td>
-                    </tr>
-                    <tr>
-                        <td>Larissa Lourenço Bingre</td>
-                        <td>O-</td>
-                        <td>Esporádico</td>
-                        <td>16/12/2020</td>
-                        <td>Vilhena</td>
-                    </tr>
-                    <tr>
-                        <td>Alina Madeira Roçadas</td>
-                        <td>AB-</td>
-                        <td>Fidelizado</td>
-                        <td>13/12/2020</td>
-                        <td>Vilhena</td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
-
         <div class="linhaFormulario paginador">
             <nav>
                 <ul class="pagination">
@@ -141,10 +120,33 @@
             </nav>
         </div>
     </div>
-
-    {% endif %}
-    
+</div>
+{% endif %}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Campos inválidos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Pelo menos um dos campos deve ser preenchido para realizar a busca
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 </div>
+{% endblock %}
+
+{% block codigos %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/validarConsultaDoador.js') }}"></script>
+{% if sucesso == "sucesso" %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/mensagensSucesso.js') }}"></script>
+{% endif %}
 {% endblock %}
