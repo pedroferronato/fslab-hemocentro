@@ -2,6 +2,7 @@ from app import flaskApp, login_manager, db
 from flask import render_template, redirect, request, url_for
 from app.models.hemocentro import Hemocentro
 from app.models.captador import Captador
+from flask_login import login_required
 
 
 @login_manager.user_loader
@@ -52,10 +53,7 @@ def novo_captador():
             return redirect(url_for("novo_captador", sucesso=True))
         else:
             return redirect(url_for('inicial', sucesso="sucesso"))
-        
-        
-
-
+    
 
 @flaskApp.route('/alterar-captador')
 @login_required
