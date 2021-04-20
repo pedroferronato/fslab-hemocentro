@@ -1,0 +1,13 @@
+#tamMaxEmail{
+    max-width: 280px !important;
+    width: 100%;
+}
+
+#tamMaxLogin{
+    max-width: 240px !important;
+    width: 100%;
+}
+
+.campoAlterar{
+    flex: none;
+}

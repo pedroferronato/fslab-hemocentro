@@ -265,26 +265,52 @@ option:hover {
 
 .paginador {
     justify-content: center;
+    align-items: center;
     margin-top: 32px;
     margin-bottom: 0px !important;
 }
 
-ul {
-    margin-bottom: 16px !important;
+ul.pagination {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 16px;
 }
 
-.paginador li a {
-    background-color: var(--cinzaBotao) !important;
-    color: white !important;
+ul.pagination li {display: inline;}
+
+ul.pagination li a {
+    text-align: center;
+    color: white;
+    float: left;
+    height: 40px;
+    width: 40px;
+    padding: 8px 16px;
+    margin: 0 1px;
+    border: 1px solid var(--cinzaBotao);
+    background-color: var(--cinzaBotao);
+    text-decoration: none;
+    
 }
 
-.paginador li a:hover {
-    background-color: var(--cinzaBotaoHover) !important;
+ul.pagination li a.ativo {
+    background: white;
+    color: var(--cinzaBotao);
 }
 
-.page-item:focus, .page-link:focus, .page-link:active {
+.pagination :first-child{
+    border-radius: 3px;
+}
+
+.page-item:focus, .page-link:focus, .page-link:active{
     outline: none !important;
     box-shadow: none !important;
+}
+
+.rowActive:hover{
+    cursor: pointer !important;
+    background-color: var(--cinzaLinha) !important;
 }
 
 .flexivel {
@@ -316,6 +342,17 @@ ul {
     color: var(--cinzaBotao);
     font-size: 18px;
     cursor: pointer;
+}
+
+.iconesP {
+    font-size: 16px;
+    line-height: 16px;
+    vertical-align: middle;
+}
+
+.iconesnP {
+    font-size: 16px;
+    line-height: 16px;
 }
 
 .tipoSanguineo {

@@ -2,6 +2,7 @@
 
 {% block cabecalho %}
 <link href="{{ url_for('static', filename='css/baseConteudo.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/consultaCaptador.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
@@ -18,118 +19,186 @@
             <h1>Consulta de captadores</h1>
         </div>
         <div class="formulario">
-            <div class="linhaFormulario linhaSolitaria">
-                <div class="campo" id="divNomeHemocentro">
-                    <label for="hemocentro">Nome hemocentro:</label>
-                    <input type="text" id="hemocentro" autocomplete="off">
+            {% if mensagem == "sucesso" %}
+                <div class="alert alert-success" role="alert">
+                    Captador <b>alterado</b> com sucesso
                 </div>
-                <div class="campo" id="divMunicipio">
-                    <label for="municipio">Município:</label>
-                    <select name="cidade" id="cidade">
-                        <option value="null" selected="selected" disabled>Selecione</option>
-                        <option value="jipa">Ji-Paraná</option>
-                        <option value="vha">Vilhena</option>
-                        <option value="pvh">Porto Velho</option>
-                    </select>
-                </div>
-                <div class="campo" id="divNome">
-                    <label for="nome">Nome captador:</label>
-                    <input type="text" id="nome" autocomplete="off">
-                </div>
-                <div class="campo" id="divItens">
-                    <label for="itens">Itens por pág.:</label>
-                    <input type="text" id="itens" autocomplete="off">
-                </div>
-                <div>
-                    <a href="/consultar-captadores/resultado"><button
-                            class="botao btn-principal linhaMRReset">Buscar</button></a>
-                </div>
+            {% endif %}
+            {% if mensagem == "deletado" %}
+            <div class="alert alert-success" role="alert">
+                Captador <b>deletado</b> com sucesso
             </div>
-
+            {% endif %}
+            <form action="/captador/consultar" method="GET">
+                <div class="linhaFormulario linhaSolitaria">
+                    <div class="campo" id="divNomeHemocentro">
+                        <label for="hemocentro">Hemocentro:</label>
+                        <select name="hemocentro" id="hemocentro">
+                            <option value="" {% if not hemocentro_pesquisado %} selected="selected" {% endif %}>Todos
+                            </option>
+                            {% for h in hemocentros %}
+                            <option value="{{h.id}}" {% if h.id==hemocentro_pesquisado %} selected="selected" {% endif
+                                %}>{{h.nome}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="campo" id="divNome">
+                        <label for="nome">Nome captador:</label>
+                        {% if captador_pesquisado %}
+                        <input value="{{captador_pesquisado}}" type="text" name="nome" id="nome" autocomplete="off">
+                        {% else %}
+                        <input type="text" name="nome" id="nome" autocomplete="off">
+                        {% endif %}
+                    </div>
+                    <div class="campo" id="divItens">
+                        <label for="itens">Itens por pág.:</label>
+                        <input min="1" max="50" type="number" id="itens" name="itens" autocomplete="off" {% if
+                            itens_pesquisado %} value={{itens_pesquisado}} {% endif %}>
+                    </div>
+                    <div>
+                        <button type="submit" class="botao btn-principal linhaMRReset">Buscar</button></a>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 
-    {% if resultado %}
+    {% if lista_vazia %}
     <div class="cartao">
+        <strong>Nenhum resultado encontrado</strong>
+    </div>
+    {% endif %}
 
+    {% if lista_captador %}
+    <div class="cartao">
+        <p id="resultadosEncontrados"><b>{{ paginas.total }} resultados encontrados.</b></p>
         <div class="linhaFormulario">
             <table class="table table-striped tabela">
-                <thead>
+                <thead class="noselect">
                     <tr>
                         <th scope="col">Nome</th>
-                        <th scope="col">Telefone</th>
+                        <th scope="col">Celular</th>
                         <th scope="col">Admin.</th>
                         <th scope="col">Hemocentro</th>
                         <th scope="col">Município</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>José Adalberto Fernandes</td>
-                        <td>(69) 9 8453-1615</td>
-                        <td><span class="material-icons notificado">check_circle</span></td>
-                        <td>Hemojipa</td>
-                        <td>Ji-paraná</td>
+                    {% for captador in lista_captador %}
+                    <tr class="rowActive" onclick="location.href = '/captador/alterar/{{ captador.id }}';">
+                            <td>{{ captador.nome }}</td>
+                            <td>{{ captador.celular }}</td>
+                            {% if captador.administrador %}
+                                <td><span class="material-icons notificado">check_circle</span></td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                            {% for hemocentro in hemocentros %}
+                                {% if hemocentro.id == captador.hemocentro_id %}
+                                    <td>{{ hemocentro.nome }}</td>
+                                    <td>{{ hemocentro.municipio }}</td>
+                                {% endif %}
+                            {% endfor %}
                     </tr>
-                    <tr>
-                        <td>Cleberson Heltz Martins</td>
-                        <td>(69) 9 6875-4895</td>
-                        <td></td>
-                        <td>Hemojipa</td>
-                        <td>Ji-paraná</td>
-                    </tr>
-                    <tr>
-                        <td>Janaina Alves Medeiros</td>
-                        <td>(69) 9 8857-6521</td>
-                        <td><span class="material-icons notificado">check_circle</span></td>
-                        <td>Hemocentro</td>
-                        <td>Vilhena</td>
-                    </tr>
-                    <tr>
-                        <td>Alina Madeira Roçadas</td>
-                        <td>(69) 9 8597-4689</td>
-                        <td></td>
-                        <td>Hemocentro</td>
-                        <td>Vilhena</td>
-                    </tr>
-                    <tr>
-                        <td>Catia Rafaella Tyller</td>
-                        <td>(69) 9 8795-6824</td>
-                        <td></td>
-                        <td>Hemojipa</td>
-                        <td>Ji-paraná</td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
-
-        <div class="linhaFormulario paginador">
+        <div class="linhaFormulario paginador noselect">
             <nav>
+                {% if paginas.pages >= 6 %}
                 <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
+                    <li>
+                        <a
+                            href="/captador/consultar?page={{ 1 }}&hemocentro={{ hemocentro_pesquisado }}&nome={{ captador_pesquisado }}&itens={{ itens_pesquisado }}">
+                            <span class="material-icons iconesP">
+                                first_page
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="iconesnP" {% if paginas.prev_num==None %} {% else %}
+                            href="/captador/consultar?page={{ paginas.prev_num }}&hemocentro={{ hemocentro_pesquisado }}&nome={{ captador_pesquisado }}&itens={{ itens_pesquisado }}"
+                            {% endif %}>
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
+                    {% if paginas.has_prev %}
+                    <li>
+                        <a
+                            href="/captador/consultar?page={{ paginas.prev_num }}&hemocentro={{ hemocentro_pesquisado }}&nome={{ captador_pesquisado }}&itens={{ itens_pesquisado }}">
+                            {{ paginas.prev_num }}
+                        </a>
+                    </li>
+                    {% endif %}
+                    <li>
+                        <a class="ativo" disable
+                            href="/captador/consultar?page={{ paginas.page }}&hemocentro={{ hemocentro_pesquisado }}&nome={{ captador_pesquisado }}&itens={{ itens_pesquisado }}">
+                            {{ paginas.page }}
+                        </a>
+                    </li>
+                    {% if paginas.has_next %}
+                    <li>
+                        <a
+                            href="/captador/consultar?page={{ paginas.next_num }}&hemocentro={{ hemocentro_pesquisado }}&nome={{ captador_pesquisado }}&itens={{ itens_pesquisado }}">
+                            {{ paginas.next_num }}
+                        </a>
+                    </li>
+                    {% endif %}
+                    <li>
+                        <a class="iconesnP" {% if paginas.next_num==None %} {% else %}
+                            href="/captador/consultar?page={{ paginas.next_num }}&hemocentro={{ hemocentro_pesquisado }}&nome={{ captador_pesquisado }}&itens={{ itens_pesquisado }}"
+                            {% endif %}>
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="/captador/consultar?page={{ paginas.pages }}&hemocentro={{ hemocentro_pesquisado }}&nome={{ captador_pesquisado }}&itens={{ itens_pesquisado }}">
+                            <span class="material-icons iconesP ">
+                                last_page
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+                {% else %}
+                <ul class="pagination">
+                    <li>
+                        <a class="iconesnP" {% if paginas.prev_num==None %} {% else %}
+                            href="/captador/consultar?page={{ paginas.prev_num }}&hemocentro={{ hemocentro_pesquisado }}&nome={{ captador_pesquisado }}&itens={{ itens_pesquisado }}"
+                            {% endif %}>
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    {% for page in paginas.iter_pages() %}
+                    <li {% if page==paginas.page %} disable {% endif %}>
+                        <a class="{% if page==paginas.page %} ativo {% endif %}"
+                            href="/captador/consultar?page={{ page }}&hemocentro={{ hemocentro_pesquisado }}&nome={{ captador_pesquisado }}&itens={{ itens_pesquisado }}">{{
+                            page }}</a>
+                    </li>
+                    {% endfor %}
+
+                    <li>
+                        <a class="iconesnP" {% if paginas.next_num==None %} {% else %}
+                            href="/captador/consultar?page={{ paginas.next_num }}&hemocentro={{ hemocentro_pesquisado }}&nome={{ captador_pesquisado }}&itens={{ itens_pesquisado }}"
+                            {% endif %}>
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
                 </ul>
+                {% endif %}
             </nav>
         </div>
-
     </div>
 
     {% endif %}
-    
+
 </div>
 
 </div>
 {% endblock %}
+{% block codigos %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/validarCaptador.js') }}"></script>
+{% endblock  %}
