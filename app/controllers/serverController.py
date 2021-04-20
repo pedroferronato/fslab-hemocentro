@@ -1,10 +1,16 @@
 from app import flaskApp, db, login_manager
 from app.models.utilidadeSistema import Utilidades
 from app.models.captador import Captador
-from flask import render_template, redirect, request, url_for
+from flask import render_template, redirect, request, url_for, session
 from flask_login import login_user, logout_user, login_required
+from datetime import timedelta
 import bcrypt
 
+@flaskApp.before_request
+def make_session_permanent():
+    session.permanent = True
+    flaskApp.permanent_session_lifetime = timedelta(minutes=30)
+    session.modified = True
 
 @flaskApp.route('/login', methods=['GET','POST'])
 def login():
@@ -28,7 +34,7 @@ def login():
             mensagem = "Login não autorizado"
             return render_template("login.html", mensagem=mensagem)
         else:
-            login_user(captador)
+            login_user(captador, remember=False)
             return redirect('/inicio')
 
 
