@@ -3,7 +3,7 @@
 {% block conteudo %}
 
 <div class="imagemPaginaInicial noselect">
-    <img src="{{ url_for('static', filename='images/hemojipaCentral.png') }}">
+    <img src="/static/images/{{ current_user.get_hemocentro().get_img() }}">
 </div> 
 {% endblock %}
 

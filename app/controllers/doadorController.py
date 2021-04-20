@@ -6,12 +6,14 @@ from datetime import datetime, date
 
 
 @flaskApp.route('/doador', methods=['GET', 'POST'])
+@login_required
 def novo_doador():
 
     cidade_registradas = Utilidades.query.order_by(Utilidades.id).all()
     sucesso = request.args.get('sucesso')
 
     recarregar = request.args.get('reload')
+
 
     numRegistroBKP = request.args.get('numRegistroBKP')
     nomeBKP = request.args.get('nomeBKP')
@@ -73,6 +75,7 @@ def novo_doador():
         mae = request.form['mae']
         pai = request.form['pai']
 
+
         try:
             doador = Doador(numero_registro=numRegistro, hemocentro_id = 1, nome=nome, cpf=cpf, sexo=sexo, tipo_sanguineo=tipoSangue, data_de_nascimento=dateNasc,
              cadastro_SUS=sus, estado_civil=estadoCivil, celular=celular, telefone=telefone, email=mail, municipio=municipio,
@@ -92,6 +95,7 @@ def novo_doador():
 
 
 @flaskApp.route('/doador/alterar/<doador_numRegistro>', methods=['GET', 'POST'])
+@login_required
 def alterar_doador(doador_numRegistro):
     cidade_registradas = Utilidades.query.order_by(Utilidades.id).all()
     if request.method == 'GET':
@@ -118,6 +122,7 @@ def alterar_doador(doador_numRegistro):
         pai = request.form['pai']
         doador = Doador.query.filter_by(id=doador_numRegistro).first()
 
+
         doador.nome = nome
         doador.cpf = cpf
         doador.sexo = sexo
@@ -138,11 +143,11 @@ def alterar_doador(doador_numRegistro):
         doador.nome_pai = pai 
         db.session.add(doador)
         db.session.commit()
-
         return redirect(url_for('consultar_doador', sucesso="sucesso"))
 
 
 @flaskApp.route('/doador/consultar') 
+@login_required
 def consultar_doador():
     cidade_registradas = Utilidades.query.order_by(Utilidades.id).all()
     nome = request.args.get('nome')
@@ -191,7 +196,8 @@ def consultar_doador():
         return render_template("consultaDoadores.html", lista_vazia=True, cidades=cidade_registradas)
 
 
-@flaskApp.route('/doador/deletar/<doador_numRegistro>') 
+@flaskApp.route('/doador/deletar/<doador_numRegistro>')
+@login_required
 def deletar_doador(doador_numRegistro):
     doador = Doador.query.filter_by(id=doador_numRegistro).first()
     db.session.delete(doador)
