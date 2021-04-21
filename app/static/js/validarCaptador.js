@@ -1,3 +1,7 @@
+$(".alert2").delay(5000).slideUp(200, function() {
+    $(this).alert('close')
+})
+
 $(".alert").delay(2000).slideUp(200, function() {
     $(this).alert('close')
 })
@@ -13,10 +17,12 @@ function validarCampos(evento) {
     var lbMail = document.getElementById("lbMail")
     var login = document.getElementById("login")
     var lbLogin = document.getElementById("lbLogin")
-    var senha = document.getElementById("senha")
-    var lbSenha = document.getElementById("lbSenha")
-    var confirmarSenha = document.getElementById("confirmarSenha")
-    var lbConfirmarSenha = document.getElementById("lbConfirmarSenha")
+    if (document.getElementById("senha")){
+        var senha = document.getElementById("senha")
+        var lbSenha = document.getElementById("lbSenha")
+        var confirmarSenha = document.getElementById("confirmarSenha")
+        var lbConfirmarSenha = document.getElementById("lbConfirmarSenha")
+    }
 
     var alerta = false
 
@@ -60,6 +66,8 @@ function validarCampos(evento) {
         alerta = true
     }
     
+    if (document.getElementById("senha")){
+
     if (senha.value == undefined || senha.value == null || senha.value == "" || senha.value == " ") {
         if (!senha.classList.contains('borda-alerta')) {
             senha.classList.add('borda-alerta')
@@ -86,6 +94,8 @@ function validarCampos(evento) {
             lbConfirmarSenha.classList.add('txt-alerta')
         }
         alerta = true
+    }
+
     }
 
     if (alerta) evento.preventDefault()
