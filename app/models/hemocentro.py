@@ -10,6 +10,14 @@ class Hemocentro(db.Model):
     telefone = db.Column(db.String(200), nullable=False)
     urlImg =  db.Column(db.String(200))
 
+    def get_nome(self):
+        return self.nome
+
+    
+    def get_img(self):
+        return self.urlImg
+
+
     def __repr__(self):
         return f"Hemocentro: {self.nome}"
 

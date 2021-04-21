@@ -6,14 +6,16 @@ from app.models.captador import Captador
 from collections import Counter
 from sqlalchemy import exc
 import bcrypt
+from flask_login import login_required
 
 
 @login_manager.user_loader
-def get_user(id):
-    return Captador.query.filter_by(id=id).first()
+def get_user(captador_id):
+    return Captador.query.filter_by(id=captador_id).first()
 
 
 @flaskApp.route('/captador', methods=['GET', 'POST'])
+@login_required
 def novo_captador():
     mensagem = request.args.get('mensagem')
     senhasDiferentes = request.args.get('senhas')
@@ -53,8 +55,8 @@ def novo_captador():
         else:
             return redirect(url_for('inicial', sucesso="sucesso"))
 
-
 @flaskApp.route('/captador/alterar/<captador_id>', methods = ['GET', 'POST'])
+@login_required
 def alterar_captador(captador_id):
     hemocentros = Hemocentro.query.all()
     mensagem = request.args.get('mensagem')
@@ -63,17 +65,14 @@ def alterar_captador(captador_id):
         return render_template("captador.html", alterar=True, captador=captador, hemocentros=hemocentros, mensagem=mensagem)
 
     elif request.method == 'POST':
-
         nome = request.form['nome']
         celular = request.form['celular']
         hemocentro = request.form['hemocentro']
         adm = request.form['adm']
         mail = request.form['mail']
         login = request.form['login']
-
         try:
             cap = Captador.query.filter_by(id=captador_id).first()
-
             cap.nome = nome
             cap.celular = celular
             cap.hemocentro_id = int(hemocentro)
@@ -98,8 +97,8 @@ def alterar_captador(captador_id):
 
         return redirect(url_for("consultar_captador", mensagem="sucesso", nome=cap.nome))
 
-
 @flaskApp.route('/captador/consulta')
+@login_required
 def consulta_captador():
     hemocentro_registrados = Hemocentro.query.all()
     mensagem = request.args.get('mensagem')
@@ -107,6 +106,7 @@ def consulta_captador():
 
 
 @flaskApp.route('/captador/consultar')
+@login_required
 def consultar_captador():
     hemocentro_registrados = Hemocentro.query.all()
 
@@ -154,6 +154,7 @@ def consultar_captador():
 
 
 @flaskApp.route('/captador/deletar/<captador_id>') 
+@login_required
 def deletar_captador(captador_id):
     cap = Captador.query.filter_by(id=captador_id).first()
     db.session.delete(cap)

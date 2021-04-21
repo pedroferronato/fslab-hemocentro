@@ -17,17 +17,37 @@ class Captador(db.Model, UserMixin):
     administrador = db.Column(db.Boolean(), default=False)
     servidor = db.Column(db.Boolean(), default=False)
 
+
     def is_authenticated(self):
         return True
+
 
     def is_active(self):
         return True
 
+
     def is_anonymous(self):
         return False
 
+
     def get_id(self):
         return self.id
+
+
+    def get_cargo(self):
+        if self.servidor:
+            return 'Servidor'
+        else:
+            return 'Captador'
+
+    
+    def get_hemocentro(self):
+        return Hemocentro.query.filter_by(id=self.hemocentro_id).first()
+
+    
+    def get_nome(self):
+        return self.nome
+
 
     def __repr__(self):
         return f'Captador: {self.email}'

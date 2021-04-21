@@ -22,7 +22,7 @@
         <div class="d-flex flex-column p-3 barraLateral">
             <a href="/inicio">
                 <div class="divisaoLogo d-flex justify-content-center">
-                    <img id="logoBarra" src="{{ url_for('static', filename='images/hemojipa3.png') }}">
+                    <img id="logoBarra" src="/static/images/{{ current_user.get_hemocentro().get_img() }}">
                 </div>
             </a>
 
@@ -65,13 +65,13 @@
                         </div>
 
                         <div v-if="opcoes['doadores']" class="opcoes">
-                            <a href="/novo-doador">
+                            <a href="/doador">
                                 <div>
                                     <span class="material-icons icones">add</span>
                                     <p>Novo doador</p>
                                 </div>
                             </a>
-                            <a href="/consultar-inaptidao">
+                            <a href="/doador/consultar">
                                 <div>
                                     <span class="material-icons icones">search</span>
                                     <p>Consultar doadores</p>
@@ -179,7 +179,7 @@
                 </div>
 
                 <div class="hemocentro">
-                    <p>Hemojipa</p>
+                    <p>{{ current_user.get_hemocentro().get_nome() }}</p>
                 </div>
 
             </div>
@@ -189,15 +189,17 @@
             <div class="caixaFlex">
                 <div class="barraSuperior">
                     <div>
+                        {% if current_user.administrador and not current_user.servidor%}
                         <p>Administrador</p>
+                        {% endif %}
                     </div>
                     <div class="linha"></div>
                     <div>
-                        <p>Servidor IFRO</p>
-                        <p>Sawdev</p>
+                        <p>{{ current_user.get_nome() }}</p>
+                        <p id="cargo">{{ current_user.get_cargo() }}</p>
                     </div>
                     <div>
-                        <a href=""><span id="logout" class="material-icons icone">logout</span></a>
+                        <a href="/logout"><span id="logout" class="material-icons icone">logout</span></a>
                     </div>
                     <div>
                         <a href="/perfil"><span class="material-icons icone">manage_accounts</span></a>
@@ -212,7 +214,7 @@
             </div>
         </div>
 
-        
+
 
     </div>
 

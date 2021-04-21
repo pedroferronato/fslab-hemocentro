@@ -2,9 +2,11 @@ from app import flaskApp, db
 from app.models.utilidadeSistema import Utilidades
 from app.models.hemocentro import Hemocentro
 from flask import render_template, redirect, request, url_for
+from flask_login import login_required
 
 
 @flaskApp.route('/hemocentro', methods=['GET', 'POST'])
+@login_required
 def novo_hemocentro():
 
     cidade_registradas = Utilidades.query.order_by(Utilidades.id).all()
@@ -50,6 +52,7 @@ def novo_hemocentro():
 
 
 @flaskApp.route('/hemocentro/alterar/<hemocentro_id>', methods=['GET', 'POST'])
+@login_required
 def alterar_hemocentro(hemocentro_id):
     cidade_registradas = Utilidades.query.order_by(Utilidades.id).all()
     if request.method == 'GET':
@@ -71,6 +74,7 @@ def alterar_hemocentro(hemocentro_id):
 
 
 @flaskApp.route('/hemocentro/consultar') 
+@login_required
 def consultar_hemocentro():
     cidade_registradas = Utilidades.query.order_by(Utilidades.id).all()
     nome = request.args.get('nome')
@@ -98,6 +102,7 @@ def consultar_hemocentro():
 
 
 @flaskApp.route('/hemocentro/deletar/<hemocentro_id>') 
+@login_required
 def deletar_hemocentro(hemocentro_id):
     hemocentro = Hemocentro.query.filter_by(id=hemocentro_id).first()
     db.session.delete(hemocentro)

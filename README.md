@@ -24,7 +24,6 @@ Desenvolvimento do sistema de hemocentros de Rondônia, em parceria com o Hemoji
   * Jinja2 Snippet Kit 2.0.0 - Wyatt Ferguson
   * Material Icon Theme 
   * GitLens
-  * Todo Tree
 
 ## Receita do bolo para formulários
   * Importe o css base de formulários:
