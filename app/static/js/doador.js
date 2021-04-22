@@ -17,11 +17,10 @@ function validarCampos(evento) {
     var lbNascimento = document.getElementById("lbNascimento")
     var sus = document.getElementById("sus")
     var lbSus = document.getElementById("lbSus")
-    var telefone = document.getElementById("telefone")
-    var lbTelefone = document.getElementById("lbTelefone")
     var municipio = document.getElementById("municipio")
     var lbMunicipio = document.getElementById("lbMunicipio")
-
+    var dataInaptidao = document.getElementById("dataInaptidao")
+    var lbDataInaptidao = document.getElementById("lbDataInaptidao")
 
     var alerta = false;
 
@@ -60,7 +59,14 @@ function validarCampos(evento) {
         }
         alerta = true;
     }
-    if (nascimento.value == undefined || nascimento.value == null || nascimento.value == "" || nascimento.value == " ") {
+    if (dataInaptidao.value.length > 0 && dataInaptidao.value.length <= 9) {
+        if (!dataInaptidao.classList.contains('borda-alerta')) {
+            dataInaptidao.classList.add('borda-alerta')
+            lbDataInaptidao.classList.add('txt-alerta')
+        }
+        alerta = true;
+    }
+    if (nascimento.value == undefined || nascimento.value == null || nascimento.value == "" || nascimento.value == " " || (nascimento.value.length > 0 && nascimento.value.length <= 9)) {
         if (!nascimento.classList.contains('borda-alerta')) {
             nascimento.classList.add('borda-alerta')
             lbNascimento.classList.add('txt-alerta')
@@ -71,13 +77,6 @@ function validarCampos(evento) {
         if (!sus.classList.contains('borda-alerta')) {
             sus.classList.add('borda-alerta')
             lbSus.classList.add('txt-alerta')
-        }
-        alerta = true;
-    }
-    if (telefone.value == undefined || telefone.value == null || telefone.value == "" || telefone.value == " ") {
-        if (!telefone.classList.contains('borda-alerta')) {
-            telefone.classList.add('borda-alerta')
-            lbTelefone.classList.add('txt-alerta')
         }
         alerta = true;
     }
@@ -121,13 +120,13 @@ function removerClasseAlerta(elemento) {
         sus.classList.remove('borda-alerta')
         lbSus.classList.remove('txt-alerta')
     }
-    if (telefone.classList.contains('borda-alerta') && elemento == 'telefone') {
-        telefone.classList.remove('borda-alerta')
-        lbTelefone.classList.remove('txt-alerta')
-    }
     if (municipio.classList.contains('borda-alerta') && elemento == 'municipio') {
         municipio.classList.remove('borda-alerta')
         lbMunicipio.classList.remove('txt-alerta')
+    }
+    if (dataInaptidao.classList.contains('borda-alerta') && elemento == 'inaptidao') {
+        dataInaptidao.classList.remove('borda-alerta')
+        lbDataInaptidao.classList.remove('txt-alerta')
     }
 }
 
@@ -143,11 +142,11 @@ function limpar() {
     celular.value = ""
     telefone.value = ""
     mail.value = ""
-    aviso.value = "selecione"
+    aviso.value = "nao"
     municipio.value = "selecione"
     profissao.value = ""
     localTrabalho.value = ""
-    estadoAptidao.value = "selecione"
+    estadoAptidao.value = "apto"
     dataInaptidao.value = ""
     mae.value = ""
     pai.value = ""
@@ -178,7 +177,7 @@ function adicionarCidade() {
     nomeSafe.value = nome.value
     cpfSafe.value = cpf.value
     sexoSafe.value = sexo.value
-    tipoSangueSafe.value = tipoSangueSafe.value
+    tipoSangueSafe.value = tipoSangue.value
     nascimentoSafe.value = nascimento.value
     susSafe.value = sus.value
     estadoCivilSafe.value = estadoCivil.value
@@ -186,7 +185,7 @@ function adicionarCidade() {
     telefoneSafe.value = telefone.value
     mailSafe.value = mail.value
     avisoSafe.value = aviso.value
-    profissaoSafe.value = profissaoSafe.value
+    profissaoSafe.value = profissao.value
     localTrabalhoSafe.value = localTrabalho.value
     estadoAptidaoSafe.value = estadoAptidao.value
     dataInaptidaoSafe.value = dataInaptidao.value

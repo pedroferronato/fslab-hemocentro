@@ -3,7 +3,7 @@ from app.models.utilidadeSistema import Utilidades
 from app.models.doador import Doador
 from flask import render_template, redirect, request, url_for
 from datetime import datetime, date
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 
 @flaskApp.route('/doador', methods=['GET', 'POST'])
@@ -14,7 +14,6 @@ def novo_doador():
     sucesso = request.args.get('sucesso')
 
     recarregar = request.args.get('reload')
-
 
     numRegistroBKP = request.args.get('numRegistroBKP')
     nomeBKP = request.args.get('nomeBKP')
@@ -51,37 +50,40 @@ def novo_doador():
         if request.form['inserir'] == 'Inserir e continuar':
             continuar = True
 
-        numRegistro = request.form['numRegistro']
+        num_registro = request.form['numRegistro']
         nome = request.form['nome']
         cpf = request.form['cpf']
         sexo = request.form['sexo']
-        tipoSangue = request.form['tipoSangue']
+        tipo_sangue = request.form['tipoSangue']
         nascimento = request.form['nascimento']
-        dateNasc = datetime.strptime(nascimento, '%d/%m/%Y').date()
+        data_nascimento = datetime.strptime(nascimento, '%d/%m/%Y').date()
         sus = request.form['sus']
-        estadoCivil = request.form['estadoCivil']
+        estado_civil = request.form['estadoCivil']
         celular = request.form['celular']
         telefone = request.form['telefone']
         mail = request.form['mail']
-        aviso = request.form['aviso'] 
+        aviso = request.form['aviso']
         municipio = request.form['municipio']
         profissao = request.form['profissao']
-        localTrabalho = request.form['localTrabalho']
-        estadoAptidao = request.form['estadoAptidao']
-        dataInaptidao = request.form['dataInaptidao']
-        if not dataInaptidao:
-            dateInap = None
+        local_trabalho = request.form['localTrabalho']
+        estado_aptidao = request.form['estadoAptidao']
+        if estado_aptidao == "apto":
+            estado_aptidao = False
         else:
-            dateInap = datetime.strptime(dataInaptidao, '%d/%m/%Y').date()
+            estado_aptidao = True
+        data_inaptidao = request.form['dataInaptidao']
+        if not data_inaptidao:
+            data_inaptidao = None
+        else:
+            data_inaptidao = datetime.strptime(dataInaptidao, '%d/%m/%Y').date()
         mae = request.form['mae']
         pai = request.form['pai']
 
-
         try:
-            doador = Doador(numero_registro=numRegistro, hemocentro_id = 1, nome=nome, cpf=cpf, sexo=sexo, tipo_sanguineo=tipoSangue, data_de_nascimento=dateNasc,
-             cadastro_SUS=sus, estado_civil=estadoCivil, celular=celular, telefone=telefone, email=mail, municipio=municipio,
-             profissao=profissao, local_trabalho=localTrabalho, final_inaptidao=dateInap, contatos_preferidos= aviso,
-             nome_mae=mae, nome_pai=pai )
+            doador = Doador(numero_registro=num_registro, hemocentro_id = current_user.get_hemocentro().get_id(), nome=nome, cpf=cpf, sexo=sexo, tipo_sanguineo=tipo_sangue, data_de_nascimento=data_nascimento,
+            cadastro_SUS=sus, estado_civil=estado_civil, celular=celular, telefone=telefone, email=mail, municipio=municipio,
+            profissao=profissao, local_trabalho=local_trabalho, inaptidao=estado_aptidao, final_inaptidao=data_inaptidao, contatos_preferidos= aviso,
+            nome_mae=mae, nome_pai=pai)
             db.session.add(doador)
             db.session.commit()
 
