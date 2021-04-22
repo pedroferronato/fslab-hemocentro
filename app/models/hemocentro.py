@@ -18,6 +18,10 @@ class Hemocentro(db.Model):
         return self.urlImg
 
 
+    def get_id(self):
+        return self.id
+
+
     def __repr__(self):
         return f"Hemocentro: {self.nome}"
 
