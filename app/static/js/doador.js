@@ -38,7 +38,7 @@ function validarCampos(evento) {
         }
         alerta = true;
     }
-    if (cpf.value == undefined || cpf.value == null || cpf.value == "" || cpf.value == " ") {
+    if (cpf.value == undefined || cpf.value == null || cpf.value == "" || cpf.value == " " || !validarCPF()) {
         if (!cpf.classList.contains('borda-alerta')) {
             cpf.classList.add('borda-alerta')
             lbCpf.classList.add('txt-alerta')
@@ -66,7 +66,14 @@ function validarCampos(evento) {
         }
         alerta = true;
     }
-    if (nascimento.value == undefined || nascimento.value == null || nascimento.value == "" || nascimento.value == " " || (nascimento.value.length > 0 && nascimento.value.length <= 9)) {
+    if (dataInaptidao.value.length > 9 && !validarData(dataInaptidao.value, false) ) {
+        if (!dataInaptidao.classList.contains('borda-alerta')) {
+            dataInaptidao.classList.add('borda-alerta')
+            lbDataInaptidao.classList.add('txt-alerta')
+        }
+        alerta = true;
+    }
+    if (nascimento.value == undefined || nascimento.value == null || nascimento.value == "" || nascimento.value == " " || (nascimento.value.length > 0 && nascimento.value.length <= 9) || !validarData(nascimento.value, true)) {
         if (!nascimento.classList.contains('borda-alerta')) {
             nascimento.classList.add('borda-alerta')
             lbNascimento.classList.add('txt-alerta')
@@ -87,8 +94,47 @@ function validarCampos(evento) {
         }
         alerta = true;
     }
-
+    evento.preventDefault()
     if (alerta) evento.preventDefault()
+}
+
+function validarCPF() {
+    var Soma;
+    var Resto;
+    Soma = 0;
+    let strCPF = cpf.value.replace(".", "").replace(".", "").replace("-", "")
+    if (strCPF == "00000000000" || strCPF == "11111111111" || strCPF == "22222222222" || strCPF == "33333333333" || strCPF == "44444444444" || strCPF == "55555555555" || strCPF == "66666666666" || strCPF == "77777777777" || strCPF == "88888888888" || strCPF == "99999999999") return false;
+
+    for (i = 1; i <= 9; i++) Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (11 - i);
+    Resto = (Soma * 10) % 11;
+
+    if ((Resto == 10) || (Resto == 11)) Resto = 0;
+    if (Resto != parseInt(strCPF.substring(9, 10))) return false;
+
+    Soma = 0;
+    for (i = 1; i <= 10; i++) Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (12 - i);
+    Resto = (Soma * 10) % 11;
+
+    if ((Resto == 10) || (Resto == 11)) Resto = 0;
+    if (Resto != parseInt(strCPF.substring(10, 11))) return false;
+    return true;
+}
+
+function validarData(vardata, nasc) {
+    let data = vardata.split("/");
+    let ano = data[2];
+    let mes = data[1];
+    let dia = data[0];
+
+    var diasDoMes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+    if ((!(ano % 4) && ano % 100) || !(ano % 400)) diasDoMes[1] = 29;
+    
+    if (mes <= 0 || mes > 12) return false
+    if (dia <= 0 || dia > diasDoMes[mes - 1]) return false;
+    if (nasc) if (ano > new Date().getFullYear()) return false;
+
+    return true;
 }
 
 function removerClasseAlerta(elemento) {
