@@ -1,26 +1,26 @@
 #divRegistro {
-    flex: 3;
+    flex: 2;
+    max-width: 130px;
     margin-right: 12px;
 }
 
 #divNome {
-    flex: 5;
+    flex: 6;
 }
 
 #divTipo {
     flex: 1;
+    max-width: 80px;
 }
 
 #divData {
     flex: 2;
-}
-
-#divConvocacao {
-    flex: 3;
+    max-width: 130px;
 }
 
 #divFidelidade {
-    flex: 3;
+    flex: 2;
+    max-width: 200px;
 }
 
 #divInapto {
@@ -31,11 +31,47 @@
     flex: 2;
 }
 
+#divConvocacao {
+    flex: 2;
+    max-width: 250px;
+}
+
 #divObservacoes {
     flex: 6;
 }
 
+#divPesquisaPor {
+    max-width: 150px;
+    flex: 2;
+}
+
+#divPesquisa {
+    flex: 6;
+}
+
+#btnPesquisa {
+    max-width: 150px;
+    flex: 1;
+}
+
 #searchIco {
-    margin-left: 12px;
     font-size: 28px;
+}
+
+#resultadosEncontrados {
+    padding-bottom: 16px;
+}
+
+.btnPesquisa {
+    height: 40px;
+    padding: 0px 8px;
+    font-size: 28px;
+    line-height: 0px;
+    background-color: var(--cinzaFundo);
+    margin-right: 12px;
+    border:none;
+}
+
+.btnPesquisa:focus, .btnPesquisa:focus {
+    outline: none;
 }

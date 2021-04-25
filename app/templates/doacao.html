@@ -29,68 +29,101 @@
         </div>
 
         <div class="formulario">
-
+            {% if alterar %}
+            <form action="/doacao/alterar/" method="POST">
+            {% else %}
+            <form action="/doacao" method="POST">
+            {% endif %}
+            {% if mensagem == "Inserido" %}
+                <div class="alert alert-success" role="alert">
+                    Doação registrada com sucesso
+                </div>
+            {% endif %}
+            {% if mensagem == "ErroBD" %}
+            <div class="alert2 alert alert-danger" role="alert">
+                Erro ao inserir na <b>base de dados</b>.
+            </div>
+            {% endif %}
+            {% if mensagem == "ErroBD_2" %}
+            <div class="alert2 alert alert-danger" role="alert">
+                Número de registro não confere com o devivo doador. Erro:#<b>base de dados</b>.
+            </div>
+            {% endif %}
+            {% if mensagem == "ErroBD_3" %}
+            <div class="alert2 alert alert-danger" role="alert">
+                Erro inesperado na troca de fidelização. Erro:#<b>base de dados</b>.
+            </div>
+            {% endif %}
+            {% if mensagem == "ErroBD_4" %}
+            <div class="alert2 alert alert-danger" role="alert">
+                <b>Número de registro</b> não encontrado.
+            </div>
+            {% endif %}
             <div class="linhaFormulario">
                 <div class="campo" id="divRegistro">
-                    <label for="numRegistro">Nº registro:</label>
+                    <label for="numRegistro" id="lbRegistro">Nº registro:</label>
                     <div class="flexivel AlgCenter">
-                        <input type="text" id="numRegistro" autocomplete="off">
-                        <p id="searchIco" class="material-icons iconesS">search</p>
+                        <input maxlength="12" type="text" id="numRegistro" name="numRegistro" autocomplete="off" 
+                        {% if doador %} value="{{doador.numero_registro}}" {% endif %}
+                        {% if numero_registro %} value="{{numero_registro}}" {% endif %}
+                        onfocus="removerClasseAlerta('numRegistro')">
                     </div>
                 </div>
+                <input name="botao" class="material-icons iconesS btnPesquisa" value="search" type="submit" onclick="procurarDoador(event)"></input>
                 <div class="campo" id="divNome">
-                    <label for="nome">Nome do doador:</label>
-                    <input type="text" id="nome" autocomplete="off">
+                    <label for="nome" id="lbNome">Nome do doador:</label>
+                    <input type="text" id="nome" name="nome" readonly 
+                    {% if doador %} value="{{doador.nome}}" {% endif %}
+                    onfocus="removerClasseAlerta('nome')">
                 </div>
                 <div class="campo" id="divTipo">
-                    <label for="tipoSangue">Tipo:</label>
-                    <input type="text" id="tipoSangue" autocomplete="off">
-                </div>
-                <div class="campo" id="divData">
-                    <label for="data">Data:</label>
-                    <input type="text" id="data" autocomplete="off">
-                </div>
-                <div class="campo" id="divConvocacao">
-                    <label for="convocacao">Convocação:</label>
-                    <input type="text" id="convocacao" autocomplete="off">
+                    <label for="tipoSangue" id="lbTipo">Tipo:</label>
+                    <input type="text" id="tipoSangue" name="tipoSangue" readonly 
+                    {% if doador %} value="{{doador.tipo_sanguineo}}" {% endif %}
+                    onfocus="removerClasseAlerta('tipoSangue')">
                 </div>
                 <div class="campo" id="divFidelidade">
-                    <label for="fidelidade">Fidelidade:</label>
-                    <input type="text" id="fidelidade" autocomplete="off">
-                </div>
-            </div>
-
-            <div class="linhaFormulario ultimaLinhaInput">
-                <div class="campo" id="divInapto">
-                    <label for="inapto">Inapto:</label>
-                    <select name="estadoAptidao" id="estadoAptidao">
-                        <option value="null" selected="selected" disabled>Selecione</option>
-                        <option value="inapto">Inapto</option>
-                        <option value="apto">Apto</option>
+                    <label for="fidelidade" id="lbFidelidade">Fidelidade:</label>
+                    <select id="fidelidade" name="fidelidade"
+                    onfocus="removerClasseAlerta('fidelidade')">
+                    <option value="Selecione" {% if not doador %} selected="select" {% endif %}>Selecione</option>
+                    <option value="Exporádico" {% if doador and doador.fidelidade == "Exporádico" %} selected="select" {% endif %}>Exporádico</option>
+                    <option value="Fidelizado" {% if doador and doador.fidelidade == "Fidelizado" %} selected="select" {% endif %}>Fidelizado</option>
                     </select>
                 </div>
-                <div class="campo" id="divDataFinal">
-                    <label for="dataFinal">Data final:</label>
-                    <input type="text" id="dataFinal" autocomplete="off">
+            </div>
+            <div class="linhaFormulario ultimaLinhaInput">
+                <div class="campo" id="divData">
+                    <label for="data" id="lbData">Data:</label>
+                    <input class="data" type="text" id="data" name="data" value={{date}} autocomplete="off"
+                    onfocus="removerClasseAlerta('data')">
+                </div>
+                <div class="campo" id="divConvocacao">
+                    <label for="convocacao" id="lbConvocacao">Convocação:</label>
+                    <select name="convocacao" id="convocacao" onfocus="removerClasseAlerta('convocacao')">
+                        <option value="Selecione" {% if not convocacao %} selected="select" {% endif %}>Selecione</option>
+                        <option value="Reposição" {% if convocacao and convocacao == "Reposição" %} selected="select" {% endif %}>Reposição</option>
+                        <option value="Voluntário" {% if convocacao and convocacao == "Voluntário" %} selected="select" {% endif %}>Voluntário</option>
+                    </select>
                 </div>
                 <div class="campo" id="divObservacoes">
                     <label for="observacoes">Observações:</label>
-                    <input type="text" id="observacoes" autocomplete="off"
+                    <input type="text" id="observacoes" name="observacoes" autocomplete="off"
                         placeholder="Caso não tenha, deixe em branco.">
                 </div>
             </div>
-
             <div class="linhaBotoes">
-                {% if alterar %}
-                <button class="botao btn-principal linhaMRReset">Alterar</button>
-                {% else %}
-                <button class="botao btn-principal">Inserir e continuar</button>
-                <button class="botao btn-principal">Inserir</button>
-                <button class="botao btn-secundario linhaMRReset">Limpar</button>
-                {% endif %}
+                <button onclick="validarCampos(event)" name="botao" value="Inserir e continuar" class="botao btn-principal">Inserir e continuar</button>
+                <button onclick="validarCampos(event)" name="botao" value="Inserir" class="botao btn-principal">Inserir</button>
+                <button type="button" onclick="limpar()" class="botao btn-secundario linhaMRReset">Limpar</button>
             </div>
-
         </div>
     </div>
 </div>
 {% endblock %}
+{% block codigos %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+<script src="{{ url_for('static', filename='js/mascaras.js') }}"></script>
+<script src="{{ url_for('static', filename='js/doacao.js') }}"></script>
+{% endblock  %}
