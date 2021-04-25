@@ -1,12 +1,114 @@
-from app import flaskApp
-from flask import render_template
-from flask_login import login_required
+from app import flaskApp, db
+from flask import render_template, request, redirect, url_for
+from flask_login import login_required, current_user
+from datetime import date, datetime
+from collections import Counter
+from app.models.doacao import Doacao
+from app.models.doador import Doador
 
 
-@flaskApp.route('/nova-doacao')
+# hemocentro_id = current_user.get_hemocentro().get_id()
+
+@flaskApp.route('/doacao', methods=['GET', 'POST'])
 @login_required
 def nova_doacao():
-    return render_template("doacao.html")
+    hoje = date.today()
+    hoje = hoje.strftime('%d/%m/%Y')
+    mensagem = request.args.get('mensagem')
+    numero_registro = request.args.get('numero_registro')
+    nome = request.args.get('nome')
+    tipoSangue = request.args.get('tipoSangue')
+
+    if request.method == 'GET':
+        return render_template("doacao.html", date=hoje, mensagem=mensagem,numero_registro=numero_registro,nome=nome,tipoSangue=tipoSangue)
+
+    elif request.method == 'POST':
+
+        if request.form['botao'] == "search":
+            convocacao = request.form['convocacao']
+            data = request.form['data']
+            numRegistro = request.form['numRegistro']
+            if not numRegistro == '':
+                doador = Doador.query.filter_by(numero_registro=numRegistro).first()
+                if doador:
+                    return render_template("doacao.html", date=data, doador=doador, convocacao=convocacao)
+                else:
+                    return render_template("doacao.html", date=data, convocacao=convocacao,mensagem="ErroBD_4")
+            else:
+                return redirect(url_for("pesquisa_doador"))
+        elif request.form['botao'] == "Inserir e continuar" or request.form['botao'] == "Inserir":
+            continuar = False
+            if request.form['botao'] == 'Inserir e continuar':
+                continuar = True
+            
+            numRegistro = request.form['numRegistro']
+            nome = request.form['nome']
+            try:
+                doador = Doador.query.filter_by(numero_registro=numRegistro).first()
+                if doador == None or nome != doador.nome:
+                    return redirect(url_for("nova_doacao", date=hoje, mensagem="ErroBD_2"))
+            except:
+                return redirect(url_for("nova_doacao", date=hoje, mensagem="ErroBD_2"))
+            else:
+                fidelidade = request.form['fidelidade']
+                if doador.fidelidade != fidelidade:
+                    try:
+                        doador.fidelidade = fidelidade
+                        db.session.add(doador)
+                        db.session.commit()
+                    except:
+                        return redirect(url_for("doacao.html", date=hoje, mensagem="ErroBD_3"))
+                data = request.form['data']
+                data = datetime.strptime(data, '%d/%m/%Y').date()
+                convocacao = request.form['convocacao']
+                observacoes = request.form['observacoes']
+                hemocentro_id = current_user.get_hemocentro().get_id()
+                doacao = Doacao(hemocentro_id = hemocentro_id, doador_id= numRegistro, data= data,
+                convocacao=convocacao, observacao = observacoes)
+                try:
+                    db.session.add(doacao)
+                    db.session.commit()
+                except Exception as e:
+                    print(e)
+                    return redirect(url_for("nova_doacao", date=hoje, mensagem="ErroBD"))
+
+                if continuar:
+                    return redirect(url_for("nova_doacao", mensagem="Inserido"))
+                else:
+                    return redirect(url_for('inicial', sucesso="sucesso"))
+        
+
+@flaskApp.route('/doacao/doador') 
+@login_required
+def pesquisa_doador():
+    return render_template("doacaoDoador.html")
+
+
+@flaskApp.route('/doacao/doador/pesquisa')
+@login_required
+def pesquisar_doador():
+    pesquisaPor = request.args.get('pesquisaPor')
+    pesquisa = request.args.get('pesquisa')
+    resultadoPesquisa = []
+
+    page = request.args.get('page')
+    if page and page.isdigit():
+        page = int(page)
+    else:
+        page = 1
+
+    if pesquisaPor == 'cpf':
+        paginate = Doador.query.filter_by(cpf=pesquisa).paginate(page=page, per_page=2)
+        resultadoPesquisa = paginate.items
+    elif pesquisaPor == 'nome':
+        nome_pesquisa = '%' + pesquisa + '%'
+        paginate = Doador.query.filter(Doador.nome.like(nome_pesquisa)).paginate(page=page, per_page=2)
+        resultadoPesquisa = paginate.items
+
+    if Counter(resultadoPesquisa):
+        return render_template("doacaoDoador.html", resultadoPesquisa=resultadoPesquisa, paginate=paginate,pesquisaPor=pesquisaPor,pesquisa=pesquisa)
+    else:
+        return render_template("doacaoDoador.html", lista_vazia=True,pesquisaPor=pesquisaPor,pesquisa=pesquisa)
 
 
 @flaskApp.route('/alterar-doacao') # '/alterar_doacao/<id>'
