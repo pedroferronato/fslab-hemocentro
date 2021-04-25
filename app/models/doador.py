@@ -16,7 +16,7 @@ class Doador(db.Model):
     idade = db.Column(db.Integer)
     tipo_sanguineo = db.Column(db.String(200), nullable=False)
     municipio = db.Column(db.String(200), nullable=False)
-    telefone = db.Column(db.String(200), nullable=False)
+    telefone = db.Column(db.String(200))
     celular = db.Column(db.String(200))
     email = db.Column(db.String(200))
     cadastro_SUS = db.Column(db.String(200), nullable=False)

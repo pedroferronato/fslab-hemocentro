@@ -3,7 +3,8 @@ from app.models.utilidadeSistema import Utilidades
 from app.models.doador import Doador
 from flask import render_template, redirect, request, url_for
 from datetime import datetime, date
-from flask_login import login_required
+from collections import Counter
+from flask_login import login_required, current_user
 
 
 @flaskApp.route('/doador', methods=['GET', 'POST'])
@@ -14,7 +15,6 @@ def novo_doador():
     sucesso = request.args.get('sucesso')
 
     recarregar = request.args.get('reload')
-
 
     numRegistroBKP = request.args.get('numRegistroBKP')
     nomeBKP = request.args.get('nomeBKP')
@@ -51,37 +51,40 @@ def novo_doador():
         if request.form['inserir'] == 'Inserir e continuar':
             continuar = True
 
-        numRegistro = request.form['numRegistro']
+        num_registro = request.form['numRegistro']
         nome = request.form['nome']
         cpf = request.form['cpf']
         sexo = request.form['sexo']
-        tipoSangue = request.form['tipoSangue']
+        tipo_sangue = request.form['tipoSangue']
         nascimento = request.form['nascimento']
-        dateNasc = datetime.strptime(nascimento, '%d/%m/%Y').date()
+        data_nascimento = datetime.strptime(nascimento, '%d/%m/%Y').date()
         sus = request.form['sus']
-        estadoCivil = request.form['estadoCivil']
+        estado_civil = request.form['estadoCivil']
         celular = request.form['celular']
         telefone = request.form['telefone']
         mail = request.form['mail']
-        aviso = request.form['aviso'] 
+        aviso = request.form['aviso']
         municipio = request.form['municipio']
         profissao = request.form['profissao']
-        localTrabalho = request.form['localTrabalho']
-        estadoAptidao = request.form['estadoAptidao']
-        dataInaptidao = request.form['dataInaptidao']
-        if not dataInaptidao:
-            dateInap = None
+        local_trabalho = request.form['localTrabalho']
+        estado_aptidao = request.form['estadoAptidao']
+        if estado_aptidao == "apto":
+            estado_aptidao = False
         else:
-            dateInap = datetime.strptime(dataInaptidao, '%d/%m/%Y').date()
+            estado_aptidao = True
+        data_inaptidao = request.form['dataInaptidao']
+        if not data_inaptidao:
+            data_inaptidao = None
+        else:
+            data_inaptidao = datetime.strptime(dataInaptidao, '%d/%m/%Y').date()
         mae = request.form['mae']
         pai = request.form['pai']
 
-
         try:
-            doador = Doador(numero_registro=numRegistro, hemocentro_id = 1, nome=nome, cpf=cpf, sexo=sexo, tipo_sanguineo=tipoSangue, data_de_nascimento=dateNasc,
-             cadastro_SUS=sus, estado_civil=estadoCivil, celular=celular, telefone=telefone, email=mail, municipio=municipio,
-             profissao=profissao, local_trabalho=localTrabalho, final_inaptidao=dateInap, contatos_preferidos= aviso,
-             nome_mae=mae, nome_pai=pai )
+            doador = Doador(numero_registro=num_registro, hemocentro_id = current_user.get_hemocentro().get_id(), nome=nome, cpf=cpf, sexo=sexo, tipo_sanguineo=tipo_sangue, data_de_nascimento=data_nascimento,
+            cadastro_SUS=sus, estado_civil=estado_civil, celular=celular, telefone=telefone, email=mail, municipio=municipio,
+            profissao=profissao, local_trabalho=local_trabalho, inaptidao=estado_aptidao, final_inaptidao=data_inaptidao, contatos_preferidos= aviso,
+            nome_mae=mae, nome_pai=pai)
             db.session.add(doador)
             db.session.commit()
 
@@ -100,28 +103,25 @@ def novo_doador():
 def alterar_doador(doador_numRegistro):
     cidade_registradas = Utilidades.query.order_by(Utilidades.id).all()
     if request.method == 'GET':
-        doador = Doador.query.filter_by(id=doador_numRegistro).first()
+        doador = Doador.query.filter_by(numero_registro=doador_numRegistro).first()
         return render_template("doador.html", alterar=True, doador=doador, cidades=cidade_registradas)
     elif request.method == 'POST':
         nome = request.form['nome']
         cpf = request.form['cpf']
         sexo = request.form['sexo']
         tipoSangue = request.form['tipoSangue']
-        nascimento = request.form['nascimento']
+        nascimento = datetime.strptime(request.form['nascimento'], '%d/%m/%Y').date()
         sus = request.form['sus']
         estadoCivil = request.form['estadoCivil']
         celular = request.form['celular']
         telefone = request.form['telefone']
         mail = request.form['mail']
         aviso = request.form['aviso']
-        municipio = request.form['municipio']
         profissao = request.form['profissao']
         localTrabalho = request.form['localTrabalho']
-        estadoAptidao = request.form['estadoAptidao']
-        dataInaptidao = request.form['dataInaptidao']
         mae = request.form['mae']
         pai = request.form['pai']
-        doador = Doador.query.filter_by(id=doador_numRegistro).first()
+        doador = Doador.query.filter_by(numero_registro=doador_numRegistro).first()
 
 
         doador.nome = nome
@@ -135,75 +135,80 @@ def alterar_doador(doador_numRegistro):
         doador.telefone = telefone
         doador.email = mail
         doador.contatos_preferidos = aviso
-        doador.municipio = municipio
         doador.profissao = profissao
         doador.local_trabalho = localTrabalho
-        doador.inaptidao = estadoAptidao
-        doador.final_inaptidao = dataInaptidao
         doador.nome_mae = mae
         doador.nome_pai = pai 
         db.session.add(doador)
         db.session.commit()
-        return redirect(url_for('consultar_doador', sucesso="sucesso"))
+        return redirect(url_for('consultar_doador', mensagem="sucesso", registro_alterado=doador.numero_registro))
 
 
 @flaskApp.route('/doador/consultar') 
 @login_required
 def consultar_doador():
+    registro_alterado = request.args.get('registro_alterado')
+    mensagem = request.args.get('mensagem')
+
+    cidade_registradas = Utilidades.query.order_by(Utilidades.id).all()
+
+    if registro_alterado:
+        return render_template("consultaDoadores.html", cidades=cidade_registradas, registro_alterado=registro_alterado, mensagem=mensagem)
+    else:
+        return render_template("consultaDoadores.html", cidades=cidade_registradas, mensagem=mensagem)
+
+
+@flaskApp.route('/doador/consulta') 
+@login_required
+def consulta_doador():
     cidade_registradas = Utilidades.query.order_by(Utilidades.id).all()
     nome = request.args.get('nome')
     tipo_sanguineo = request.args.get('tipoSangue')
     numero_registro = request.args.get('registro')
     municipio = request.args.get('municipio')
 
-    sucesso = request.args.get('sucesso')
+    parametros = []
 
-    if nome and tipo_sanguineo and numero_registro and municipio:
-        nome = '%' + nome + '%'
-        tipo_sanguineo = '%' + tipo_sanguineo + '%'
-        numero_registro = '%' + numero_registro + '%'
-        municipio = '%' + municipio + '%'
-        lista_doador = Doador.query.filter(Doador.nome.like(nome), Doador.tipo_sanguineo.like(tipo_sanguineo), Doador.numero_registro.like(numero_registro), Doador.municipio.like(municipio))
-    elif nome and tipo_sanguineo:
-        nome = '%' + nome + '%'
-        tipo_sanguineo = '%' + tipo_sanguineo + '%'
-        lista_doador = Doador.query.filter(Doador.nome.like(nome), Doador.tipo_sanguineo.like(tipo_sanguineo))
-    elif nome and numero_registro:
-        nome = '%' + nome + '%'
-        numero_registro = '%' + numero_registro + '%'
-        lista_doador = Doador.query.filter(Doador.nome.like(nome), Doador.numero_registro.like(numero_registro))
-    elif nome and municipio:
-        nome = '%' + nome + '%'
-        municipio = '%' + municipio + '%'
-        lista_doador = Doador.query.filter(Doador.nome.like(nome), Doador.municipio.like(municipio))
-    elif nome:
-        nome = '%' + nome + '%'
-        lista_doador = Doador.query.filter(Doador.nome.like(nome))
-    elif tipo_sanguineo:
-        tipo_sanguineo = '%' + tipo_sanguineo + '%'
-        lista_doador = Doador.query.filter(Doador.tipo_sanguineo.like(tipo_sanguineo))
-    elif numero_registro:
-        numero_registro = '%' + numero_registro + '%'
-        lista_doador = Doador.query.filter(Doador.numero_registro.like(numero_registro))
-    elif municipio:
-        municipio = '%' + municipio + '%'
-        lista_doador = Doador.query.filter(Doador.municipio.like(municipio))
+    if nome:
+       parametros.append(Doador.nome.like("%{}%".format(nome)))
+    if tipo_sanguineo and tipo_sanguineo != "null":
+       parametros.append(Doador.tipo_sanguineo == tipo_sanguineo)
+    if numero_registro:
+       parametros.append(Doador.numero_registro == numero_registro)
+    if municipio and municipio != "null":
+       parametros.append(Doador.municipio == municipio)
+
+
+    page = request.args.get('page')
+
+    if page and page.isdigit():
+        page = int(page)
     else:
-        return render_template("consultaDoadores.html", sucesso=sucesso, cidades=cidade_registradas)
+        page = 1
 
-    if lista_doador.count() > 0:
-        return render_template("consultaDoadores.html", resultado=True, lista_doador=lista_doador, cidades=cidade_registradas)
+    itens = request.args.get('itens')
+    
+    if itens:
+        itens_pesquisados = int(itens)
     else:
-        return render_template("consultaDoadores.html", lista_vazia=True, cidades=cidade_registradas)
+        itens_pesquisados = 5
 
+    paginacao = Doador.query.filter(*parametros).paginate(page=page, per_page=itens_pesquisados)
+
+    lista_doador = paginacao.items
+
+    if Counter(lista_doador):
+        return render_template("consultaDoadores.html", resultado=True, paginas=paginacao, doadores=lista_doador, cidades=cidade_registradas, itens=itens_pesquisados, nome_pesquisado=nome, tipo_pesquisado=tipo_sanguineo, registro_pesquisado=numero_registro, municipio_pesquisado=municipio)
+    else:
+        return render_template("consultaDoadores.html", lista_vazia=True, cidades=cidade_registradas, itens=itens_pesquisados, nome_pesquisado=nome, tipo_pesquisado=tipo_sanguineo, registro_pesquisado=numero_registro, municipio_pesquisado=municipio)
 
 @flaskApp.route('/doador/deletar/<doador_numRegistro>')
 @login_required
 def deletar_doador(doador_numRegistro):
-    doador = Doador.query.filter_by(id=doador_numRegistro).first()
+    doador = Doador.query.filter_by(numero_registro=doador_numRegistro).first()
     db.session.delete(doador)
     db.session.commit()
-    return redirect(url_for('consultar_doador', sucesso="sucesso"))
+    return redirect(url_for('consultar_doador', mensagem="deletado"))
 
 
 # @flaskApp.route('/alterar-inaptidao') # '/alterar_inatidao/<id>'

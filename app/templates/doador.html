@@ -44,10 +44,10 @@
                     <div class="linhaFormulario">
                         <div class="campo" id="divRegistro">
                             <label id="lbNumRegistro" for="numRegistro">Nº registro:</label>
-                            <input name="numRegistro" type="text" id="numRegistro" autocomplete="off"
+                            <input name="numRegistro" type="number" id="numRegistro" autocomplete="off"
                                 onfocus="removerClasseAlerta('numRegistro')" {% if reload %}
                                 value="{{ numRegistroBKP }}" {% endif %} {% if alterar %}
-                                value="{{ doador.numero_registro }}" {% endif %}>
+                                value="{{ doador.numero_registro }}" disabled {% endif %}>
 
                         </div>
                         <div class="campo" id="divNome">
@@ -64,29 +64,24 @@
                         </div>
                         <div class="campo" id="divSexo">
                             <label id="lbSexo" for="sexo">Sexo:</label>
-                            <select name="sexo" id="sexo" onfocus="removerClasseAlerta('sexo')" {% if reload %}
-                                value="{{ sexoBKP }}" {% endif %} {% if alterar %} value="{{ doador.sexo }}" {% endif
-                                %}>
-                                <option value="null" selected="selected" disabled>Selecione</option>
-                                <option value="fem">Feminino</option>
-                                <option value="mas">Masculino</option>
-                            </select>
-
+                            <select name="sexo" id="sexo" onfocus="removerClasseAlerta('sexo')">
+                                <option value="selecione" selected="selected" >Selecione</option>
+                                <option {% if (alterar and doador.tipo_sanguineo == 'fem') or (reload and sexoBKP == 'fem') %} selected="selected" {% endif %} value="fem">Feminino</option>
+                                <option {% if (alterar and doador.sexo == 'mas') or (reload and sexoBKP == 'mas') %} selected="selected" {% endif %} value="mas">Masculino</option>
+                            </select> 
                         </div>
                         <div class="campo" id="divSangue">
                             <label id="lbTipoSangue" for="tipoSangue">Tipo sanguíneo:</label>
-                            <select name="tipoSangue" id="tipoSangue" onfocus="removerClasseAlerta('tipoSangue')" {% if
-                                reload %} value="{{ tipoSangueBKP }}" {% endif %} {% if alterar %}
-                                value="{{ doador.tipo_sanguineo }}" {% endif %}>
-                                <option value="null" selected="selected" disabled>Selecione</option>
-                                <option value="A+">A+</option>
-                                <option value="A-">A-</option>
-                                <option value="B+">B+</option>
-                                <option value="B-">B-</option>
-                                <option value="AB+">AB+</option>
-                                <option value="AB-">AB-</option>
-                                <option value="O+">O+</option>
-                                <option value="O-">O-</option>
+                            <select name="tipoSangue" id="tipoSangue" onfocus="removerClasseAlerta('tipoSangue')">
+                                <option value="selecione">Selecione</option>
+                                <option {% if (alterar and doador.tipo_sanguineo == 'A+') or (reload and tipoSangueBKP == 'A+') %} selected="selected" {% endif %} value="A+">A+</option>
+                                <option {% if (alterar and doador.tipo_sanguineo == 'A-') or (reload and tipoSangueBKP == 'A-') %} selected="selected" {% endif %} value="A-">A-</option>
+                                <option {% if (alterar and doador.tipo_sanguineo == 'B+') or (reload and tipoSangueBKP == 'B+') %} selected="selected" {% endif %} value="B+">B+</option>
+                                <option {% if (alterar and doador.tipo_sanguineo == 'B-') or (reload and tipoSangueBKP == 'B-') %} selected="selected" {% endif %} value="B-">B-</option>
+                                <option {% if (alterar and doador.tipo_sanguineo == 'AB+') or (reload and tipoSangueBKP == 'AB+') %} selected="selected" {% endif %} value="AB+">AB+</option>
+                                <option {% if (alterar and doador.tipo_sanguineo == 'AB-') or (reload and tipoSangueBKP == 'AB-') %} selected="selected" {% endif %} value="AB-">AB-</option>
+                                <option {% if (alterar and doador.tipo_sanguineo == 'O+') or (reload and tipoSangueBKP == 'O+') %} selected="selected" {% endif %} value="O+">O+</option>
+                                <option {% if (alterar and doador.tipo_sanguineo == 'O-') or (reload and tipoSangueBKP == 'O-') %} selected="selected" {% endif %} value="O-">O-</option>
                             </select>
                         </div>
                     </div>
@@ -94,13 +89,13 @@
                     <div class="linhaFormulario">
                         <div class="campo">
                             <label id="lbNascimento" for="nascimento">Data de Nascimento:</label>
-                            <input name="nascimento" type="text" id="nascimento" autocomplete="off"
+                            <input class="data" name="nascimento" type="text" id="nascimento" autocomplete="off"
                                 onfocus="removerClasseAlerta('nascimento')" {% if reload %} value="{{ nascimentoBKP }}"
-                                {% endif %} {% if alterar %} value="{{ doador.data_de_nascimento }}" {% endif %}>
+                                {% endif %} {% if alterar %} value="{{ doador.data_de_nascimento.strftime('%d-%m-%Y') }}" {% endif %}>
                         </div>
                         <div class="campo">
                             <label id="lbSus" for="sus">Cadastro do SUS:</label>
-                            <input name="sus" type="text" id="sus" autocomplete="off"
+                            <input name="sus" type="number" id="sus" autocomplete="off"
                                 onfocus="removerClasseAlerta('sus')" {% if reload %} value="{{ susBKP }}" {% endif %} {%
                                 if alterar %} value="{{ doador.cadastro_SUS }}" {% endif %}>
                         </div>
@@ -127,32 +122,37 @@
                     <div class="linhaFormulario">
                         <div class="campo">
                             <label id="lbMail" for="mail">E-mail:</label>
-                            <input name="mail" type="text" id="mail" autocomplete="off" {% if reload %}
+                            <input name="mail" type="email" id="mail" autocomplete="off" {% if reload %}
                                 value="{{ mailBKP }}" {% endif %} {% if alterar %} value="{{ doador.email }}" {% endif
                                 %}>
                         </div>
                         <div class="campo">
                             <label id="lbAviso" for="aviso">Receber aviso por:</label>
-                            <select name="aviso" id="aviso" {% if reload %} value="{{ avisoBKP }}" {% endif %} {% if
-                                alterar %} value="{{ doador.contatos_preferidos }}" {% endif %}>
-                                <option value="null" selected="selected" disabled>Selecione</option>
-                                <option value="email">E-mail</option>
-                                <option value="sms">SMS</option>
-                                <option value="email&sms">E-mail + SMS</option>
+                            <select name="aviso" id="aviso">
+                                {% if alterar %}
+                                <option value="nao">Não receber</option>
+                                <option value="email" {% if  doador.contatos_preferidos == 'email' %} selected="selected" {% endif %}>E-mail</option>
+                                <option value="sms" {% if  doador.contatos_preferidos == 'sms' %} selected="selected" {% endif %}>SMS</option>
+                                <option value="email&sms" {% if  doador.contatos_preferidos == 'email&sms' %} selected="selected" {% endif %}>E-mail + SMS</option>
+                                {% else %}
+                                <option value="nao">Não receber</option>
+                                <option value="email" {% if  avisoBKP == 'email' %} selected="selected" {% endif %}>E-mail</option>
+                                <option value="sms" {% if  avisoBKP == 'sms' %} selected="selected" {% endif %}>SMS</option>
+                                <option value="email&sms" {% if  avisoBKP == 'email&sms' %} selected="selected" {% endif %}>E-mail + SMS</option>
+                                {% endif %}
                             </select>
                         </div>
                         <div class="campo">
                             <div class="flexivel SpcBtw AlgEnd">
                                 <label id="lbMunicipio" for="municipio">Município:</label>
-                                <span onclick="adicionarCidade()" class="material-icons iconesM">add_location_alt</span>
+                                {% if not alterar %} <span onclick="adicionarCidade()" class="material-icons iconesM" >add_location_alt</span> {% endif %}
                             </div>
                             <select name="municipio" id="municipio" onfocus="removerClasseAlerta('municipio')" {% if
                                 alterar %} disabled {% endif %}>
                                 <option value="selecione" {% if not alterar %} selected="selected" {% endif %}>Selecione
                                 </option>
                                 {% if alterar %}
-                                <option value="{{doador.municipio}}" selected="selected">{{doador.municipio}}
-                                </option>
+                                <option value="{{doador.municipio}}" selected="selected">{{doador.municipio}}</option>
                                 {% else %}
                                 {% for cidade in cidades %}
                                 <option value="{{cidade.cidade_registrada}}" {% if
@@ -176,22 +176,24 @@
                             <input name="localTrabalho" type="text" id="localTrabalho" autocomplete="off" {% if reload
                                 %} value="{{ localTrabalhoBKP }}" {% endif %} {% if alterar %}
                                 value="{{ doador.local_trabalho }}" {% endif %}>
-                        </div>
+                        </div>      
                         <div class="campo">
-                            <label id="lbInapto" for="inapto">Inapto:</label>
-                            <select name="estadoAptidao" id="estadoAptidao" {% if reload %}
-                                value="{{ estadoAptidaoBKP }}" {% endif %} {% if alterar %} disabled
-                                value="{{ doador.inaptidao }}" {% endif %}>
-                                <option value="null" selected="selected" disabled>Selecione</option>
-                                <option value="inapto">Inapto</option>
+                            <label for="estadoAptidao">Inaptidão:</label>
+                            <select name="estadoAptidao" id="estadoAptidao" {% if alterar %} disabled {% endif %}>
+                                {% if alterar %}
+                                <option value="apto" >Apto</option>
+                                <option value="inapto" 
+                                {% if  doador.inaptidao %} selected="selected" {% endif %}>Inapto</option>
+                                {% else %}
                                 <option value="apto">Apto</option>
+                                <option value="inapto">Inapto</option>
+                                {% endif %}
                             </select>
                         </div>
                         <div class="campo">
                             <label id="lbDataInaptidao" for="dataInaptidao">Data Inaptidão:</label>
-                            <input name="dataInaptidao" type="text" id="dataInaptidao" autocomplete="off" {% if reload
-                                %} value="{{ dataInaptidaoBKP }}" {% endif %} {% if alterar %}
-                                value="{{ doador.final_inaptidao }}" {% endif %}>
+                            <input onfocus="removerClasseAlerta('inaptidao')" class="data" name="dataInaptidao" type="text" id="dataInaptidao" autocomplete="off" {% if reload %} value="{{ dataInaptidaoBKP }}" {% endif %} 
+                            {% if alterar %} value="{{ doador.final_inaptidao }}" disabled {% endif %}>
                         </div>
                     </div>
 
@@ -226,7 +228,7 @@
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        Deseja realmente deletar o doador "{{ doador.nome }}" da base de dados?!
+                                        Deseja realmente excluir o doador "{{ doador.nome }}" da base de dados?!
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
@@ -262,7 +264,7 @@
                     <h5 class="modal-title" id="addCidadeLabel">Adicionar cidade</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="/cidade/nova" method="POST">
+                <form action="/cidade/nova/doador" method="POST">
                     <div class="modal-body">
                         <div class="campo">
                             <input type="hidden" id="numRegistroSafe" name="numRegistroSafe">
@@ -303,4 +305,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 <script src="{{ url_for('static', filename='js/mascaras.js') }}"></script>
 <script src="{{ url_for('static', filename='js/doador.js') }}"></script>
+
 {% endblock %}
