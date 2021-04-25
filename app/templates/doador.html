@@ -47,7 +47,7 @@
                             <input name="numRegistro" type="number" id="numRegistro" autocomplete="off"
                                 onfocus="removerClasseAlerta('numRegistro')" {% if reload %}
                                 value="{{ numRegistroBKP }}" {% endif %} {% if alterar %}
-                                value="{{ doador.numero_registro }}" {% endif %}>
+                                value="{{ doador.numero_registro }}" disabled {% endif %}>
 
                         </div>
                         <div class="campo" id="divNome">
@@ -91,7 +91,7 @@
                             <label id="lbNascimento" for="nascimento">Data de Nascimento:</label>
                             <input class="data" name="nascimento" type="text" id="nascimento" autocomplete="off"
                                 onfocus="removerClasseAlerta('nascimento')" {% if reload %} value="{{ nascimentoBKP }}"
-                                {% endif %} {% if alterar %} value="{{ doador.data_de_nascimento }}" {% endif %}>
+                                {% endif %} {% if alterar %} value="{{ doador.data_de_nascimento.strftime('%d-%m-%Y') }}" {% endif %}>
                         </div>
                         <div class="campo">
                             <label id="lbSus" for="sus">Cadastro do SUS:</label>
@@ -131,9 +131,9 @@
                             <select name="aviso" id="aviso">
                                 {% if alterar %}
                                 <option value="nao">Não receber</option>
-                                <option value="email" {% if  doador.aviso == 'email' %} selected="selected" {% endif %}>E-mail</option>
-                                <option value="sms" {% if  doador.aviso == 'sms' %} selected="selected" {% endif %}>SMS</option>
-                                <option value="email&sms" {% if  doador.aviso == 'email&sms' %} selected="selected" {% endif %}>E-mail + SMS</option>
+                                <option value="email" {% if  doador.contatos_preferidos == 'email' %} selected="selected" {% endif %}>E-mail</option>
+                                <option value="sms" {% if  doador.contatos_preferidos == 'sms' %} selected="selected" {% endif %}>SMS</option>
+                                <option value="email&sms" {% if  doador.contatos_preferidos == 'email&sms' %} selected="selected" {% endif %}>E-mail + SMS</option>
                                 {% else %}
                                 <option value="nao">Não receber</option>
                                 <option value="email" {% if  avisoBKP == 'email' %} selected="selected" {% endif %}>E-mail</option>
@@ -145,7 +145,7 @@
                         <div class="campo">
                             <div class="flexivel SpcBtw AlgEnd">
                                 <label id="lbMunicipio" for="municipio">Município:</label>
-                                <span onclick="adicionarCidade()" class="material-icons iconesM">add_location_alt</span>
+                                {% if not alterar %} <span onclick="adicionarCidade()" class="material-icons iconesM" >add_location_alt</span> {% endif %}
                             </div>
                             <select name="municipio" id="municipio" onfocus="removerClasseAlerta('municipio')" {% if
                                 alterar %} disabled {% endif %}>
@@ -193,7 +193,7 @@
                         <div class="campo">
                             <label id="lbDataInaptidao" for="dataInaptidao">Data Inaptidão:</label>
                             <input onfocus="removerClasseAlerta('inaptidao')" class="data" name="dataInaptidao" type="text" id="dataInaptidao" autocomplete="off" {% if reload %} value="{{ dataInaptidaoBKP }}" {% endif %} 
-                            {% if alterar %} value="{{ doador.final_inaptidao }}" {% endif %}>
+                            {% if alterar %} value="{{ doador.final_inaptidao }}" disabled {% endif %}>
                         </div>
                     </div>
 
@@ -228,7 +228,7 @@
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        Deseja realmente deletar o doador "{{ doador.nome }}" da base de dados?!
+                                        Deseja realmente excluir o doador "{{ doador.nome }}" da base de dados?!
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
@@ -305,4 +305,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 <script src="{{ url_for('static', filename='js/mascaras.js') }}"></script>
 <script src="{{ url_for('static', filename='js/doador.js') }}"></script>
+
 {% endblock %}

@@ -94,7 +94,6 @@ function validarCampos(evento) {
         }
         alerta = true;
     }
-    evento.preventDefault()
     if (alerta) evento.preventDefault()
 }
 
