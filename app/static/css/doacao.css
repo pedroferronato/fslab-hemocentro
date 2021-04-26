@@ -40,12 +40,13 @@
     flex: 6;
 }
 
-#divNome {
-    flex: 10;
+#divPesquisaPor {
+    max-width: 150px;
+    flex: 2;
 }
 
-#divCPF{
-    flex: 4;
+#divPesquisa {
+    flex: 6;
 }
 
 #btnPesquisa {
@@ -66,7 +67,7 @@
     padding: 0px 8px;
     font-size: 28px;
     line-height: 0px;
-    background-color: white;
+    background-color: var(--cinzaFundo);
     margin-right: 12px;
     border:none;
 }
