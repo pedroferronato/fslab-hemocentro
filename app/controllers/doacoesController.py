@@ -87,8 +87,8 @@ def pesquisa_doador():
 @flaskApp.route('/doacao/doador/pesquisa')
 @login_required
 def pesquisar_doador():
-    nome = request.args.get('nome')
-    cpf = request.args.get('cpf')
+    pesquisaPor = request.args.get('pesquisaPor')
+    pesquisa = request.args.get('pesquisa')
     resultadoPesquisa = []
 
     page = request.args.get('page')
@@ -97,25 +97,18 @@ def pesquisar_doador():
     else:
         page = 1
 
-    if nome and cpf:
-        nome_pesquisa = '%' + nome + '%'
-        paginate = Doador.query.filter(Doador.nome.like(nome_pesquisa),Doador.cpf.like(cpf)).paginate(page=page, per_page=10)
+    if pesquisaPor == 'cpf':
+        paginate = Doador.query.filter_by(cpf=pesquisa).paginate(page=page, per_page=2)
         resultadoPesquisa = paginate.items
-    elif nome:
-        nome_pesquisa = '%' + nome + '%'
-        paginate = Doador.query.filter(Doador.nome.like(nome_pesquisa)).paginate(page=page, per_page=10)
-        resultadoPesquisa = paginate.items
-    elif cpf:
-        paginate = Doador.query.filter_by(cpf=cpf).paginate(page=page, per_page=10)
-        resultadoPesquisa = paginate.items
-    else:
-        paginate = Doador.query.paginate(page=page, per_page=10)
+    elif pesquisaPor == 'nome':
+        nome_pesquisa = '%' + pesquisa + '%'
+        paginate = Doador.query.filter(Doador.nome.like(nome_pesquisa)).paginate(page=page, per_page=2)
         resultadoPesquisa = paginate.items
 
     if Counter(resultadoPesquisa):
-        return render_template("doacaoDoador.html", resultadoPesquisa=resultadoPesquisa, paginate=paginate,nome=nome,cpf=cpf)
+        return render_template("doacaoDoador.html", resultadoPesquisa=resultadoPesquisa, paginate=paginate,pesquisaPor=pesquisaPor,pesquisa=pesquisa)
     else:
-        return render_template("doacaoDoador.html", lista_vazia=True,nome=nome,cpf=cpf)
+        return render_template("doacaoDoador.html", lista_vazia=True,pesquisaPor=pesquisaPor,pesquisa=pesquisa)
 
 
 @flaskApp.route('/alterar-doacao') # '/alterar_doacao/<id>'
