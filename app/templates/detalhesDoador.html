@@ -228,7 +228,13 @@
                     <td>{{ doacao.data.strftime('%d/%m/%Y') }}</td>
                     <td>{{ doacao.convocacao }}</td>
                     <td>{{ doacao.get_local_coleta() }}</td>
-                    <td>{{ doacao.observacao }}</td>
+                    <td>
+                        {% if doacao.observacao == "" %}
+                        -
+                        {% else %}
+                        {{ doacao.observacao }}
+                        {% endif %}
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

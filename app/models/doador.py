@@ -76,5 +76,5 @@ class Doador(db.Model):
 
 
     def get_ultimas_dez_doacoes(self):
-        return Doacao.query.filter_by(doador_id=self.numero_registro).limit(10).all()
+        return Doacao.query.filter_by(doador_id=self.numero_registro).order_by(Doacao.data.desc()).limit(10).all()
 
