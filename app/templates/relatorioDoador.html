@@ -21,24 +21,81 @@
         </div>
 
         <div class="formulario">
-            <div class="linhaFormulario linhaSolitaria">
-                <div class="campo" id="divRegistro">
-                    <label for="registro">Número de registro:</label>
-                    <input type="text" id="registro" autocomplete="off">
+            <form action="/detalhes-doador" method="GET">
+                <div class="linhaFormulario linhaSolitaria">
+                    <div class="campo" id="divRegistro">
+                        <label id="lbRegistro" for="registro">Número de registro:</label>
+                        <input type="number" id="registro" name="registro" autocomplete="off">
+                    </div>
+                    <div class="campo" id="divNome">
+                        <label id="lbNome" for="nome">Nome:</label>
+                        <input type="text" id="nome" name="nome" autocomplete="off">
+                    </div>
+                    <div class="campo" id="divCpf">
+                        <label id="lbCpf" for="cpf">CPF:</label>
+                        <input type="text" id="cpf" name="cpf" autocomplete="off" onfocus="removerAlerta()">
+                    </div>
+                    <button onclick="validarCampos(event)" class="botao btn-principal linhaMRReset">Buscar</button>
                 </div>
-                <div class="campo" id="divNome">
-                    <label for="nome">Nome:</label>
-                    <input type="text" id="nome" autocomplete="off">
-                </div>
-                <div class="campo" id="divCpf">
-                    <label for="cpf">CPF:</label>
-                    <input type="text" id="cpf" autocomplete="off">
-                </div>
-                <a href="/realatorio-doador/id"><button class="botao btn-principal linhaMRReset">Buscar</button></a>
+            </form>
+        </div>
+
+    </div>
+    {% if nenhum_encontrado %}
+    <div class="cartao">
+        <strong>Nenhum resultado encontrado</strong>
+    </div>
+    {% endif %}
+
+    {% if resultados %}
+    <div class="cartao">
+        <div class="linhaFormulario">
+            <table class="table table-striped tabela">
+                <thead class="noselect">
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">CPF</th>
+                        <th scope="col">Tipo sanguíneo</th>
+                        <th scope="col">Detalhes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for doador in resultados %}
+                    <tr class="rowActive">
+                        <td>{{ doador.nome }}</td>
+                        <td>{{ doador.cpf }}</td>
+                        <td>{{ doador.tipo_sanguineo }}</td>
+                        <td><a href="/detalhes-doador/{{ doador.numero_registro }}"><span class="material-icons iconesM">search</span></a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Campos inválidos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Pelo menos um dos campos deve ser preenchido para realizar a busca
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
             </div>
         </div>
-        
     </div>
 </div>
+{% endblock %}
 
+{% block codigos %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+<script src="{{ url_for('static', filename='js/mascaras.js') }}"></script>
+<script src="{{ url_for('static', filename='js/validarRelatorioDoador.js') }}"></script>
 {% endblock %}

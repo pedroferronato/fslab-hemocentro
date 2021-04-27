@@ -211,27 +211,83 @@ def deletar_doador(doador_numRegistro):
     return redirect(url_for('consultar_doador', mensagem="deletado"))
 
 
-# @flaskApp.route('/alterar-inaptidao') # '/alterar_inatidao/<id>'
-# def alterar_inaptidao():
-#     return render_template("alterarInaptidao.html")
+@flaskApp.route('/relatorio-doador') 
+@login_required
+def relatorio_doador():
+    return render_template("relatorioDoador.html")
 
 
-# @flaskApp.route('/consultar-inaptidao') 
-# def consultar_inaptidao():
-#     return render_template("consultaDoadores.html")
+@flaskApp.route('/detalhes-doador') 
+@login_required
+def detalhes_doador():
+    registro = request.args.get('registro')
+    nome = request.args.get('nome')
+    cpf = request.args.get('cpf')
+
+    parametros = []
+
+    if registro:
+        parametros.append(Doador.numero_registro == registro)
+    if nome:
+        parametros.append(Doador.nome.like("%{}%".format(nome)))
+    if cpf:
+        parametros.append(Doador.cpf == cpf)
+
+    resultado = Doador.query.filter(*parametros)
+
+    if resultado.count() == 1:
+        return render_template("detalhesDoador.html", doador=resultado.first())
+    elif resultado.count() == 0:
+        return render_template("relatorioDoador.html", nenhum_encontrado=True)
+    else:
+        return render_template("relatorioDoador.html", resultados=resultado.limit(15))
 
 
-# @flaskApp.route('/consultar-inaptidao/resultado') 
-# def consultar_inaptidao_resultado():
-#     return render_template("consultaDoadores.html", resultado=True)
+@flaskApp.route('/detalhes-doador/<num>') 
+@login_required
+def detalhes_doador_num(num):
+    doador = Doador.query.filter_by(numero_registro=num).first()
+    if not doador:
+        return render_template("relatorioDoador.html", nenhum_encontrado=True)
+    else:
+        return render_template("detalhesDoador.html", doador=doador)
 
 
-# @flaskApp.route('/realatorio-doador') 
-# def relatorio_doador():
-#     return render_template("relatorioDoador.html")
+@flaskApp.route('/alterar-inaptidao/<num>', methods=['GET', 'POST'])
+@login_required
+def alterar_inaptidao(num):
+    doador = Doador.query.filter_by(numero_registro=num).first()
+
+    if request.method == "GET":
+        if not doador:
+            return render_template("relatorioDoador.html", nenhum_encontrado=True)
+        else:
+            return render_template("alterarInaptidao.html", doador=doador)
+    if request.method == "POST":
+        inaptidao = request.form['estadoAptidao']
+        if request.form['data']:
+            data = datetime.strptime(request.form['data'], '%d/%m/%Y').date()
+        
+        if inaptidao == "apto":
+            doador.inaptidao = False
+            doador.final_inaptidao = None
+        elif inaptidao == "inapto":
+            doador.inaptidao = True
+            doador.final_inaptidao = data
+
+        db.session.add(doador)
+        db.session.commit()
+
+        return redirect(url_for('detalhes_doador_num', num=num))
 
 
-# @flaskApp.route('/realatorio-doador/id') # '/alterar_inatidao/<id>'
-# def detalhes_doador():
-#     return render_template("detalhesDoador.html")
+@flaskApp.route('/alterar-contatado/<num>')
+@login_required
+def alterar_contatado(num):
+    doador = Doador.query.filter_by(numero_registro=num).first()
+    doador.contatado = True
+    db.session.add(doador)
+    db.session.commit()
+
+    return redirect(url_for('detalhes_doador_num', num=num))
 

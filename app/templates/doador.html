@@ -95,7 +95,7 @@
                         </div>
                         <div class="campo">
                             <label id="lbSus" for="sus">Cadastro do SUS:</label>
-                            <input name="sus" type="number" id="sus" autocomplete="off"
+                            <input name="sus" type="text" id="sus" autocomplete="off"
                                 onfocus="removerClasseAlerta('sus')" {% if reload %} value="{{ susBKP }}" {% endif %} {%
                                 if alterar %} value="{{ doador.cadastro_SUS }}" {% endif %}>
                         </div>
