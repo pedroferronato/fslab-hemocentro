@@ -12,19 +12,21 @@
         <p>Inicial ></p>
         <p>Doadores ></p>
         <p>Relatório doador ></p>
-        <p>Pedro Luís Ferronato Barreto</p>
+        <p>{{ doador.nome }}</p>
     </div>
 
-    <div class="cartao noselect">
+    <div class="cartao">
         <div class="titulo">
             <div class="flexivel SpcBtw">
                 <div class="flexivel">
-                    <h1>Pedro Luís Ferronato Barreto</h1>
-                    <span class="material-icons iconesG">edit</span>
-                    <a href="/alterar-inaptidao"><span class="material-icons iconesG">healing</span></a>
-                    <span class="material-icons iconesG">phone_in_talk</span>
+                    <h1>{{ doador.nome }}</h1>
+                    <a href="/doador/alterar/{{ doador.numero_registro }}"><span class="material-icons iconesG">edit</span></a>
+                    <a href="/alterar-inaptidao/{{ doador.numero_registro }}"><span class="material-icons iconesG">healing</span></a>
+                    {% if not doador.inaptidao and not doador.contatado %}    
+                    <a href="/alterar-contatado/{{ doador.numero_registro }}"><span class="material-icons iconesG">phone_in_talk</span></a>
+                    {% endif %}
                 </div>
-                <p class="tipoSanguineo">A+</p>
+                <p class="tipoSanguineo">{{ doador.tipo_sanguineo }}</p>
             </div>
         </div>
 
@@ -32,105 +34,185 @@
             <div class="linhaFormulario AlgSrt">
                 <div class="dados">
                     <label>Núm. de regitro:</label>
-                    <p>65689</p>
+                    <p>{{ doador.numero_registro }}</p>
                 </div>
                 <div class="dados">
                     <div class="flexivel SpcBtw">
                         <label>Telefone:</label>
                         <span class="material-icons iconesS">content_copy</span>
                     </div>
-                    <p>(69) 3321-1942</p>
+                    <p>
+                        {% if doador.telefone == "" %}
+                        Não informado
+                        {% else %}
+                        {{ doador.telefone }}
+                        {% endif %}
+                    </p>
                 </div>
                 <div class="dados">
                     <div class="flexivel SpcBtw">
                         <label>Celular:</label>
                         <span class="material-icons iconesS">content_copy</span>
                     </div>
-                    <p>(69) 9 9602-1323</p>
+                    <p>
+                        {% if doador.celular == "" %}
+                        Não informado
+                        {% else %}
+                        {{ doador.celular }}
+                        {% endif %}
+                    </p>
                 </div>
                 <div class="dados">
                     <label>CPF:</label>
-                    <p>248.359.976-05</p>
+                    <p>{{ doador.cpf }}</p>
                 </div>
                 <div class="dados">
                     <label>Data de nascimento:</label>
-                    <p>Pedro Luis Ferronato Barreto</p>
+                    <p>{{ doador.data_de_nascimento.strftime('%d/%m/%Y') }}</p>
                 </div>
                 <div class="dados">
                     <label>Idade:</label>
-                    <p>20</p>
+                    <p>{{ doador.idade }} anos</p>
                 </div>
                 <div class="dados">
                     <label>Sexo:</label>
-                    <p>Masculino</p>
+                    <p>
+                        {% if doador.sexo == "mas" %}
+                        Masculino
+                        {% else %}
+                        Feminino
+                        {% endif %}
+                    </p>
                 </div>
             </div>
 
-            <div class="linhaFormulario linhaSolitaria SpcBtw AlgSrt">
+            <div class="linhaFormulario linhaSolitaria SpcBtw AlgSrt" id="linhaMedia">
                 <div class="flexivel">
                     <div class="dados">
                         <label>Cadastro SUS:</label>
-                        <p>248 5789 9523 3578</p>
+                        <p>{{ doador.cadastro_SUS }}</p>
                     </div>
                     <div class="dados">
                         <div class="flexivel SpcBtw">
                             <label>E-mail:</label>
                             <span class="material-icons iconesS">content_copy</span>
                         </div>
-                        <p>pedroluisfbar@gmail.com</p>
+                        <p>
+                            {% if doador.email == "" %}
+                            Não informado
+                            {% else %}
+                            {{ doador.email }}
+                            {% endif %}
+                        </p>
                     </div>
                     <div class="dados">
                         <label>Fidelidade:</label>
-                        <p>Fidelizado</p>
+                        <p>
+                            {% if doador.fidelidade %}
+                            {{ doador.fidelidade }}
+                            {% else %}
+                            Não informada
+                            {% endif %}
+                        </p>
                     </div>
                     <div class="dados">
                         <label>Total:</label>
-                        <p>6</p>
+                        <p>{{ doador.get_total_doacoes() }} doações</p>
                     </div>
                     <div class="dados">
                         <label>Cidade:</label>
-                        <p>Vilhena</p>
+                        <p>{{ doador.municipio }}</p>
                     </div>
+                    {% if doador.inaptidao %}    
+                    <div class="dados txt-alerta">
+                        <label>Inapto até:</label>
+                        <p>{{ doador.final_inaptidao.strftime('%d/%m/%Y') }}</p>
+                    </div>
+                    {% endif %}
                 </div>
-                <span class="material-icons iconesGG">info</span>
-                <span style="display: none;" class="material-icons iconesGG">keyboard_arrow_up</span>
+                <span onclick="toggleInfo()" id="infoIco" class="material-icons iconesGG">info</span>
+                <span onclick="toggleInfo()" id="infoCloseIco"
+                    class="material-icons iconesGG escondido">keyboard_arrow_up</span>
             </div>
 
-            <div style="display: none;" class="linhaFormulario AlgSrt">
+            <div class="linhaFormulario AlgSrt escondido" id="linhaBaixa">
                 <div class="dados">
                     <label>Estado civil:</label>
-                    <p>Solteiro</p>
+                    <p>
+                        {% if doador.estado_civil %}
+                        {{ doador.estado_civil }}
+                        {% else %}
+                        Não informada
+                        {% endif %}
+                    </p>
                 </div>
                 <div class="dados">
                     <label>Profissão:</label>
-                    <p>Estudante</p>
+                    <p>
+                        {% if doador.profissao %}
+                        {{ doador.profissao }}
+                        {% else %}
+                        Não informada
+                        {% endif %}
+                    </p>
                 </div>
                 <div class="dados">
                     <label>Local:</label>
-                    <p>IFRO - Vilhena</p>
+                    <p>
+                        {% if doador.local_trabalho %}
+                        {{ doador.local_trabalho }}
+                        {% else %}
+                        Não informado
+                        {% endif %}
+                    </p>
                 </div>
                 <div class="dados">
                     <label>Mãe:</label>
-                    <p>Solange Ferronato Barreto</p>
+                    <p>
+                        {% if doador.nome_mae %}
+                        {{ doador.nome_mae }}
+                        {% else %}
+                        Não informado
+                        {% endif %}
+                    </p>
                 </div>
                 <div class="dados">
                     <label>Pai:</label>
-                    <p>Samuel Alves Barreto</p>
+                    <p>
+                        {% if doador.nome_pai %}
+                        {{ doador.nome_pai }}
+                        {% else %}
+                        Não informado
+                        {% endif %}</p>
                 </div>
                 <div class="dados">
                     <label>Notificado:</label>
-                    <p>Sim</p>
+                    <p>
+                        {% if doador.avisado %}
+                        Sim
+                        {% else %}
+                        Não
+                        {% endif %}
+                    </p>
                 </div>
                 <div class="dados">
                     <label>Contatado:</label>
-                    <p>Não</p>
+                    <p>
+                        {% if doador.contatado %}
+                        Sim
+                        {% else %}
+                        Não
+                        {% endif %}
+                    </p>
                 </div>
             </div>
 
         </div>
     </div>
 
-    <div class="cartao noselect">
+    {% if doador.get_ultimas_dez_doacoes() | length > 0%}
+
+    <div class="cartao">
         <table class="table table-striped tabela">
             <thead>
                 <tr>
@@ -141,46 +223,22 @@
                 </tr>
             </thead>
             <tbody>
+                {% for doacao in doador.get_ultimas_dez_doacoes() %}
                 <tr>
-                    <td>24/12/2020</td>
-                    <td>Voluntário</td>
-                    <td>Vilhena</td>
-                    <td>-</td>
+                    <td>{{ doacao.data.strftime('%d/%m/%Y') }}</td>
+                    <td>{{ doacao.convocacao }}</td>
+                    <td>{{ doacao.get_local_coleta() }}</td>
+                    <td>{{ doacao.observacao }}</td>
                 </tr>
-                <tr>
-                    <td>24/09/2020</td>
-                    <td>Voluntário</td>
-                    <td>Vilhena</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>23/06/2020</td>
-                    <td>Reposição</td>
-                    <td>Vilhena</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>21/03/2020</td>
-                    <td>Voluntário</td>
-                    <td>Vilhena</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>20/12/2019</td>
-                    <td>Voluntário</td>
-                    <td>Vilhena</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>15/08/2019</td>
-                    <td>Voluntário</td>
-                    <td>Vilhena</td>
-                    <td>-</td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
-        
     </div>
+    {% endif %}
 </div>
 
+{% endblock %}
+
+{% block codigos %}
+<script src="{{ url_for('static', filename='js/detalhesDoador.js') }}"></script>
 {% endblock %}

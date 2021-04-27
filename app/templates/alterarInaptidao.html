@@ -11,7 +11,7 @@
     <div class="bread noselect">
         <p>Inicial ></p>
         <p>Doadores ></p>
-        <p>Pedro Luís Ferronato Barreto ></p>
+        <p>{{ doador.nome }} ></p>
         <p>Alterar inaptidão</p>
     </div>
 
@@ -21,34 +21,44 @@
             <h1>Alterar inaptidão</h1>
         </div>
 
-            <div class="formulario">
+        <div class="formulario">
+            <form action="/alterar-inaptidao/{{ doador.numero_registro }}" method="POST">
                 <div class="linhaFormulario">
                     <div class="dados">
                         <label for="txt">Nome completo:</label>
-                        <p>Pedro Luis Ferronato Barreto</p>
+                        <p>{{ doador.nome }}</p>
                     </div>
                 </div>
                 <div class="linhaFormulario">
                     <div class="campo" id="divInapto">
                         <label for="inapto">Inapto:</label>
-                        <select name="estadoAptidao" id="estadoAptidao" {% if alterar %} disabled {% endif %}>
-                            <option value="null" selected="selected" disabled>Selecione</option>
-                            <option value="inapto">Inapto</option>
-                            <option value="apto">Apto</option>
+                        <select onchange="bloquearData()" name="estadoAptidao" id="estadoAptidao">
+                            <option {% if not doador.inaptidao %} selected="selected" {% endif %} value="apto">Apto
+                            </option>
+                            <option {% if doador.inaptidao %} selected="selected" {% endif %} value="inapto">Inapto
+                            </option>
                         </select>
                     </div>
                     <div class="campo" id="divData">
-                        <label for="data">Data final:</label>
-                        <input type="text" id="data" autocomplete="off">
+                        <label id="lbData" for="data">Data final:</label>
+                        <input onfocus="removerClasse()" type="text" class="data" id="data" name="data" autocomplete="off" {% if doador.final_inaptidao %}  value="{{ doador.final_inaptidao.strftime('%d/%m/%Y') }}" {% endif %}>
                     </div>
                     <div>
-                        <button class="botao btn-principal">Atualizar estado</button>
+                        <button onclick="verificarData(event)" class="botao btn-principal">Atualizar estado</button>
                     </div>
                 </div>
-            </div>
-            
+            </form>
         </div>
+
     </div>
+</div>
 
 </div>
+{% endblock %}
+
+{% block codigos %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+<script src="{{ url_for('static', filename='js/mascaras.js') }}"></script>
+<script src="{{ url_for('static', filename='js/alterarInaptidao.js') }}"></script>
 {% endblock %}

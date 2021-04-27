@@ -1,6 +1,5 @@
 from app import db
 from app.models.hemocentro import Hemocentro
-from app.models.doador import Doador
 
 from datetime import date
 
@@ -13,7 +12,11 @@ class Doacao(db.Model):
     doador_id = db.Column(db.Integer, db.ForeignKey('doadores.numero_registro'), nullable=False)
     data = db.Column(db.Date(), nullable=False)
     convocacao = db.Column(db.String(200))
-    observacao = db.Column(db.String(200))
+    observacao = db.Column(db.String(200), default="-")
+
+
+    def get_local_coleta(self):
+        return Hemocentro.query.filter_by(id=self.hemocentro_id).first().nome
 
 
     def __repr__(self):

@@ -6,3 +6,8 @@ label {
 
     margin-bottom: 8px !important;
 }
+
+.escondido {
+    display: none;
+    opacity: 0;
+}

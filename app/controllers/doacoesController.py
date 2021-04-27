@@ -66,6 +66,8 @@ def nova_doacao():
                 doacao = Doacao(hemocentro_id = hemocentro_id, doador_id= numRegistro, data= data,
                 convocacao=convocacao, observacao = observacoes)
                 try:
+                    doador.contatado = False
+                    db.session.add(doador)
                     db.session.add(doacao)
                     db.session.commit()
                 except Exception as e:

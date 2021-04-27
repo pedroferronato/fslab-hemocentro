@@ -418,3 +418,7 @@ input[type=number], input[type=number]::-webkit-inner-spin-button, input[type=nu
     -moz-appearance: textfield;
     -webkit-appearance: none;
 }
+
+#resultadosEncontrados {
+    padding-bottom: 16px;
+}

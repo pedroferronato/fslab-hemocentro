@@ -1,5 +1,5 @@
 from app import db
-from app.models.hemocentro import Hemocentro
+from app.models.doacao import Doacao
 
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
@@ -63,10 +63,18 @@ class Doador(db.Model):
 
 
     def dia_do_aniversario(self):
-        # Deve retornar um boleano (é ou não dia de seu aniversário)
+        # Deve retornar um booleano (é ou não dia de seu aniversário)
         pass
 
 
-    def data_ultima_doacao(self):
-        pass
+    def get_ultima_doacao(self):
+        return Doacao.query.order_by(Doacao.data.desc()).first()
+
+
+    def get_total_doacoes(self):
+        return len(Doacao.query.filter_by(doador_id=self.numero_registro).all())
+
+
+    def get_ultimas_dez_doacoes(self):
+        return Doacao.query.filter_by(doador_id=self.numero_registro).limit(10).all()
 
