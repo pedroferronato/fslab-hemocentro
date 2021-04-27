@@ -12,7 +12,7 @@ class Doacao(db.Model):
     doador_id = db.Column(db.Integer, db.ForeignKey('doadores.numero_registro'), nullable=False)
     data = db.Column(db.Date(), nullable=False)
     convocacao = db.Column(db.String(200))
-    observacao = db.Column(db.String(200), default="-")
+    observacao = db.Column(db.String(200))
 
 
     def get_local_coleta(self):
