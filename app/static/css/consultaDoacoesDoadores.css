@@ -1,0 +1,15 @@
+#divNome {
+    flex: 3;
+}
+
+#divCpf {
+    flex: 2;
+}
+
+#divNumeroRegistro {
+    flex: 2;
+}
+
+#divItens {
+    flex: 1;
+}

@@ -138,6 +138,56 @@ def consultar_doacao():
     return render_template("consultarDoacoes.html")
 
 
+@flaskApp.route('/consultar-doacao/doador') 
+@login_required
+def consultar_doacao_por_doador():
+    return render_template("consultarDoacoesDoador.html")
+
+
+@flaskApp.route('/consultar-doacao/doador/consulta', methods=['POST']) 
+@login_required
+def consulta_doacao_por_doador():
+    nome = request.form['nome']
+    cpf = request.form['cpf']
+    numero_registro = request.form['numeroRegistro']
+
+    itens = request.form['itens']
+    page = request.form['page']
+
+    if page and page.isdigit():
+        page = int(page)
+    else:
+        page = 1
+
+    if itens:
+        itens_pesquisados = int(itens)
+    else:
+        itens_pesquisados = 10
+
+    parametros = []
+
+    if nome:
+       parametros.append(Doador.nome.like("%{}%".format(nome)))
+    if cpf:
+       parametros.append(Doador.cpf == cpf)
+    if numero_registro:
+       parametros.append(Doador.numero_registro == numero_registro)
+
+    doador = Doador.query.filter(*parametros).first()
+
+    if doador:
+        doacoes = Doacao.query.filter_by(doador_id=doador.numero_registro)
+        if doacoes.count() > 0:
+            doacoes = doacoes.paginate(page=page, per_page=itens_pesquisados)
+            return render_template("consultarDoacoesDoador.html", resultado=True, doacoes=doacoes.items, doador=doador, itens=itens_pesquisados, paginas=doacoes, nome=nome, cpf=cpf, numeroRegistro=numero_registro)
+        else:
+            return render_template("consultarDoacoesDoador.html", nenhumaDoacao=True)
+    else:
+        return render_template("consultarDoacoesDoador.html", usuarioNaoEncontrado=True)
+
+
+
+
 @flaskApp.route('/consultar-doacao/resultado') 
 @login_required
 def consultar_doacao_resultado():

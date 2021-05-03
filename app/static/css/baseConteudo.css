@@ -280,7 +280,7 @@ ul.pagination {
 
 ul.pagination li {display: inline;}
 
-ul.pagination li a {
+ul.pagination li a, ul.pagination li button {
     text-align: center;
     color: white;
     float: left;
@@ -294,7 +294,7 @@ ul.pagination li a {
     
 }
 
-ul.pagination li a.ativo {
+ul.pagination li a.ativo, ul.pagination li button.ativo {
     background: white;
     color: var(--cinzaBotao);
 }
