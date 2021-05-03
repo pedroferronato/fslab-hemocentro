@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+
+{% block cabecalho %}
+<link href="{{ url_for('static', filename='css/baseConteudo.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/consultaDoacoesDoadores.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block conteudo %}
+<div class="contentorConteudo">
+
+    <div class="bread noselect">
+        <p>Inicial ></p>
+        <p>Doações ></p>
+        <p>Consulta por doador</p>
+    </div>
+
+    <form action="/consultar-doacao/doador/consulta" method="POST">
+        <div class="cartao noselect">
+            <div class="titulo">
+                <h1>Consulta de doações por doadores</h1>
+            </div>
+            <div class="formulario">
+                <div class="linhaFormulario linhaSolitaria">
+                    <div class="campo" id="divNome">
+                        <label for="nome">Nome:</label>
+                        <input {% if nome %} value="{{ nome }}" {% endif %}type="text" id="nome" name="nome"
+                            autocomplete="off">
+                    </div>
+                    <div class="campo" id="divCpf">
+                        <label for="cpf" id="lbCpf">CPF:</label>
+                        <input {% if cpf %} value="{{ cpf }}" {% endif %} onfocus="removerAlerta()" type="text" id="cpf"
+                            name="cpf" autocomplete="off">
+                    </div>
+                    <div class="campo" id="divNumeroRegistro">
+                        <label for="numeroRegistro">Número de registro:</label>
+                        <input {% if numeroRegistro %} value="{{ numeroRegistro }}" {% endif %} type="number"
+                            id="numeroRegistro" name="numeroRegistro" autocomplete="off">
+                    </div>
+                    <div class="campo" id="divItens">
+                        <label for="itens">Itens por pág.:</label>
+                        <input {% if itens %} value="{{ itens }}" {% endif %} type="number" id="itens" name="itens"
+                            autocomplete="off">
+                    </div>
+                    <div>
+                        <button onclick="validar(event)" class="botao btn-principal linhaMRReset">Buscar</button>
+                    </div>
+                </div>
+                <input type="hidden" name="page" id="page" value="1">
+            </div>
+        </div>
+
+        {% if usuarioNaoEncontrado %}
+        <div class="cartao">
+            <strong>Doador não encontrado</strong>
+        </div>
+        {% endif %}
+
+        {% if nenhumaDoacao %}
+        <div class="cartao">
+            <strong>Nenhuma doação encontrada</strong>
+        </div>
+        {% endif %}
+
+        {% if resultado %}
+        <div class="cartao">
+            <p id="resultadosEncontrados"><b>{{ paginas.total }} resultados encontrados.</b></p>
+            <div class="linhaFormulario">
+                <table class="table table-striped tabela">
+                    <thead>
+                        <tr>
+                            <th scope="col">Data</th>
+                            <th scope="col">Doador</th>
+                            <th scope="col">Convocação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for doacao in doacoes %}
+                        <tr>
+                            <td>{{ doacao.data.strftime('%d/%m/%Y') }}</td>
+                            <td>{{ doador.nome }}</td>
+                            <td>{{ doacao.convocacao }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="linhaFormulario paginador">
+                
+                <nav>
+                    {% if paginas.pages >= 6 %}
+                    <ul class="pagination">
+                        <li>
+                            <button onclick="adicionarPagina()">
+                                <span class="material-icons iconesP">
+                                    first_page
+                                </span>
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="adicionarPagina(1)" class="iconesnP" {% if not paginas.prev_num==None %}
+                                {% endif %}>
+                                <span aria-hidden="true">&laquo;</span>
+                            </button>
+                        </li>
+                        {% if paginas.has_prev %}
+                        <li>
+                            <button onclick="adicionarPagina('{{ paginas.prev_num }}')">
+                                {{ paginas.prev_num }}
+                            </button>
+                        </li>
+                        {% endif %}
+                        <li>
+                            <button onclick="adicionarPagina('{{ paginas.page }}')" class="ativo" disable>
+                                {{ paginas.page }}
+                            </button>
+                        </li>
+                        {% if paginas.has_next %}
+                        <li>
+                            <button onclick="adicionarPagina('{{ paginas.next_num }}')">
+                                {{ paginas.next_num }}
+                            </button>
+                        </li>
+                        {% endif %}
+                        <li>
+                            <button onclick="adicionarPagina('{{ paginas.next_num }}')" class="iconesnP" {% if not paginas.next_num==None %}
+                                {% endif %}>
+                                <span aria-hidden="true">&raquo;</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="adicionarPagina('{{paginas.pages}}')">
+                                <span class="material-icons iconesP ">
+                                    last_page
+                                </span>
+                            </button>
+                        </li>
+                    </ul>
+                    {% else %}
+                    <ul class="pagination">
+                        <li>
+                            <button onclick="adicionarPagina('{{paginas.prev_num}}')" class="iconesnP" {% if not paginas.prev_num==None %}
+                                {% endif %}>
+                                <span aria-hidden="true">&laquo;</span>
+                            </button>
+                        </li>
+
+                        {% for page in paginas.iter_pages() %}
+                        <li {% if page==paginas.page %} disable {% endif %}>
+                            <button onclick="adicionarPagina('{{page}}')" class="{% if page==paginas.page %} ativo {% endif %}">
+                                {{ page }}</button>
+                        </li>
+                        {% endfor %}
+
+                        <li>
+                            <button onclick="adicionarPagina('{{paginas.next_num}}')" class="iconesnP" {% if not paginas.next_num==None %}
+                                {% endif %}>
+                                <span aria-hidden="true">&raquo;</span>
+                            </button>
+                        </li>
+                    </ul>
+                    {% endif %}
+                </nav>
+            </div>
+        </div>
+
+        {% endif %}
+
+        <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">Campos inválidos</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Pelo menos um dos campos deve ser preenchido para realizar a busca
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block codigos %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+<script src="{{ url_for('static', filename='js/mascaras.js') }}"></script>
+<script src="{{ url_for('static', filename='js/consultarDoacoesDoador.js') }}"></script>
+{% endblock %}
