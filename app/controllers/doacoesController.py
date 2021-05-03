@@ -176,7 +176,7 @@ def consulta_doacao_por_doador():
     doador = Doador.query.filter(*parametros).first()
 
     if doador:
-        doacoes = Doacao.query.filter_by(doador_id=doador.numero_registro)
+        doacoes = Doacao.query.filter_by(doador_id=doador.numero_registro).order_by(Doacao.data.desc())
         if doacoes.count() > 0:
             doacoes = doacoes.paginate(page=page, per_page=itens_pesquisados)
             return render_template("consultarDoacoesDoador.html", resultado=True, doacoes=doacoes.items, doador=doador, itens=itens_pesquisados, paginas=doacoes, nome=nome, cpf=cpf, numeroRegistro=numero_registro)
