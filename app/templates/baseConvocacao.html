@@ -97,45 +97,45 @@
                     {% if paginas.pages >= 6 %}
                     <ul class="pagination">
                         <li>
-                            <button onclick="adicionarPagina()">
+                            <button name="botao" onclick="adicionarPagina()">
                                 <span class="material-icons iconesP">
                                     first_page
                                 </span>
                             </button>
                         </li>
                         <li>
-                            <button onclick="adicionarPagina(1)" class="iconesnP" {% if not paginas.prev_num==None %}
+                            <button name="botao" onclick="adicionarPagina(1)" class="iconesnP" {% if not paginas.prev_num==None %}
                                 {% endif %}>
                                 <span aria-hidden="true">&laquo;</span>
                             </button>
                         </li>
                         {% if paginas.has_prev %}
                         <li>
-                            <button onclick="adicionarPagina('{{ paginas.prev_num }}')">
+                            <button name="botao" onclick="adicionarPagina('{{ paginas.prev_num }}')">
                                 {{ paginas.prev_num }}
                             </button>
                         </li>
                         {% endif %}
                         <li>
-                            <button onclick="adicionarPagina('{{ paginas.page }}')" class="ativo" disable>
+                            <button name="botao" onclick="adicionarPagina('{{ paginas.page }}')" class="ativo" disable>
                                 {{ paginas.page }}
                             </button>
                         </li>
                         {% if paginas.has_next %}
                         <li>
-                            <button onclick="adicionarPagina('{{ paginas.next_num }}')">
+                            <button name="botao" onclick="adicionarPagina('{{ paginas.next_num }}')">
                                 {{ paginas.next_num }}
                             </button>
                         </li>
                         {% endif %}
                         <li>
-                            <button onclick="adicionarPagina('{{ paginas.next_num }}')" class="iconesnP" {% if not paginas.next_num==None %}
+                            <button name="botao" onclick="adicionarPagina('{{ paginas.next_num }}')" class="iconesnP" {% if not paginas.next_num==None %}
                                 {% endif %}>
                                 <span aria-hidden="true">&raquo;</span>
                             </button>
                         </li>
                         <li>
-                            <button onclick="adicionarPagina('{{paginas.pages}}')">
+                            <button name="botao" onclick="adicionarPagina('{{paginas.pages}}')">
                                 <span class="material-icons iconesP ">
                                     last_page
                                 </span>
@@ -145,7 +145,7 @@
                     {% else %}
                     <ul class="pagination">
                         <li>
-                            <button onclick="adicionarPagina('{{paginas.prev_num}}')" class="iconesnP" {% if not paginas.prev_num==None %}
+                            <button name="botao" onclick="adicionarPagina('{{paginas.prev_num}}')" class="iconesnP" {% if not paginas.prev_num==None %}
                                 {% endif %}>
                                 <span aria-hidden="true">&laquo;</span>
                             </button>
@@ -153,13 +153,13 @@
 
                         {% for page in paginas.iter_pages() %}
                         <li {% if page==paginas.page %} disable {% endif %}>
-                            <button onclick="adicionarPagina('{{page}}')" class="{% if page==paginas.page %} ativo {% endif %}">
+                            <button name="botao" onclick="adicionarPagina('{{page}}')" class="{% if page==paginas.page %} ativo {% endif %}">
                                 {{ page }}</button>
                         </li>
                         {% endfor %}
 
                         <li>
-                            <button onclick="adicionarPagina('{{paginas.next_num}}')" class="iconesnP" {% if not paginas.next_num==None %}
+                            <button name="botao" onclick="adicionarPagina('{{paginas.next_num}}')" class="iconesnP" {% if not paginas.next_num==None %}
                                 {% endif %}>
                                 <span aria-hidden="true">&raquo;</span>
                             </button>

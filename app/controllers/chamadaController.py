@@ -25,7 +25,7 @@ def chamada_tipada_resultado():
     telefonados_string = telefonados
     telefonados = telefonados.split("&")
     telefonados.pop()
-    telefonados = [int(x) for x in telefonados] 
+    telefonados = [int(x) for x in telefonados]
     
     if page and page.isdigit():
         page = int(page)
@@ -56,7 +56,7 @@ def chamada_tipada_resultado():
                 telefonado.contatado = True
                 db.session.add(telefonado)
                 db.session.commit()
-                return render_template("convocacaoTipada.html", tipo_sanguineo=tipo, tipo="tipada")
+            return render_template("convocacaoTipada.html", tipo_sanguineo=tipo, tipo="tipada")
         else:
             paginacao = resultado.paginate(page=page, per_page=itens_pesquisados)
             return render_template("convocacaoTipada.html", resultado=True, doadores=paginacao.items, paginas=paginacao, tipo_sanguineo=tipo, tipo="tipada", itens=itens_pesquisados, telefonados=telefonados, telefonadosStr=telefonados_string)
