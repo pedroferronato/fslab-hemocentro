@@ -22,8 +22,8 @@ class Doador(db.Model):
     cadastro_SUS = db.Column(db.String(200), nullable=False)
     sexo = db.Column(db.String(200), nullable=False)
     estado_civil = db.Column(db.String(200))
-    avisado = db.Column(db.Boolean())
-    contatado = db.Column(db.Boolean())
+    avisado = db.Column(db.Boolean(), default=0)
+    contatado = db.Column(db.Boolean(), default=0)
     contatos_preferidos = db.Column(db.String(200))
     nome_mae = db.Column(db.String(200))
     nome_pai = db.Column(db.String(200))
@@ -33,6 +33,7 @@ class Doador(db.Model):
     inaptidao = db.Column(db.Boolean(), default=False)
     final_inaptidao = db.Column(db.Date())
     legado = db.Column(db.Boolean(), default=False)
+    ultima_doacao = db.Column(db.Date())
 
 
     def __repr__(self):

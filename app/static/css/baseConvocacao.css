@@ -36,7 +36,7 @@
     box-shadow: none !important;
 }
 
-.icones{
+.iconesCH{
     display: block;
     text-align: center;
     font-size: 24px;
@@ -55,4 +55,12 @@
 
 .textStart tr td:first-child{
     text-align: start;
+}
+
+.material-icons {
+    cursor: pointer;
+}
+
+.azul {
+    color: #0275D8;
 }

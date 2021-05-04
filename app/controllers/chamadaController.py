@@ -1,6 +1,11 @@
-from app import flaskApp
-from flask import render_template
-from flask_login import login_required
+from app import flaskApp, db
+from flask import render_template, request
+from flask_login import login_required, current_user
+from sqlalchemy import and_, or_
+from app.models.doador import Doador
+from dateutil.relativedelta import relativedelta
+from datetime import datetime
+
 
 @flaskApp.route('/convocacao-tipada')
 @login_required
@@ -8,11 +13,55 @@ def chamada_tipada():
     return render_template("convocacaoTipada.html", tipo="tipada")
 
 
-@flaskApp.route('/convocacao-tipada/resultado')
+@flaskApp.route('/convocacao-tipada/resultado', methods=['POST'])
 @login_required
 def chamada_tipada_resultado():
-    return render_template("convocacaoTipada.html", tipo="tipada", resultado=True)
+    tipo = request.form['tipagem']
 
+    itens = request.form['itens']
+    page = request.form['page']
+
+    telefonados = request.form['telefonados']
+    telefonados_string = telefonados
+    telefonados = telefonados.split("&")
+    telefonados.pop()
+    telefonados = [int(x) for x in telefonados] 
+    
+    if page and page.isdigit():
+        page = int(page)
+    else:
+        page = 1
+
+    if itens:
+        itens_pesquisados = int(itens)
+    else:
+        itens_pesquisados = 5
+
+    filtros = []
+
+    filtros.append(or_(and_(Doador.sexo == "mas", Doador.ultima_doacao <= (datetime.today() - relativedelta(months=3))), and_(Doador.sexo == "fem", Doador.ultima_doacao <= (datetime.today() - relativedelta(months=4)))))
+    filtros.append(Doador.contatado == False)
+    filtros.append(Doador.hemocentro_id == current_user.get_hemocentro().get_id())
+    filtros.append(Doador.tipo_sanguineo == tipo)
+    filtros.append(Doador.inaptidao == False)
+
+    resultado = Doador.query.filter(*filtros).limit(100).from_self()
+
+    if len(resultado.all()) == 0:
+        return render_template("convocacaoTipada.html", listaVazia=True, tipo_sanguineo=tipo, tipo="tipada")
+    else:
+        if request.form['botao'] == 'Marcar Telefonados':
+            for numero in telefonados:
+                telefonado = Doador.query.filter_by(numero_registro= numero).first()
+                telefonado.contatado = True
+                db.session.add(telefonado)
+                db.session.commit()
+                return render_template("convocacaoTipada.html", tipo_sanguineo=tipo, tipo="tipada")
+        else:
+            paginacao = resultado.paginate(page=page, per_page=itens_pesquisados)
+            return render_template("convocacaoTipada.html", resultado=True, doadores=paginacao.items, paginas=paginacao, tipo_sanguineo=tipo, tipo="tipada", itens=itens_pesquisados, telefonados=telefonados, telefonadosStr=telefonados_string)
+
+    
 
 @flaskApp.route('/convocacao-emergencial')
 @login_required
