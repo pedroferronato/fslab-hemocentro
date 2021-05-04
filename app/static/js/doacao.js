@@ -6,7 +6,184 @@ $(".alert").delay(2000).slideUp(200, function() {
     $(this).alert('close')
 })
 
+function predefinicaoPersonalizado() {
+    $('#predefinicoes').val("personalizado");
+}
+
+function setarData(dataSelect) {
+    let data = new Date();
+    let dataHoje = new Date();
+
+    if (dataSelect.value == "ontem") {
+        data.setDate(data.getDate() - 1);
+        let diaData = data.getDate()
+        let mesData = data.getMonth() + 1
+        if (diaData < 10) {
+            diaData = "0"+diaData
+        }
+        if (mesData < 10) {
+            mesData = "0"+mesData
+        }
+
+        let dataFormatada = diaData + "/" + mesData + "/" + data.getFullYear();
+        $('.data').val(dataFormatada);
+        return
+    }
+    
+    if (dataSelect.value == "anteontem") {
+        data.setDate(data.getDate() - 2);
+        let diaData = data.getDate()
+        let mesData = data.getMonth() + 1
+        if (diaData < 10) {
+            diaData = "0"+diaData
+        }
+        if (mesData < 10) {
+            mesData = "0"+mesData
+        }
+
+        let dataFormatada = diaData + "/" + mesData + "/" + data.getFullYear();
+        $('.data').val(dataFormatada);
+        return
+    }
+
+    if (dataSelect.value == "dois" || dataSelect.value == "sete" || dataSelect.value == "dez") {
+        if (dataSelect.value == "dois") {
+            data.setDate(data.getDate() - 1);
+            let diaData = data.getDate()
+            let mesData = data.getMonth() + 1
+            if (diaData < 10) {
+                diaData = "0"+diaData
+            }
+            if (mesData < 10) {
+                mesData = "0"+mesData
+            }
+
+            let dataFormatada = diaData + "/" + mesData + "/" + data.getFullYear();
+            $('#data').val(dataFormatada);
+        }
+
+        if (dataSelect.value == "sete") {
+            data.setDate(data.getDate() - 6);
+            let diaData = data.getDate()
+            let mesData = data.getMonth() + 1
+            if (diaData < 10) {
+                diaData = "0"+diaData
+            }
+            if (mesData < 10) {
+                mesData = "0"+mesData
+            }
+
+            let dataFormatada = diaData + "/" + mesData + "/" + data.getFullYear();
+            $('#data').val(dataFormatada);
+        }
+
+        if (dataSelect.value == "dez") {
+            data.setDate(data.getDate() - 9);
+            let diaData = data.getDate()
+            let mesData = data.getMonth() + 1
+            if (diaData < 10) {
+                diaData = "0"+diaData
+            }
+            if (mesData < 10) {
+                mesData = "0"+mesData
+            }
+
+            let dataFormatada = diaData + "/" + mesData + "/" + data.getFullYear();
+            $('#data').val(dataFormatada);
+        }
+
+        dataHoje.setDate(dataHoje.getDate());
+        let diaDataHoje = dataHoje.getDate();
+        let mesDataHoje = dataHoje.getMonth() + 1;
+        if (diaDataHoje < 10) {
+            diaDataHoje = "0"+diaDataHoje;
+        }
+        if (mesDataHoje < 10) {
+            mesDataHoje = "0"+mesDataHoje;
+        }
+
+        let dataFormatadaHoje = diaDataHoje + "/" + mesDataHoje + "/" + dataHoje.getFullYear();
+        $('#dataFinal').val(dataFormatadaHoje);
+        return
+    }
+
+}
+
 var alerta = false
+
+function validarData(vardata) {
+    let data = vardata.split("/");
+
+    let ano = data[2];
+    let mes = data[1];
+    let dia = data[0];
+
+    var diasDoMes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+    if ((!(ano % 4) && ano % 100) || !(ano % 400)) diasDoMes[1] = 29;
+    
+    if (mes <= 0 || mes > 12) return false
+    if (dia <= 0 || dia > diasDoMes[mes - 1]) return false;
+
+    return true;
+}
+
+function validarConsultaDoacao(evento){
+    var predefinicoes = document.getElementById("predefinicoes")
+    var data = document.getElementById("data")
+    var lbData = document.getElementById("lbData")
+    var dataFinal = document.getElementById("dataFinal")
+    var lbDataFinal = document.getElementById("lbDataFinal")
+    let vPredefinicao = true
+    let vDataInicial = true
+    let vDataFinal = true
+    alerta = false
+
+    if (predefinicoes.value == "null") {
+        vPredefinicao = false
+    } else {
+        if (!validarData(data.value) || data.value.length < 10){
+            data.classList.add('borda-alerta')
+            lbData.classList.add('txt-alerta')
+            alerta = true
+        }
+        
+        if (!validarData(dataFinal.value) || dataFinal.value.length < 10){
+            dataFinal.classList.add('borda-alerta')
+            lbDataFinal.classList.add('txt-alerta')
+            alerta = true
+        }
+        if (alerta) return evento.preventDefault()
+    }
+
+    if (data.value == undefined || data.value == null || data.value == "" || data.value == " ") vDataInicial = false
+    if (dataFinal.value == undefined || dataFinal.value == null || dataFinal.value == "" || dataFinal.value == " ") vDataFinal = false
+    
+    if (!vPredefinicao && !vDataInicial || !vDataFinal){
+        alert("Por favor, selecione uma predefinição de data ou preencha os campos para a pesquisa.")
+        return evento.preventDefault()
+    }
+
+    let dataInicialSplit = data.value.split('/');
+    let dataFinalSplit = dataFinal.value.split('/');
+    let dataInicialFormato = ''+dataInicialSplit[2]+'-'+dataInicialSplit[1]+'-'+dataInicialSplit[0]+''
+    let dataFinalFormato = ''+dataFinalSplit[2]+'-'+dataFinalSplit[1]+'-'+dataFinalSplit[0]+''
+    let dataInicialFormatoDate = new Date(dataInicialFormato)
+    let dataFinalFormatoDate = new Date(dataFinalFormato)
+
+    if (dataInicialFormatoDate.getTime() > dataFinalFormatoDate.getTime()){
+        alert("A data final deve ser maior que a data inicial na busca.")
+        return evento.preventDefault()
+    }
+
+    if ((dataFinalFormatoDate - dataInicialFormatoDate) > 31622400000) {
+        alert("A busca de datas devem ser entre até 366 dias.")
+        return evento.preventDefault()
+    }
+
+    evento.preventDefault()
+
+}
 
 function validarCampoPesquisa(evento){
     var pesquisa = document.getElementById("pesquisa")
@@ -18,7 +195,6 @@ function validarCampoPesquisa(evento){
         }
         alerta = true
     }
-    
     if (alerta) evento.preventDefault()
 }
 
@@ -141,6 +317,18 @@ function removerClasseAlerta(elemento){
         pesquisa.classList.remove('borda-alerta')
     }
 
+}
+
+function removerClasseAlertaDoacoes(elemento){
+    if (data.classList.contains('borda-alerta') && elemento == 'data') {
+        data.classList.remove('borda-alerta')
+        lbData.classList.remove('txt-alerta')
+    }
+
+    if (dataFinal.classList.contains('borda-alerta') && elemento == 'dataFinal') {
+        dataFinal.classList.remove('borda-alerta')
+        lbDataFinal.classList.remove('txt-alerta')
+    }
 }
 
 function limpar() {
