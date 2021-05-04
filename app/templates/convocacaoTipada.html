@@ -1,46 +1,30 @@
 {% extends "baseConvocacao.html" %}
 
+{% block formHeader %}
+    <form action="/convocacao-tipada/resultado" method="post">
+{% endblock  %}
+
+{% if listaVazia %}
+    <strong>Nenhum resultado enc</strong>
+{% endif %}
+
 {% block infoTabela %}
 
+{% for doador in doadores %}
 <tr>
-    <td><input class="form-check-input" type="checkbox" value="" id="telefonado"></td>
-    <td>Bernadette Pfannerstill</td>
-    <td>(69) 9 8556-5884</td>
-    <td><span class="material-icons notificado">check_circle</span></td>
-    <td>A+</td>
-    <td>24/12/2020</td>
+    <td>
+        {% if doador.numero_registro in telefonados %} 
+        <span onclick="adicionarTelefonado('{{ doador.numero_registro }}', event)" class="material-icons noselect azul">phone</span>
+        {% else %}
+        <span onclick="adicionarTelefonado('{{ doador.numero_registro }}', event)" class="material-icons noselect">phone</span>
+        {% endif %}
+    </td>
+    <td>{{ doador.nome }}</td>
+    <td>{% if doador.celular != "" %} {{ doador.celular }} {% else %} {{ doador.telefone }} {% endif %}</td>
+    <td>{% if doador.avisado %}<span class="material-icons notificado">check_circle</span>{% endif %}</td>
+    <td>{{ doador.tipo_sanguineo }}</td>
+    <td>{{ doador.get_ultima_doacao().data }}</td>
 </tr>
-<tr>
-    <td><input class="form-check-input" type="checkbox" value="" id="telefonado"></td>
-    <td>Noel Corwin</td>
-    <td>(69) 9 8112-6523</td>
-    <td><span class="material-icons notificado">check_circle</span></td>
-    <td>A+</td>
-    <td>24/12/2020</td>
-</tr>
-<tr>
-    <td><input class="form-check-input" type="checkbox" value="" id="telefonado"></td>
-    <td>Sue Turner</td>
-    <td>(69) 9 8922-5658</td>
-    <td><span class="material-icons notificado">check_circle</span></td>
-    <td>A+</td>
-    <td>24/12/2020</td>
-</tr>
-<tr>
-    <td><input class="form-check-input" type="checkbox" value="" id="telefonado"></td>
-    <td>Rafael Price</td>
-    <td>(69) 9 8441-5653</td>
-    <td><span class="material-icons notificado">check_circle</span></td>
-    <td>A+</td>
-    <td>24/12/2020</td>
-</tr>
-<tr>
-    <td><input class="form-check-input" type="checkbox" value="" id="telefonado"></td>
-    <td>José Maria Silva</td>
-    <td>(69) 9 9685-2544</td>
-    <td><span class="material-icons notificado">check_circle</span></td>
-    <td>A+</td>
-    <td>24/12/2020</td>
-</tr>
+{% endfor %}
 
 {% endblock %}

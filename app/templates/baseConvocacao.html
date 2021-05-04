@@ -24,6 +24,16 @@
 
         <div class="formulario">
 
+            {% if listaVazia %}
+            <div class="alert alert-warning" role="alert">
+                Nenhum resultado encontrado para o tipo escolhido
+            </div>
+            {% endif %}
+
+            {% block formHeader %}
+
+            {% endblock %}
+
             {% if resultado %}
             <div class="linhaFormulario ultimaLinhaInput SpcBtw">
                 {% else %}
@@ -32,37 +42,41 @@
 
                     <div class="flexivel noselect">
                         <div class="campo" id="divTipagem">
-                            <label for="tipagem">Tipo sanguíneo:</label>
-                            <select name="tipagem" id="tipagem">
-                                <option value="null" selected="selected" disabled>Selecione</option>
-                                <option value="A+">A+</option>
-                                <option value="A-">A-</option>
-                                <option value="B+">B+</option>
-                                <option value="B-">B-</option>
-                                <option value="AB+">AB+</option>
-                                <option value="AB-">AB-</option>
-                                <option value="O+">O+</option>
-                                <option value="O-">O-</option>
+                            <label id="lbTipagem" for="tipagem">Tipo sanguíneo:</label>
+                            <select onfocus="remover()" name="tipagem" id="tipagem">
+                                <option value="null">Selecione</option>
+                                <option {% if tipo_sanguineo =="A+" %} selected="selected" {% endif %} value="A+">A+</option>
+                                <option {% if tipo_sanguineo =="A-" %} selected="selected" {% endif %} value="A-">A-</option>
+                                <option {% if tipo_sanguineo =="B+" %} selected="selected" {% endif %} value="B+">B+</option>
+                                <option {% if tipo_sanguineo =="B-" %} selected="selected" {% endif %} value="B-">B-</option>
+                                <option {% if tipo_sanguineo =="AB+" %} selected="selected" {% endif %} value="AB+">AB+</option>
+                                <option {% if tipo_sanguineo =="AB-" %} selected="selected" {% endif %} value="AB-">AB-</option>
+                                <option {% if tipo_sanguineo =="O+" %} selected="selected" {% endif %} value="O+">O+</option>
+                                <option {% if tipo_sanguineo =="O-" %} selected="selected" {% endif %} value="O-">O-</option>
                             </select>
                         </div>
                         <div class="campo" id="divIP">
                             <label for="itenspp">Itens por página:</label>
-                            <input type="number" id="itenspp" autocomplete="off" value=5 max="50">
+                            <input {% if itens %} value="{{ itens }}" {% endif %} type="number" id="itenspp"
+                                name="itens" autocomplete="off">
                         </div>
-                        <a href="/convocacao-{{ tipo }}/resultado"><button
-                                class="botao btn-principal linhaMRReset">Buscar</button></a>
+                        <input type="hidden" name="page" id="page" value="1">
+                        <input type="hidden" name="telefonados" id="telefonados" {% if telefonadosStr %}
+                            value="{{ telefonadosStr }}"
+                        {% endif %}>
+                        <button name="botao" onclick="validar(event)" class="botao btn-principal linhaMRReset">Buscar</button>
                     </div>
-                    <button class="botao btn-secundario linhaMRReset noselect">Marcar Telefonados</button>
+                    <input type="submit" name="botao" class="botao btn-secundario linhaMRReset noselect" value="Marcar Telefonados">
 
                 </div>
             </div>
 
             {% if resultado %}
-
+            <p id="resultadosEncontrados"><b>{{ paginas.total }} resultados encontrados.</b></p>
             <table class="table table-striped tabela tabelaFC">
                 <thead>
                     <tr>
-                        <th scope="col"><span class="material-icons icones">check_circle</span></th>
+                        <th scope="col"><span class="material-icons iconesCH">check_circle</span></th>
                         <th scope="col">Nome</th>
                         <th scope="col">Telefone</th>
                         <th scope="col">Notificado</th>
@@ -78,30 +92,92 @@
             </table>
 
             <div class="linhaFormulario paginador">
+                
                 <nav>
+                    {% if paginas.pages >= 6 %}
                     <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
+                        <li>
+                            <button onclick="adicionarPagina()">
+                                <span class="material-icons iconesP">
+                                    first_page
+                                </span>
+                            </button>
                         </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">4</a></li>
-                        <li class="page-item"><a class="page-link" href="#">5</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
+                        <li>
+                            <button onclick="adicionarPagina(1)" class="iconesnP" {% if not paginas.prev_num==None %}
+                                {% endif %}>
+                                <span aria-hidden="true">&laquo;</span>
+                            </button>
+                        </li>
+                        {% if paginas.has_prev %}
+                        <li>
+                            <button onclick="adicionarPagina('{{ paginas.prev_num }}')">
+                                {{ paginas.prev_num }}
+                            </button>
+                        </li>
+                        {% endif %}
+                        <li>
+                            <button onclick="adicionarPagina('{{ paginas.page }}')" class="ativo" disable>
+                                {{ paginas.page }}
+                            </button>
+                        </li>
+                        {% if paginas.has_next %}
+                        <li>
+                            <button onclick="adicionarPagina('{{ paginas.next_num }}')">
+                                {{ paginas.next_num }}
+                            </button>
+                        </li>
+                        {% endif %}
+                        <li>
+                            <button onclick="adicionarPagina('{{ paginas.next_num }}')" class="iconesnP" {% if not paginas.next_num==None %}
+                                {% endif %}>
                                 <span aria-hidden="true">&raquo;</span>
-                            </a>
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="adicionarPagina('{{paginas.pages}}')">
+                                <span class="material-icons iconesP ">
+                                    last_page
+                                </span>
+                            </button>
                         </li>
                     </ul>
+                    {% else %}
+                    <ul class="pagination">
+                        <li>
+                            <button onclick="adicionarPagina('{{paginas.prev_num}}')" class="iconesnP" {% if not paginas.prev_num==None %}
+                                {% endif %}>
+                                <span aria-hidden="true">&laquo;</span>
+                            </button>
+                        </li>
+
+                        {% for page in paginas.iter_pages() %}
+                        <li {% if page==paginas.page %} disable {% endif %}>
+                            <button onclick="adicionarPagina('{{page}}')" class="{% if page==paginas.page %} ativo {% endif %}">
+                                {{ page }}</button>
+                        </li>
+                        {% endfor %}
+
+                        <li>
+                            <button onclick="adicionarPagina('{{paginas.next_num}}')" class="iconesnP" {% if not paginas.next_num==None %}
+                                {% endif %}>
+                                <span aria-hidden="true">&raquo;</span>
+                            </button>
+                        </li>
+                    </ul>
+                    {% endif %}
                 </nav>
             </div>
 
             {% endif %}
-            
+            </form>
         </div>
     </div>
+    
 </div>
+{% endblock %}
+
+{% block codigos %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/convocacao.js') }}"></script>
 {% endblock %}

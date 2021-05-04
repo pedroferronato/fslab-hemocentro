@@ -186,8 +186,6 @@ def consulta_doacao_por_doador():
         return render_template("consultarDoacoesDoador.html", usuarioNaoEncontrado=True)
 
 
-
-
 @flaskApp.route('/consultar-doacao/resultado') 
 @login_required
 def consultar_doacao_resultado():
