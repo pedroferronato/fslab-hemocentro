@@ -1,6 +1,7 @@
 from app import flaskApp, db
-from app.models.utilidadeSistema import Utilidades
+from app.models.municipio import Municipio
 from app.models.doador import Doador
+from app.models.estado import Estado 
 from flask import render_template, redirect, request, url_for
 from datetime import datetime, date
 from collections import Counter
@@ -11,7 +12,7 @@ from flask_login import login_required, current_user
 @login_required
 def novo_doador():
 
-    cidade_registradas = Utilidades.query.order_by(Utilidades.id).all()
+    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(nome='Rondônia').first().id).order_by(Municipio.nome).all()
     sucesso = request.args.get('sucesso')
 
     recarregar = request.args.get('reload')
@@ -101,7 +102,7 @@ def novo_doador():
 @flaskApp.route('/doador/alterar/<doador_numRegistro>', methods=['GET', 'POST'])
 @login_required
 def alterar_doador(doador_numRegistro):
-    cidade_registradas = Utilidades.query.order_by(Utilidades.id).all()
+    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(nome='Rondônia').first().id).order_by(Municipio.nome).all()
     if request.method == 'GET':
         doador = Doador.query.filter_by(numero_registro=doador_numRegistro).first()
         return render_template("doador.html", alterar=True, doador=doador, cidades=cidade_registradas)
@@ -150,7 +151,7 @@ def consultar_doador():
     registro_alterado = request.args.get('registro_alterado')
     mensagem = request.args.get('mensagem')
 
-    cidade_registradas = Utilidades.query.order_by(Utilidades.id).all()
+    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(nome='Rondônia').first().id).order_by(Municipio.nome).all()
 
     if registro_alterado:
         return render_template("consultaDoadores.html", cidades=cidade_registradas, registro_alterado=registro_alterado, mensagem=mensagem)
@@ -161,7 +162,7 @@ def consultar_doador():
 @flaskApp.route('/doador/consulta') 
 @login_required
 def consulta_doador():
-    cidade_registradas = Utilidades.query.order_by(Utilidades.id).all()
+    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(nome='Rondônia').first().id).order_by(Municipio.nome).all()
     nome = request.args.get('nome')
     tipo_sanguineo = request.args.get('tipoSangue')
     numero_registro = request.args.get('registro')
