@@ -113,9 +113,20 @@
                     <tr class="rowActive" onclick="location.href = '/doador/alterar/{{ doador.numero_registro }}';">
                         <td>{{ doador.nome }}</td>
                         <td>{{ doador.tipo_sanguineo }}</td>
-                        <td>{{ doador.fidelidade }}</td>
-                        <!-- #TODO: pegar data ultima doação -->
-                        <td>doação</td>
+                        <td>
+                            {% if doador.fidelidade %}
+                            {{ doador.fidelidade }}
+                            {% else %}
+                            -
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if doador.get_ultima_doacao().data %}
+                            {{ doador.get_ultima_doacao().data }}
+                            {% else %}
+                            -
+                            {% endif %}
+                        </td>
                         <td>{{ doador.municipio}}</td>
                     </tr>
                     {% endfor %}

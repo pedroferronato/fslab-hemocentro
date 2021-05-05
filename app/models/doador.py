@@ -69,7 +69,7 @@ class Doador(db.Model):
 
 
     def get_ultima_doacao(self):
-        return Doacao.query.order_by(Doacao.data.desc()).first()
+        return Doacao.query.order_by(Doacao.data.desc()).filter_by(doador_id=self.numero_registro).first()
 
 
     def get_total_doacoes(self):
