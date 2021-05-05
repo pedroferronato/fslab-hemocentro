@@ -11,7 +11,7 @@ class Doacao(db.Model):
     hemocentro_id = db.Column(db.Integer, db.ForeignKey('hemocentros.id'), nullable=False)
     doador_id = db.Column(db.Integer, db.ForeignKey('doadores.numero_registro'), nullable=False)
     data = db.Column(db.Date(), nullable=False)
-    convocacao = db.Column(db.String(200))
+    convocacao = db.Column(db.String(50))
     observacao = db.Column(db.String(200))
 
 

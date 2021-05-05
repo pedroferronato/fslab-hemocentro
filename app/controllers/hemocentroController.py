@@ -1,6 +1,7 @@
 from app import flaskApp, db
-from app.models.utilidadeSistema import Utilidades
 from app.models.hemocentro import Hemocentro
+from app.models.municipio import Municipio
+from app.models.estado import Estado
 from flask import render_template, redirect, request, url_for
 from flask_login import login_required
 
@@ -9,7 +10,7 @@ from flask_login import login_required
 @login_required
 def novo_hemocentro():
 
-    cidade_registradas = Utilidades.query.order_by(Utilidades.id).all()
+    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(nome='Rondônia').first().id).order_by(Municipio.nome).all()
     sucesso = request.args.get('sucesso')
 
     recarregar = request.args.get('reload')
@@ -54,7 +55,7 @@ def novo_hemocentro():
 @flaskApp.route('/hemocentro/alterar/<hemocentro_id>', methods=['GET', 'POST'])
 @login_required
 def alterar_hemocentro(hemocentro_id):
-    cidade_registradas = Utilidades.query.order_by(Utilidades.id).all()
+    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(nome='Rondônia').first().id).order_by(Municipio.nome).all()
     if request.method == 'GET':
         hemocentro = Hemocentro.query.filter_by(id=hemocentro_id).first()
         return render_template("hemocentro.html", alterar=True, hemocentro=hemocentro, cidades=cidade_registradas)
@@ -76,7 +77,7 @@ def alterar_hemocentro(hemocentro_id):
 @flaskApp.route('/hemocentro/consultar') 
 @login_required
 def consultar_hemocentro():
-    cidade_registradas = Utilidades.query.order_by(Utilidades.id).all()
+    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(nome='Rondônia').first().id).order_by(Municipio.nome).all()
     nome = request.args.get('nome')
     municipio = request.args.get('municipio')
 

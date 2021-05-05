@@ -1,7 +1,6 @@
 from app import flaskApp, login_manager, db
 from flask import render_template, redirect, request, url_for
 from app.models.hemocentro import Hemocentro
-from app.models.utilidadeSistema import Utilidades
 from app.models.captador import Captador
 from collections import Counter
 from sqlalchemy import exc

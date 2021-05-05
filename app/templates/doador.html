@@ -145,7 +145,6 @@
                         <div class="campo">
                             <div class="flexivel SpcBtw AlgEnd">
                                 <label id="lbMunicipio" for="municipio">Município:</label>
-                                {% if not alterar %} <span onclick="adicionarCidade()" class="material-icons iconesM" >add_location_alt</span> {% endif %}
                             </div>
                             <select name="municipio" id="municipio" onfocus="removerClasseAlerta('municipio')" {% if
                                 alterar %} disabled {% endif %}>
@@ -155,9 +154,7 @@
                                 <option value="{{doador.municipio}}" selected="selected">{{doador.municipio}}</option>
                                 {% else %}
                                 {% for cidade in cidades %}
-                                <option value="{{cidade.cidade_registrada}}" {% if
-                                    cidade.cidade_registrada==cidade_adicionada %} selected="selected" {% endif %}>
-                                    {{cidade.cidade_registrada}}</option>
+                                <option value="{{cidade.nome}}">{{cidade.nome}}</option>
                                 {% endfor %}
                                 {% endif %}
                             </select>
