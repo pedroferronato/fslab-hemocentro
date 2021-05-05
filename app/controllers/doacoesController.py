@@ -135,9 +135,40 @@ def detalhes_doacao():
 @flaskApp.route('/consultar-doacao') 
 @login_required
 def consultar_doacao():
-
-    
     return render_template("consultarDoacoes.html")
+
+@flaskApp.route('/consultar-doacao/resultado', methods=['POST']) 
+@login_required
+def consultar_doacao_resultado():
+        dataBKP = request.form['data']
+        dataFinalBKP = request.form['dataFinal']
+        data = datetime.strptime(request.form['data'], '%d/%m/%Y').date()
+        dataFinal = datetime.strptime(request.form['dataFinal'], '%d/%m/%Y').date()
+        itens = request.form['itens']
+
+        page = request.form['page']
+
+        if page and page.isdigit():
+            page = int(page)
+        else:
+            page = 1
+
+        if itens:
+            itens_pesquisados = int(itens)
+        else:
+            itens_pesquisados = 10
+
+        try:
+            paginacao = db.session.query(Doacao.data, Doador.nome, Doacao.convocacao).filter(Doacao.doador_id == Doador.numero_registro, Doacao.data.between(data, dataFinal)).order_by(Doacao.data.desc()).paginate(page=page, per_page=itens_pesquisados)
+            lista_doacoes = paginacao.items
+            if Counter(lista_doacoes):
+                return render_template("consultarDoacoes.html", resultado=True, paginas=paginacao, doacoes=lista_doacoes, itens=itens_pesquisados, data = dataBKP, dataFinal = dataFinalBKP)
+            else:
+                return render_template("consultarDoacoes.html", lista_vazia=True, itens=itens_pesquisados, data = dataBKP, dataFinal = dataFinalBKP)
+        except Exception as e:
+            return render_template("consultarDoacoes.html") 
+
+        return render_template("consultarDoacoes.html") 
 
 
 @flaskApp.route('/consultar-doacao/doador') 

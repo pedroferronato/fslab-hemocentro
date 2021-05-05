@@ -160,7 +160,7 @@ function validarConsultaDoacao(evento){
     if (dataFinal.value == undefined || dataFinal.value == null || dataFinal.value == "" || dataFinal.value == " ") vDataFinal = false
     
     if (!vPredefinicao && !vDataInicial || !vDataFinal){
-        alert("Por favor, selecione uma predefinição de data ou preencha os campos para a pesquisa.")
+        $(erroUm).modal('show');
         return evento.preventDefault()
     }
 
@@ -172,16 +172,14 @@ function validarConsultaDoacao(evento){
     let dataFinalFormatoDate = new Date(dataFinalFormato)
 
     if (dataInicialFormatoDate.getTime() > dataFinalFormatoDate.getTime()){
-        alert("A data final deve ser maior que a data inicial na busca.")
+        $(erroDois).modal('show');
         return evento.preventDefault()
     }
-
+    
     if ((dataFinalFormatoDate - dataInicialFormatoDate) > 31622400000) {
-        alert("A busca de datas devem ser entre até 366 dias.")
+        $(erroTres).modal('show');
         return evento.preventDefault()
     }
-
-    evento.preventDefault()
 
 }
 
@@ -378,4 +376,8 @@ function validarData(vardata, nasc) {
     if (nasc) if (ano > new Date().getFullYear()) return false;
 
     return true;
+}
+
+function adicionarPagina(valor) {
+    document.getElementById("page").value = valor
 }

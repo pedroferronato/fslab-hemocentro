@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block conteudo %}
+
 <div class="contentorConteudo">
 
     <div class="bread noselect">
@@ -16,117 +17,210 @@
 
     <div class="cartao noselect">
         <div class="titulo">
-            <h1>Consulta de doadores</h1>
+            <h1>Consulta de doação por data</h1>
         </div>
         <div class="formulario">
-            <form action="/consultar-doacao" method="POST">
-            <div class="linhaFormulario linhaSolitaria">
-                <div class="campo" id="divPredefinicoes">
-                    <label for="predefinicao">Predefinições:</label>
-                    <select onchange="setarData(this)" name="predefinicoes" id="predefinicoes">
-                        <option value="null" selected="selected" disabled>Selecione</option>
-                        <option value="personalizado" disabled>Personalizado</option>
-                        <option value="ontem">Ontem</option>
-                        <option value="anteontem">Anteontem</option>
-                        <option value="dois">Últimos 2 dias</option>
-                        <option value="sete">Últimos 7 dias</option>
-                        <option value="dez">Últimos 10 dias</option>
-                    </select>
+            <form action="/consultar-doacao/resultado" method="POST">
+                <div class="linhaFormulario linhaSolitaria">
+                    <div class="campo" id="divPredefinicoes">
+                        <label for="predefinicao">Predefinições:</label>
+                        <select onchange="setarData(this)" name="predefinicoes" id="predefinicoes">
+                            <option value="null" selected="selected" disabled>Selecione</option>
+                            <option value="personalizado" disabled>Personalizado</option>
+                            <option value="ontem">Ontem</option>
+                            <option value="anteontem">Anteontem</option>
+                            <option value="dois">Últimos 2 dias</option>
+                            <option value="sete">Últimos 7 dias</option>
+                            <option value="dez">Últimos 10 dias</option>
+                        </select>
+                    </div>
+                    <div class="campo" id="divData">
+                        <label for="data" id="lbData">Data inicial:</label>
+                        <input onkeyup="predefinicaoPersonalizado()" onfocus="removerClasseAlertaDoacoes('data')"
+                            class="data" name="data" type="text" id="data" autocomplete="off" {% if data %}
+                            value="{{ data }}" {% endif %}>
+                    </div>
+                    <div class="campo" id="divDataFinal">
+                        <label for="dataFinal" id="lbDataFinal">Data final:</label>
+                        <input onkeyup="predefinicaoPersonalizado()" onfocus="removerClasseAlertaDoacoes('dataFinal')"
+                            class="data" name="dataFinal" type="text" id="dataFinal" autocomplete="off" {% if dataFinal
+                            %} value="{{ dataFinal }}" {% endif %}>
+                    </div>
+                    <div class="campo" id="divItens">
+                        <label for="itens">Itens por pág.:</label>
+                        <input type="text" name="itens" id="itens" autocomplete="off" {% if itens %} value="{{ itens }}"
+                            {% endif %}>
+                    </div>
+                    <div>
+                        <a><button onclick="validarConsultaDoacao(event)"
+                                class="botao btn-principal linhaMRReset">Buscar</button></a>
+                    </div>
                 </div>
-                <div class="campo" id="divData">
-                    <label for="data" id="lbData">Data inicial:</label>
-                    <input onkeyup="predefinicaoPersonalizado()" onfocus="removerClasseAlertaDoacoes('data')" class="data" type="text" id="data" autocomplete="off">
-                </div>
-                <div class="campo" id="divDataFinal">
-                    <label for="dataFinal" id="lbDataFinal">Data final:</label>
-                    <input onkeyup="predefinicaoPersonalizado()" onfocus="removerClasseAlertaDoacoes('dataFinal')" class="data" type="text" id="dataFinal" autocomplete="off">
-                </div>
-                <div class="campo" id="divItens">
-                    <label for="itens">Itens por pág.:</label>
-                    <input type="text" id="itens" autocomplete="off">
-                </div>
-                <div>
-                    <a><button
-                        onclick="validarConsultaDoacao(event)" class="botao btn-principal linhaMRReset">Buscar</button></a>
-                </div>
-            </div>
-            </form>
         </div>
     </div>
+    <input type="hidden" name="page" id="page" value="1">
+    <div class="modal" id="erroUm" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Campos inválidos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Por favor, selecione uma predefinição de data ou preencha os campos para a pesquisa.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="erroDois" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Campos inválidos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>A data final deve ser maior que a data inicial na busca.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="erroTres" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Campos inválidos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>A busca de datas devem ser entre até 366 dias.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if lista_vazia %}
+    <div class="cartao">
+        <strong>Nenhum resultado encontrado</strong>
+    </div>
+    {% endif %}
 
     {% if resultado %}
     <div class="cartao">
-
-        <div class="linhaFormulario">
-            <table class="table table-striped tabela">
-                <thead>
-                    <tr>
-                        <th scope="col">Data</th>
-                        <th scope="col">Doador</th>
-                        <th scope="col">Convocação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>24/12/2020</td>
-                        <td>Henry Lourenço Queiroga</td>
-                        <td>Voluntário</td>
-                    </tr>
-                    <tr>
-                        <td>24/12/2020</td>
-                        <td>Matteo Beltrão Paixão</td>
-                        <td>Voluntário</td>
-                    </tr>
-                    <tr>
-                        <td>23/12/2020</td>
-                        <td>Bartolomeu Moita Beiriz</td>
-                        <td>Reposição</td>
-                    </tr>
-                    <tr>
-                        <td>23/12/2020</td>
-                        <td>Quélia Freixo Veloso</td>
-                        <td>Voluntário</td>
-                    </tr>
-                    <tr>
-                        <td>23/12/2020</td>
-                        <td>Emilia Ulhoa Lalanda</td>
-                        <td>Reposição</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
+        <p id="resultadosEncontrados"><b>{{ paginas.total }} resultados encontrados.</b></p>
+        <table class="table table-striped tabela tabelaFC">
+            <thead>
+                <tr>
+                    <th scope="col">Data</th>
+                    <th scope="col">Doador</th>
+                    <th scope="col">Convocação</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for doacao in doacoes %}
+                <tr>
+                    <td>{{ doacao.data.strftime('%d/%m/%Y') }}</td>
+                    <td>{{ doacao.nome }}</td>
+                    <td>{{ doacao.convocacao }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
         <div class="linhaFormulario paginador">
+
             <nav>
+                {% if paginas.pages >= 6 %}
                 <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
+                    <li>
+                        <button onclick="adicionarPagina()">
+                            <span class="material-icons iconesP">
+                                first_page
+                            </span>
+                        </button>
                     </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
+                    <li>
+                        <button onclick="adicionarPagina(1)" class="iconesnP" {% if not paginas.prev_num==None %} {%
+                            endif %}>
+                            <span aria-hidden="true">&laquo;</span>
+                        </button>
+                    </li>
+                    {% if paginas.has_prev %}
+                    <li>
+                        <button onclick="adicionarPagina('{{ paginas.prev_num }}')">
+                            {{ paginas.prev_num }}
+                        </button>
+                    </li>
+                    {% endif %}
+                    <li>
+                        <button onclick="adicionarPagina('{{ paginas.page }}')" class="ativo" disable>
+                            {{ paginas.page }}
+                        </button>
+                    </li>
+                    {% if paginas.has_next %}
+                    <li>
+                        <button onclick="adicionarPagina('{{ paginas.next_num }}')">
+                            {{ paginas.next_num }}
+                        </button>
+                    </li>
+                    {% endif %}
+                    <li>
+                        <button onclick="adicionarPagina('{{ paginas.next_num }}')" class="iconesnP" {% if not
+                            paginas.next_num==None %} {% endif %}>
                             <span aria-hidden="true">&raquo;</span>
-                        </a>
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="adicionarPagina('{{paginas.pages}}')">
+                            <span class="material-icons iconesP ">
+                                last_page
+                            </span>
+                        </button>
                     </li>
                 </ul>
+                {% else %}
+                <ul class="pagination">
+                    <li>
+                        <button onclick="adicionarPagina('{{paginas.prev_num}}')" class="iconesnP" {% if not
+                            paginas.prev_num==None %} {% endif %}>
+                            <span aria-hidden="true">&laquo;</span>
+                        </button>
+                    </li>
+
+                    {% for page in paginas.iter_pages() %}
+                    <li {% if page==paginas.page %} disable {% endif %}>
+                        <button onclick="adicionarPagina('{{page}}')"
+                            class="{% if page==paginas.page %} ativo {% endif %}">
+                            {{ page }}</button>
+                    </li>
+                    {% endfor %}
+
+                    <li>
+                        <button onclick="adicionarPagina('{{paginas.next_num}}')" class="iconesnP" {% if not
+                            paginas.next_num==None %} {% endif %}>
+                            <span aria-hidden="true">&raquo;</span>
+                        </button>
+                    </li>
+                </ul>
+                {% endif %}
             </nav>
         </div>
+        {% endif %}
+        </form>
     </div>
+    {% endblock %}
 
-    {% endif %}
-
-</div>
-{% endblock %}
-
-{% block codigos %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
-<script src="{{ url_for('static', filename='js/mascaras.js') }}"></script>
-<script src="{{ url_for('static', filename='js/doacao.js') }}"></script>
-{% endblock  %}
+    {% block codigos %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+    <script src="{{ url_for('static', filename='js/mascaras.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/doacao.js') }}"></script>
+    {% endblock %}
