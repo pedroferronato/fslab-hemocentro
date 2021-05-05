@@ -49,20 +49,6 @@ class Doador(db.Model):
             self.legado = True
 
 
-    def definir_inaptidao(self, inaptidao, data):
-        self.inaptidao = inaptidao
-        self.final_inaptidao = data
-        if data is None and inaptidao:
-            self.final_inaptidao = datetime.today() + relativedelta(months=1)
-            
-    
-    def get_idade(self):
-        self.idade = (hoje.year - self.data_de_nascimento.year - ((hoje.month, hoje.day) < (self.data_de_nascimento.month, self.data_de_nascimento.day)))
-        db.session.add(self)
-        db.session.commit()
-        return self.idade
-
-
     def dia_do_aniversario(self):
         # Deve retornar um booleano (é ou não dia de seu aniversário)
         pass
