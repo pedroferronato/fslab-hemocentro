@@ -33,15 +33,15 @@
         <div class="formulario">
             <div class="linhaFormulario AlgSrt">
                 <div class="dados">
-                    <label>Núm. de regitro:</label>
+                    <label>Núm. de registro:</label>
                     <p>{{ doador.numero_registro }}</p>
                 </div>
                 <div class="dados">
                     <div class="flexivel SpcBtw">
                         <label>Telefone:</label>
-                        <span class="material-icons iconesS">content_copy</span>
+                        <span onclick="copyElementText('telefone')" class="material-icons iconesS">content_copy</span>
                     </div>
-                    <p>
+                    <p id="telefone">
                         {% if doador.telefone == "" %}
                         Não informado
                         {% else %}
@@ -52,9 +52,9 @@
                 <div class="dados">
                     <div class="flexivel SpcBtw">
                         <label>Celular:</label>
-                        <span class="material-icons iconesS">content_copy</span>
+                        <span onclick="copyElementText('celular')" class="material-icons iconesS">content_copy</span>
                     </div>
-                    <p>
+                    <p id="celular">
                         {% if doador.celular == "" %}
                         Não informado
                         {% else %}
@@ -95,9 +95,9 @@
                     <div class="dados">
                         <div class="flexivel SpcBtw">
                             <label>E-mail:</label>
-                            <span class="material-icons iconesS">content_copy</span>
+                            <span onclick="copyElementText('email')" class="material-icons iconesS">content_copy</span>
                         </div>
-                        <p>
+                        <p id="email">
                             {% if doador.email == "" %}
                             Não informado
                             {% else %}
@@ -121,7 +121,7 @@
                     </div>
                     <div class="dados">
                         <label>Cidade:</label>
-                        <p>{{ doador.municipio }}</p>
+                        <p>{{ doador.get_municipio() }}</p>
                     </div>
                     {% if doador.inaptidao %}    
                     <div class="dados txt-alerta">
@@ -247,4 +247,5 @@
 
 {% block codigos %}
 <script src="{{ url_for('static', filename='js/detalhesDoador.js') }}"></script>
+<script src="{{ url_for('static', filename='js/copyToClipboard.js') }}"></script>
 {% endblock %}

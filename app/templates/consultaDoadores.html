@@ -69,8 +69,8 @@
                         <select name="municipio" id="municipio">
                             <option value="null">Selecione</option>
                             {% for cidade in cidades %}
-                            <option {% if municipio_pesquisado==cidade.cidade_registrada %} selected="selected" {% endif
-                                %} value="{{cidade.cidade_registrada}}">{{cidade.cidade_registrada}}</option>
+                            <option {% if municipio_pesquisado==cidade.id %} selected="selected" {% endif
+                                %} value="{{cidade.id}}">{{cidade.nome}}</option>
                             {% endfor %}
                         </select>
                     </div>
