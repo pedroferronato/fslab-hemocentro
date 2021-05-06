@@ -154,7 +154,7 @@
                                 <option value="{{doador.municipio}}" selected="selected">{{doador.municipio}}</option>
                                 {% else %}
                                 {% for cidade in cidades %}
-                                <option value="{{cidade.nome}}">{{cidade.nome}}</option>
+                                <option value="{{cidade.id}}">{{cidade.nome}}</option>
                                 {% endfor %}
                                 {% endif %}
                             </select>

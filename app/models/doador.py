@@ -1,5 +1,6 @@
 from app import db
 from app.models.doacao import Doacao
+from app.models.municipio import Municipio
 
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
@@ -64,4 +65,8 @@ class Doador(db.Model):
 
     def get_ultimas_dez_doacoes(self):
         return Doacao.query.filter_by(doador_id=self.numero_registro).order_by(Doacao.data.desc()).limit(10).all()
+
+
+    def get_municipio(self):
+        return Municipio.query.filter_by(id=self.municipio).first().nome
 
