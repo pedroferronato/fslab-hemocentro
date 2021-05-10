@@ -14,6 +14,7 @@ bcrypt = "*"
 flask-login = "*"
 pytest = "*"
 pytest-flask = "*"
+cryptography = "*"
 
 [dev-packages]
 
