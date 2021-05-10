@@ -50,9 +50,9 @@ class Doador(db.Model):
             self.legado = True
 
 
-    def dia_do_aniversario(self):
-        # Deve retornar um booleano (é ou não dia de seu aniversário)
-        pass
+    def get_idade(self):
+        hoje = date.today()
+        return (hoje.year - self.data_de_nascimento.year - ((hoje.month, hoje.day) < (self.data_de_nascimento.month, self.data_de_nascimento.day)))
 
 
     def get_ultima_doacao(self):
