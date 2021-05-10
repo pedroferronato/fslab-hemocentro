@@ -1,4 +1,5 @@
 from app import db
+from app.models.municipio import Municipio
 
 
 class Hemocentro(db.Model):
@@ -25,3 +26,6 @@ class Hemocentro(db.Model):
     def __repr__(self):
         return f"Hemocentro: {self.nome}"
 
+
+    def get_municipio(self):
+        return Municipio.query.filter_by(id=self.municipio).first().id

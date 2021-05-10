@@ -44,8 +44,10 @@ def chamada_tipada_resultado():
     filtros.append(Doador.hemocentro_id == current_user.get_hemocentro().get_id())
     filtros.append(Doador.tipo_sanguineo == tipo)
     filtros.append(Doador.inaptidao == False)
+    filtros.append(Doador.legado == False)
+    filtros.append(Doador.idade < 70)
 
-    resultado = Doador.query.filter(*filtros).limit(100).from_self()
+    resultado = Doador.query.filter(*filtros).limit(100).from_self().order_by(Doador.municipio == current_user.get_hemocentro().get_municipio())
 
     if len(resultado.all()) == 0:
         return render_template("convocacaoTipada.html", listaVazia=True, tipo_sanguineo=tipo, tipo="tipada")
@@ -69,10 +71,55 @@ def chamada_emergencial():
     return render_template("convocacaoEmergencial.html", tipo="emergencial")
 
 
-@flaskApp.route('/convocacao-emergencial/resultado')
+@flaskApp.route('/convocacao-emergencial/resultado', methods=['POST'])
 @login_required
 def chamada_emergencial_resultado():
-    return render_template("convocacaoEmergencial.html", tipo="emergencial", resultado=True)
+    tipo = request.form['tipagem']
+
+    itens = request.form['itens']
+    page = request.form['page']
+
+    telefonados = request.form['telefonados']
+    telefonados_string = telefonados
+    telefonados = telefonados.split("&")
+    telefonados.pop()
+    telefonados = [int(x) for x in telefonados]
+    
+    if page and page.isdigit():
+        page = int(page)
+    else:
+        page = 1
+
+    if itens:
+        itens_pesquisados = int(itens)
+    else:
+        itens_pesquisados = 5
+
+    filtros = []
+
+    filtros.append(or_(and_(Doador.sexo == "mas", Doador.ultima_doacao <= (datetime.today() - relativedelta(months=2))), and_(Doador.sexo == "fem", Doador.ultima_doacao <= (datetime.today() - relativedelta(months=3)))))
+    filtros.append(Doador.contatado == False)
+    filtros.append(Doador.hemocentro_id == current_user.get_hemocentro().get_id())
+    filtros.append(Doador.tipo_sanguineo == tipo)
+    filtros.append(Doador.inaptidao == False)
+    filtros.append(Doador.legado == False)
+    filtros.append(Doador.idade < 70)
+
+    resultado = Doador.query.filter(*filtros).limit(100).from_self().order_by(Doador.municipio == current_user.get_hemocentro().get_municipio())
+
+    if len(resultado.all()) == 0:
+        return render_template("convocacaoEmergencial.html", listaVazia=True, tipo_sanguineo=tipo, tipo="emegencial")
+    else:
+        if request.form['botao'] == 'Marcar Telefonados':
+            for numero in telefonados:
+                telefonado = Doador.query.filter_by(numero_registro= numero).first()
+                telefonado.contatado = True
+                db.session.add(telefonado)
+                db.session.commit()
+            return render_template("convocacaoEmergencial.html", tipo_sanguineo=tipo, tipo="emegencial")
+        else:
+            paginacao = resultado.paginate(page=page, per_page=itens_pesquisados)
+            return render_template("convocacaoEmergencial.html", resultado=True, doadores=paginacao.items, paginas=paginacao, tipo_sanguineo=tipo, tipo="emegencial", itens=itens_pesquisados, telefonados=telefonados, telefonadosStr=telefonados_string)
 
 
 @flaskApp.route('/convocacao-localidades-externas')
