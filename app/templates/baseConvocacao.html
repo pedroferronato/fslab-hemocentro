@@ -58,7 +58,7 @@
                         <div class="campo" id="divIP">
                             <label for="itenspp">Itens por página:</label>
                             <input {% if itens %} value="{{ itens }}" {% endif %} type="number" id="itenspp"
-                                name="itens" autocomplete="off">
+                                name="itens" autocomplete="off" max="50">
                         </div>
                         <input type="hidden" name="page" id="page" value="1">
                         <input type="hidden" name="telefonados" id="telefonados" {% if telefonadosStr %}

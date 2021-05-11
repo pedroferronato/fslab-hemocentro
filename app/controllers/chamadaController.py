@@ -3,6 +3,8 @@ from flask import render_template, request
 from flask_login import login_required, current_user
 from sqlalchemy import and_, or_
 from app.models.doador import Doador
+from app.models.municipio import Municipio
+from app.models.estado import Estado
 from dateutil.relativedelta import relativedelta
 from datetime import datetime
 
@@ -125,13 +127,61 @@ def chamada_emergencial_resultado():
 @flaskApp.route('/convocacao-localidades-externas')
 @login_required
 def chamada_localidades_externas():
-    return render_template("convocacaoLocalidadesExternas.html")
+    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(nome='Rondônia').first().id).order_by(Municipio.nome).all()
+    return render_template("convocacaoLocalidadesExternas.html", cidades=cidade_registradas)
 
 
-@flaskApp.route('/convocacao-localidades-externas/resultado')
+@flaskApp.route('/convocacao-localidades-externas/resultado', methods=['POST'])
 @login_required
 def chamada_localidades_externas_resultado():
-    return render_template("convocacaoLocalidadesExternas.html", resultado=True)
+    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(nome='Rondônia').first().id).order_by(Municipio.nome).all()
+    tipo = request.form['tipagem']
+    municipio = request.form['municipio']
+
+    itens = request.form['itens']
+    page = request.form['page']
+
+    telefonados = request.form['telefonados']
+    telefonados_string = telefonados
+    telefonados = telefonados.split("&")
+    telefonados.pop()
+    telefonados = [int(x) for x in telefonados]
+    
+    if page and page.isdigit():
+        page = int(page)
+    else:
+        page = 1
+
+    if itens:
+        itens_pesquisados = int(itens)
+    else:
+        itens_pesquisados = 5
+
+    filtros = []
+
+    filtros.append(or_(and_(Doador.sexo == "mas", Doador.ultima_doacao <= (datetime.today() - relativedelta(months=3))), and_(Doador.sexo == "fem", Doador.ultima_doacao <= (datetime.today() - relativedelta(months=4)))))
+    filtros.append(Doador.contatado == False)
+    filtros.append(Doador.tipo_sanguineo == tipo)
+    filtros.append(Doador.municipio == int(municipio))
+    filtros.append(Doador.inaptidao == False)
+    filtros.append(Doador.legado == False)
+    filtros.append(Doador.idade < 70)
+
+    resultado = Doador.query.filter(*filtros).limit(100).from_self().order_by(Doador.municipio == current_user.get_hemocentro().get_municipio())
+
+    if len(resultado.all()) == 0:
+        return render_template("convocacaoLocalidadesExternas.html", listaVazia=True, tipo_sanguineo=tipo, cidades=cidade_registradas, cidade_pesquisada=int(municipio))
+    else:
+        if request.form['botao'] == 'Marcar Telefonados':
+            for numero in telefonados:
+                telefonado = Doador.query.filter_by(numero_registro= numero).first()
+                telefonado.contatado = True
+                db.session.add(telefonado)
+                db.session.commit()
+            return render_template("convocacaoLocalidadesExternas.html", tipo_sanguineo=tipo, cidades=cidade_registradas, cidade_pesquisada=int(municipio))
+        else:
+            paginacao = resultado.paginate(page=page, per_page=itens_pesquisados)
+            return render_template("convocacaoLocalidadesExternas.html", resultado=True, doadores=paginacao.items, paginas=paginacao, tipo_sanguineo=tipo, itens=itens_pesquisados, telefonados=telefonados, telefonadosStr=telefonados_string, cidades=cidade_registradas, cidade_pesquisada=int(municipio))
 
 
 @flaskApp.route('/convocacao-convocados')
