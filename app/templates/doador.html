@@ -146,7 +146,8 @@
                             <div class="flexivel SpcBtw AlgEnd">
                                 <label id="lbMunicipio" for="municipio">Município:</label>
                             </div>
-                            <select name="municipio" id="municipio" onfocus="removerClasseAlerta('municipio')" {% if
+                            <input list=municipio>
+                            <datalist name="municipio" id="municipio" onfocus="removerClasseAlerta('municipio')" {% if
                                 alterar %} disabled {% endif %}>
                                 <option value="selecione" {% if not alterar %} selected="selected" {% endif %}>Selecione
                                 </option>
@@ -154,10 +155,10 @@
                                 <option value="{{doador.municipio}}" selected="selected">{{doador.municipio}}</option>
                                 {% else %}
                                 {% for cidade in cidades %}
-                                <option value="{{cidade.id}}">{{cidade.nome}}</option>
+                                <option value="{{cidade.nome}}"></option>
                                 {% endfor %}
                                 {% endif %}
-                            </select>
+                            </datalist>
                         </div>
                     </div>
 
@@ -299,6 +300,7 @@
 {% endblock %}
 {% block codigos %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 <script src="{{ url_for('static', filename='js/mascaras.js') }}"></script>
 <script src="{{ url_for('static', filename='js/doador.js') }}"></script>
