@@ -2,6 +2,9 @@ $(".alert").delay(2000).slideUp(200, function () {
     $(this).alert('close');
 });
 
+var municipio = document.getElementById('municipio')
+var estado = document.getElementById('estado')
+
 function validarCampos(evento) {
     var numRegistro = document.getElementById("numRegistro")
     var lbNumRegistro = document.getElementById("lbNumRegistro")
@@ -17,8 +20,6 @@ function validarCampos(evento) {
     var lbNascimento = document.getElementById("lbNascimento")
     var sus = document.getElementById("sus")
     var lbSus = document.getElementById("lbSus")
-    var municipio = document.getElementById("municipio")
-    var lbMunicipio = document.getElementById("lbMunicipio")
     var dataInaptidao = document.getElementById("dataInaptidao")
     var lbDataInaptidao = document.getElementById("lbDataInaptidao")
 
@@ -66,7 +67,7 @@ function validarCampos(evento) {
         }
         alerta = true;
     }
-    if (dataInaptidao.value.length > 9 && !validarData(dataInaptidao.value, false) ) {
+    if (dataInaptidao.value.length > 9 && !validarData(dataInaptidao.value, false)) {
         if (!dataInaptidao.classList.contains('borda-alerta')) {
             dataInaptidao.classList.add('borda-alerta')
             lbDataInaptidao.classList.add('txt-alerta')
@@ -87,9 +88,16 @@ function validarCampos(evento) {
         }
         alerta = true;
     }
-    if (municipio.value == 'selecione') {
-        if (!municipio.classList.contains('borda-alerta')) {
-            municipio.classList.add('borda-alerta')
+    if ( !estaContidoNoPadrao(estado, inputEstado) ) {
+        if (!inputEstado.classList.contains('borda-alerta')) {
+            inputEstado.classList.add('borda-alerta')
+            lbEstado.classList.add('txt-alerta')
+        }
+        alerta = true;
+    }
+    if ( !estaContidoNoPadrao(municipio, inputMunicipio) ) {
+        if (!inputMunicipio.classList.contains('borda-alerta')) {
+            inputMunicipio.classList.add('borda-alerta')
             lbMunicipio.classList.add('txt-alerta')
         }
         alerta = true;
@@ -128,12 +136,23 @@ function validarData(vardata, nasc) {
     var diasDoMes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
     if ((!(ano % 4) && ano % 100) || !(ano % 400)) diasDoMes[1] = 29;
-    
+
     if (mes <= 0 || mes > 12) return false
     if (dia <= 0 || dia > diasDoMes[mes - 1]) return false;
     if (nasc) if (ano > new Date().getFullYear()) return false;
 
     return true;
+}
+
+function estaContidoNoPadrao(datalist, input) {
+    let encontrado = false;
+    Array.from(datalist.children).forEach(element => {
+        if (input.value == element.value) {
+            encontrado = true;   
+        }
+    });
+    if (encontrado) return true;
+    return false;
 }
 
 function removerClasseAlerta(elemento) {
@@ -165,10 +184,6 @@ function removerClasseAlerta(elemento) {
         sus.classList.remove('borda-alerta')
         lbSus.classList.remove('txt-alerta')
     }
-    if (municipio.classList.contains('borda-alerta') && elemento == 'municipio') {
-        municipio.classList.remove('borda-alerta')
-        lbMunicipio.classList.remove('txt-alerta')
-    }
     if (dataInaptidao.classList.contains('borda-alerta') && elemento == 'inaptidao') {
         dataInaptidao.classList.remove('borda-alerta')
         lbDataInaptidao.classList.remove('txt-alerta')
@@ -188,7 +203,6 @@ function limpar() {
     telefone.value = ""
     mail.value = ""
     aviso.value = "nao"
-    municipio.value = "selecione"
     profissao.value = ""
     localTrabalho.value = ""
     estadoAptidao.value = "apto"

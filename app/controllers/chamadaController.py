@@ -127,16 +127,20 @@ def chamada_emergencial_resultado():
 @flaskApp.route('/convocacao-localidades-externas')
 @login_required
 def chamada_localidades_externas():
-    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(nome='Rondônia').first().id).order_by(Municipio.nome).all()
-    return render_template("convocacaoLocalidadesExternas.html", cidades=cidade_registradas)
+    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(id=current_user.get_hemocentro().get_estado().id).first().id).order_by(Municipio.nome).all()
+    estados = Estado.query.all()
+    return render_template("convocacaoLocalidadesExternas.html", cidades=cidade_registradas, estados=estados)
 
 
 @flaskApp.route('/convocacao-localidades-externas/resultado', methods=['POST'])
 @login_required
 def chamada_localidades_externas_resultado():
-    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(nome='Rondônia').first().id).order_by(Municipio.nome).all()
+    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(id=current_user.get_hemocentro().get_estado().id).first().id).order_by(Municipio.nome).all()
+    estados = Estado.query.all()
     tipo = request.form['tipagem']
-    municipio = request.form['municipio']
+    estado = request.form['inputEstado']
+    municipio = request.form['inputMunicipio']
+    municipio = Municipio.query.filter_by(nome=municipio, uf=Estado.query.filter_by(nome=estado).first().id).first().id
 
     itens = request.form['itens']
     page = request.form['page']
@@ -170,7 +174,7 @@ def chamada_localidades_externas_resultado():
     resultado = Doador.query.filter(*filtros).limit(100).from_self().order_by(Doador.municipio == current_user.get_hemocentro().get_municipio())
 
     if len(resultado.all()) == 0:
-        return render_template("convocacaoLocalidadesExternas.html", listaVazia=True, tipo_sanguineo=tipo, cidades=cidade_registradas, cidade_pesquisada=int(municipio))
+        return render_template("convocacaoLocalidadesExternas.html", listaVazia=True, estados=estados , tipo_sanguineo=tipo, cidades=cidade_registradas, cidade_pesquisada=int(municipio))
     else:
         if request.form['botao'] == 'Marcar Telefonados':
             for numero in telefonados:
@@ -178,10 +182,10 @@ def chamada_localidades_externas_resultado():
                 telefonado.contatado = True
                 db.session.add(telefonado)
                 db.session.commit()
-            return render_template("convocacaoLocalidadesExternas.html", tipo_sanguineo=tipo, cidades=cidade_registradas, cidade_pesquisada=int(municipio))
+            return render_template("convocacaoLocalidadesExternas.html", estados=estados , tipo_sanguineo=tipo, cidades=cidade_registradas, cidade_pesquisada=int(municipio))
         else:
             paginacao = resultado.paginate(page=page, per_page=itens_pesquisados)
-            return render_template("convocacaoLocalidadesExternas.html", resultado=True, doadores=paginacao.items, paginas=paginacao, tipo_sanguineo=tipo, itens=itens_pesquisados, telefonados=telefonados, telefonadosStr=telefonados_string, cidades=cidade_registradas, cidade_pesquisada=int(municipio))
+            return render_template("convocacaoLocalidadesExternas.html", estados=estados , resultado=True, doadores=paginacao.items, paginas=paginacao, tipo_sanguineo=tipo, itens=itens_pesquisados, telefonados=telefonados, telefonadosStr=telefonados_string, cidades=cidade_registradas, cidade_pesquisada=int(municipio))
 
 
 @flaskApp.route('/convocacao-convocados')

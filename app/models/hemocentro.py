@@ -1,4 +1,5 @@
 from app import db
+from app.models.estado import Estado
 from app.models.municipio import Municipio
 
 
@@ -28,4 +29,12 @@ class Hemocentro(db.Model):
 
 
     def get_municipio(self):
-        return Municipio.query.filter_by(id=self.municipio).first().id
+        return self.municipio
+
+
+    def get_municipio_nome(self):
+        return Municipio.query.filter_by(id=self.municipio).first().nome
+
+    
+    def get_estado(self):
+        return Estado.query.filter_by(id=Municipio.query.filter_by(id=self.municipio).first().uf).first()
