@@ -3,28 +3,19 @@ from app.models.hemocentro import Hemocentro
 from app.models.municipio import Municipio
 from app.models.estado import Estado
 from flask import render_template, redirect, request, url_for
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 
 @flaskApp.route('/hemocentro', methods=['GET', 'POST'])
 @login_required
 def novo_hemocentro():
 
-    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(nome='Rondônia').first().id).order_by(Municipio.nome).all()
+    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(id=current_user.get_hemocentro().get_estado().id).first().id).order_by(Municipio.nome).all()
+    estados = Estado.query.all()
     sucesso = request.args.get('sucesso')
 
-    recarregar = request.args.get('reload')
-
-    nomeBKP = request.args.get('nomeBKP')
-    telefoneBKP = request.args.get('telefoneBKP')
-    imgBKP = request.args.get('imgBKP')
-    cidade_adicionada = request.args.get('cidade_adicionada')
-
     if request.method == 'GET':
-        if recarregar:
-            return render_template("hemocentro.html", reload=recarregar, cidades=cidade_registradas, nomeBKP=nomeBKP, telefoneBKP=telefoneBKP, imgBKP=imgBKP, cidade_adicionada=cidade_adicionada)
-        else:
-            return render_template("hemocentro.html", cidades=cidade_registradas, sucesso=sucesso)
+        return render_template("hemocentro.html", cidades=cidade_registradas, estados=estados, sucesso=sucesso)
 
     elif request.method == 'POST':
         continuar = False
@@ -33,13 +24,15 @@ def novo_hemocentro():
 
         nome = request.form['nome']
         telefone = request.form['telefone']
-        cidade = request.form['municipio']
+        estado = request.form['inputEstado']
+        municipio = request.form['inputMunicipio']
+        municipio = Municipio.query.filter_by(nome=municipio, uf=Estado.query.filter_by(nome=estado).first().id).first().id
         img = request.form['img']
 
         if img == "" or img == None:
             img = "dummy.png"
         try:
-            hemocentro = Hemocentro(nome=nome, municipio=cidade, telefone=telefone, urlImg=img)
+            hemocentro = Hemocentro(nome=nome, municipio=municipio, telefone=telefone, urlImg=img)
             db.session.add(hemocentro)
             db.session.commit()
         except:

@@ -12,40 +12,12 @@ from flask_login import login_required, current_user
 @login_required
 def novo_doador():
 
-    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(nome='Rondônia').first().id).order_by(Municipio.nome).all()
+    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(id=current_user.get_hemocentro().get_estado().id).first().id).order_by(Municipio.nome).all()
+    estados = Estado.query.all()
     sucesso = request.args.get('sucesso')
 
-    recarregar = request.args.get('reload')
-
-    numRegistroBKP = request.args.get('numRegistroBKP')
-    nomeBKP = request.args.get('nomeBKP')
-    cpfBKP = request.args.get('cpfBKP')
-    sexoBKP = request.args.get('sexoBKP')
-    tipoSangueBKP = request.args.get('tipoSangueBKP')
-    nascimentoBKP = request.args.get('nascimentoBKP')
-    susBKP = request.args.get('susBKP')
-    estadoCivilBKP = request.args.get('estadoCivilBKP')
-    celularBKP = request.args.get('celularBKP')
-    telefoneBKP = request.args.get('telefoneBKP')
-    mailBKP = request.args.get('mailBKP')
-    avisoBKP = request.args.get('avisoBKP')
-    profissaoBKP = request.args.get('profissaoBKP')
-    localTrabalhoBKP = request.args.get('localTrabalhoBKP')
-    estadoAptidaoBKP = request.args.get('estadoAptidaoBKP')
-    dataInaptidaoBKP = request.args.get('dataInaptidaoBKP')
-    maeBKP = request.args.get('maeBKP')
-    paiBKP = request.args.get('paiBKP')
-    cidade_adicionada = request.args.get('cidade_adicionada')
-
     if request.method == 'GET':
-        if recarregar:
-            return render_template("doador.html", reload=recarregar, cidades=cidade_registradas, numRegistroBKP=numRegistroBKP,
-             nomeBKP=nomeBKP, cpfBKP=cpfBKP, sexoBKP=sexoBKP, tipoSangueBKP=tipoSangueBKP, nascimentoBKP=nascimentoBKP,
-             susBKP=susBKP, estadoCivilBKP=estadoCivilBKP, celularBKP=celularBKP, telefoneBKP=telefoneBKP, mailBKP=mailBKP,
-             avisoBKP=avisoBKP, profissaoBKP=profissaoBKP, localTrabalhoBKP=localTrabalhoBKP, estadoAptidaoBKP=estadoAptidaoBKP,
-             dataInaptidaoBKP=dataInaptidaoBKP, maeBKP=maeBKP, paiBKP=paiBKP, cidade_adicionada=cidade_adicionada)
-        else:
-            return render_template("doador.html", cidades=cidade_registradas, sucesso=sucesso)
+        return render_template("doador.html", cidades=cidade_registradas, estados=estados, sucesso=sucesso)
 
     elif request.method == 'POST':
         continuar = False
@@ -65,7 +37,9 @@ def novo_doador():
         telefone = request.form['telefone']
         mail = request.form['mail']
         aviso = request.form['aviso']
-        municipio = request.form['municipio']
+        estado = request.form['inputEstado']
+        municipio = request.form['inputMunicipio']
+        municipio = Municipio.query.filter_by(nome=municipio, uf=Estado.query.filter_by(nome=estado).first().id).first().id
         profissao = request.form['profissao']
         local_trabalho = request.form['localTrabalho']
         estado_aptidao = request.form['estadoAptidao']
@@ -77,7 +51,7 @@ def novo_doador():
         if not data_inaptidao:
             data_inaptidao = None
         else:
-            data_inaptidao = datetime.strptime(dataInaptidao, '%d/%m/%Y').date()
+            data_inaptidao = datetime.strptime(data_inaptidao, '%d/%m/%Y').date()
         mae = request.form['mae']
         pai = request.form['pai']
 

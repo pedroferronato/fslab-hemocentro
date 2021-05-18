@@ -24,6 +24,21 @@ function validar(evento) {
         }
         evento.preventDefault()
     }
+
+    if ( !estaContidoNoPadrao(estado, inputEstado) ) {
+        if (!inputEstado.classList.contains('borda-alerta')) {
+            inputEstado.classList.add('borda-alerta')
+            lbEstado.classList.add('txt-alerta')
+        }
+        evento.preventDefault()
+    }
+    if ( !estaContidoNoPadrao(municipio, inputMunicipio) ) {
+        if (!inputMunicipio.classList.contains('borda-alerta')) {
+            inputMunicipio.classList.add('borda-alerta')
+            lbMunicipio.classList.add('txt-alerta')
+        }
+        evento.preventDefault()
+    }
 }
 
 function remover(elemento) {

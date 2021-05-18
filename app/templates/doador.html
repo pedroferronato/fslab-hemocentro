@@ -144,20 +144,24 @@
                         </div>
                         <div class="campo">
                             <div class="flexivel SpcBtw AlgEnd">
+                                <label id="lbEstado" for="inputEstado">Estado:</label>
+                            </div>
+                            <input autocomplete="off" name="inputEstado" id="inputEstado" list="estado" value="{{current_user.get_hemocentro().get_estado().nome}}">
+                            <datalist name="estado" id="estado">
+                                {% for estado in estados %}
+                                <option value="{{estado.nome}}"></option>
+                                {% endfor %}
+                            </datalist>
+                        </div>
+                        <div class="campo">
+                            <div class="flexivel SpcBtw AlgEnd">
                                 <label id="lbMunicipio" for="municipio">Município:</label>
                             </div>
-                            <input list=municipio>
-                            <datalist name="municipio" id="municipio" onfocus="removerClasseAlerta('municipio')" {% if
-                                alterar %} disabled {% endif %}>
-                                <option value="selecione" {% if not alterar %} selected="selected" {% endif %}>Selecione
-                                </option>
-                                {% if alterar %}
-                                <option value="{{doador.municipio}}" selected="selected">{{doador.municipio}}</option>
-                                {% else %}
+                            <input autocomplete="off" name="inputMunicipio" id="inputMunicipio" list="municipio" value="{{current_user.get_hemocentro().get_municipio_nome()}}">
+                            <datalist name="municipio" id="municipio">
                                 {% for cidade in cidades %}
                                 <option value="{{cidade.nome}}"></option>
                                 {% endfor %}
-                                {% endif %}
                             </datalist>
                         </div>
                     </div>
@@ -255,46 +259,6 @@
                 </form>
         </div>
     </div>
-    <div class="modal fade" id="addCidade" tabindex="-1" aria-labelledby="addCidadeLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addCidadeLabel">Adicionar cidade</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="/cidade/nova/doador" method="POST">
-                    <div class="modal-body">
-                        <div class="campo">
-                            <input type="hidden" id="numRegistroSafe" name="numRegistroSafe">
-                            <input type="hidden" id="nomeSafe" name="nomeSafe">
-                            <input type="hidden" id="cpfSafe" name="cpfSafe">
-                            <input type="hidden" id="sexoSafe" name="sexoSafe">
-                            <input type="hidden" id="tipoSangueSafe" name="tipoSangueSafe">
-                            <input type="hidden" id="nascimentoSafe" name="nascimentoSafe">
-                            <input type="hidden" id="susSafe" name="susSafe">
-                            <input type="hidden" id="estadoCivilSafe" name="estadoCivilSafe">
-                            <input type="hidden" id="celularSafe" name="celularSafe">
-                            <input type="hidden" id="telefoneSafe" name="telefoneSafe">
-                            <input type="hidden" id="mailSafe" name="mailSafe">
-                            <input type="hidden" id="avisoSafe" name="avisoSafe">
-                            <input type="hidden" id="profissaoSafe" name="profissaoSafe">
-                            <input type="hidden" id="localTrabalhoSafe" name="localTrabalhoSafe">
-                            <input type="hidden" id="estadoAptidaoSafe" name="estadoAptidaoSafe">
-                            <input type="hidden" id="dataInaptidaoSafe" name="dataInaptidaoSafe">
-                            <input type="hidden" id="maeSafe" name="maeSafe">
-                            <input type="hidden" id="paiSafe" name="paiSafe">
-                            <label for="novaCidade">Cidade:</label>
-                            <input type="text" id="novaCidade" name="novaCidade" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn-primary">Adicionar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 </div>
 
 {% endblock %}
@@ -304,5 +268,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 <script src="{{ url_for('static', filename='js/mascaras.js') }}"></script>
 <script src="{{ url_for('static', filename='js/doador.js') }}"></script>
-
+<script src="{{ url_for('static', filename='js/estadoCidade.js') }}"></script>
 {% endblock %}

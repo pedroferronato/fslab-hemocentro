@@ -1,6 +1,8 @@
-from app import flaskApp, db, login_manager
+from app import flaskApp, login_manager
 from app.models.captador import Captador
-from flask import render_template, redirect, request, url_for, session
+from app.models.estado import Estado
+from app.models.municipio import Municipio
+from flask import render_template, redirect, request, session, jsonify
 from flask_login import login_user, logout_user, login_required
 from datetime import timedelta
 import bcrypt
@@ -72,3 +74,9 @@ def perfil():
 def alterar_senha():
     return render_template("alterarSenha.html")
 
+@flaskApp.route('/cidades/<estado>')
+def get_cidade(estado):
+    estado_id = Estado.query.filter_by(nome=estado).first().id
+    cidades = Municipio.query.filter_by(uf=estado_id)
+    cidades = [x.nome for x in cidades]
+    return jsonify(cidades)
