@@ -18,45 +18,46 @@
             <h1>Perfil</h1>
         </div>
         <div class="formulario">
+            <form action="/perfil" method="POST">
+                <div class="linhaFormulario">
+                    <div class="campo" id="divNome">
+                        <label id="lbNome" for="nome">Nome completo:</label>
+                        <input value="{{ current_user.nome }}" type="text" name="nome" id="nome" autocomplete="off">
+                    </div>
+                    <div class="campo" id="divCelular">
+                        <label id="lbCelular" for="celular">Celular:</label>
+                        <input class="celular" value="{{ current_user.celular }}" type="text" id="celular"
+                            name="celular" autocomplete="off">
+                    </div>
+                    <div class="campo" id="divHemocentro">
+                        <label for="hemocentro">Hemocentro:</label>
+                        <input value="{{ current_user.get_hemocentro().nome }}" type="text" readonly>
+                    </div>
+                </div>
+                <div class="linhaFormulario ultimaLinhaInput">
+                    <div class="campo" id="divEmail">
+                        <label id="lbEmail" for="email">E-mail:</label>
+                        <input value="{{ current_user.email }}" type="text" id="email" name="email" autocomplete="off">
+                    </div>
+                    <div class="campo" id="divLogin">
+                        <label id="lbLogin" for="login">Login:</label>
+                        <input value="{{ current_user.login }}" type="text" id="login" name="login" autocomplete="off">
+                    </div>
+                </div>
 
-            <div class="linhaFormulario">
-                <div class="campo" id="divNome">
-                    <label for="nome">Nome completo:</label>
-                    <input type="text" id="nome" autocomplete="off">
+                <div class="linhaBotoes SpcBtw">
+                    <input onclick="validar(event)" type="submit" name="botao" class="botao btn-perfil btn-principal" value="Atualizar cadastro">
+                    <input type="submit" name="botao" class="botao btn-perfil btn-alerta linhaMRReset" value="Excluir cadastro">
                 </div>
-                <div class="campo" id="divTelefone">
-                    <label for="telefone">Telefone:</label>
-                    <input type="text" id="telefone" autocomplete="off">
-                </div>
-                <div class="campo" id="divHemocentro">
-                    <label for="hemocentro">Hemocentro:</label>
-                    <select name="adm" id="adm">
-                        <option value="cap" selected="selected" disabled>Selecione</option>
-                        <option value="jipa">Hemojipa</option>
-                        <option value="vha">Vilhena</option>
-                    </select>
-                </div>
-            </div>
-            <div class="linhaFormulario ultimaLinhaInput">
-                <div class="campo" id="divEmail">
-                    <label for="email">E-mail:</label>
-                    <input type="text" id="email" autocomplete="off">
-                </div>
-                <div class="campo" id="divLogin">
-                    <label for="login">Login:</label>
-                    <input type="text" id="login" autocomplete="off">
-                </div>
-            </div>
-
-            <div class="linhaBotoes SpcBtw">
-                <div>
-                    <button class="botao btn-principal">Atualizar cadastro</button>
-                    <button class="botao btn-secundario">Alterar senha</button>
-                </div>
-                <button class="botao btn-alerta linhaMRReset">Excluir cadastro</button>
-            </div>
-
+            </form>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block codigos %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+<script src="{{ url_for('static', filename='js/mascaras.js') }}"></script>
+<script src="{{ url_for('static', filename='js/perfil.js') }}"></script>
 {% endblock %}
