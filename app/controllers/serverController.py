@@ -1,9 +1,9 @@
-from app import flaskApp, login_manager
+from app import flaskApp, login_manager, db
 from app.models.captador import Captador
 from app.models.estado import Estado
 from app.models.municipio import Municipio
 from flask import render_template, redirect, request, session, jsonify
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 from datetime import timedelta
 import bcrypt
 
@@ -68,6 +68,33 @@ def inicial():
 @login_required
 def perfil():
     return render_template("perfil.html")
+
+
+@flaskApp.route('/perfil', methods=['POST'])
+@login_required
+def alterar_perfil():
+    nome = request.form['nome']
+    celular = request.form['celular']
+    email = request.form['email']
+    login = request.form['login']
+
+    captador = Captador.query.filter_by(id=current_user.id).first()
+    
+    if request.form['botao'] == "Atualizar cadastro":
+        print("entrou")
+        captador.nome = nome
+        captador.celular = celular
+        captador.email = email
+        captador.login = login
+        db.session.add(captador)
+        db.session.commit()
+        return render_template("perfil.html")
+    if request.form['botao'] == "Excluir cadastro":
+        db.session.delete(captador)
+        db.session.commit()
+        logout_user()
+        return redirect('/login')
+
 
 
 @flaskApp.route('/alterar-senha') # TODO: USAR ALGUMA FORMA DE IDENTIFICAÇÃO
