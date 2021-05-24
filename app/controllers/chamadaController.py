@@ -187,15 +187,3 @@ def chamada_localidades_externas_resultado():
             paginacao = resultado.paginate(page=page, per_page=itens_pesquisados)
             return render_template("convocacaoLocalidadesExternas.html", estados=estados , resultado=True, doadores=paginacao.items, paginas=paginacao, tipo_sanguineo=tipo, itens=itens_pesquisados, telefonados=telefonados, telefonadosStr=telefonados_string, cidades=cidade_registradas, cidade_pesquisada=int(municipio))
 
-
-@flaskApp.route('/convocacao-convocados')
-@login_required
-def chamada_convocados():
-    return render_template("convocacaoConvocados.html")
-
-
-@flaskApp.route('/convocacao-convocados/resultado')
-@login_required
-def chamada_convocados_resultado():
-    return render_template("convocacaoConvocados.html", resultado=True)
-

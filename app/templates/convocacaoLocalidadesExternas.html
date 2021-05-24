@@ -3,6 +3,7 @@
 {% block cabecalho %}
 <link href="{{ url_for('static', filename='css/baseConteudo.css') }}" rel="stylesheet">
 <link href="{{ url_for('static', filename='css/baseConvocacao.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/convocacaoExterna.css') }}" rel="stylesheet">
 {% endblock %}
 
 
@@ -31,58 +32,67 @@
 
             <form action="/convocacao-localidades-externas/resultado" method="post">
 
-                {% if resultado %}
-                <div class="linhaFormulario ultimaLinhaInput SpcBtw">
-                    {% else %}
-                    <div class="linhaFormulario linhaSolitaria SpcBtw">
-                        {% endif%}
-
-                        <div class="flexivel">
-                            <div class="campo">
-                                <div class="flexivel SpcBtw AlgEnd">
-                                    <label id="lbEstado" for="inputEstado">Estado:</label>
-                                </div>
-                                <input autocomplete="off" name="inputEstado" id="inputEstado" list="estado" value="{{current_user.get_hemocentro().get_estado().nome}}">
-                                <datalist name="estado" id="estado">
-                                    {% for estado in estados %}
-                                    <option value="{{estado.nome}}"></option>
-                                    {% endfor %}
-                                </datalist>
-                            </div>
-                            <div class="campo">
-                                <div class="flexivel SpcBtw AlgEnd">
-                                    <label id="lbMunicipio" for="municipio">Município:</label>
-                                </div>
-                                <input autocomplete="off" name="inputMunicipio" id="inputMunicipio" list="municipio" value="{{current_user.get_hemocentro().get_municipio_nome()}}">
-                                <datalist name="municipio" id="municipio">
-                                    {% for cidade in cidades %}
-                                    <option value="{{cidade.nome}}"></option>
-                                    {% endfor %}
-                                </datalist>
-                            </div>
-                            <div class="campo" id="divTipagem">
-                                <label id="lbTipagem" for="tipagem">Tipo sanguíneo:</label>
-                                <select name="tipagem" id="tipagem" onfocus="remover('tipo')">
-                                    <option value="null">Selecione</option>
-                                    <option {% if tipo_sanguineo =="A+" %} selected="selected" {% endif %} value="A+">A+</option>
-                                    <option {% if tipo_sanguineo =="A-" %} selected="selected" {% endif %} value="A-">A-</option>
-                                    <option {% if tipo_sanguineo =="B+" %} selected="selected" {% endif %} value="B+">B+</option>
-                                    <option {% if tipo_sanguineo =="B-" %} selected="selected" {% endif %} value="B-">B-</option>
-                                    <option {% if tipo_sanguineo =="AB+" %} selected="selected" {% endif %} value="AB+">AB+</option>
-                                    <option {% if tipo_sanguineo =="AB-" %} selected="selected" {% endif %} value="AB-">AB-</option>
-                                    <option {% if tipo_sanguineo =="O+" %} selected="selected" {% endif %} value="O+">O+</option>
-                                    <option {% if tipo_sanguineo =="O-" %} selected="selected" {% endif %} value="O-">O-</option>
-                                </select>
-                            </div>
-                            <div class="campo" id="divIP">
-                                <label for="itens">Itens por página:</label>
-                                <input {% if itens %} value="{{ itens }}" {% endif %} type="number" id="itens" name="itens" autocomplete="off" max=50>
-                            </div>
-                            <input type="hidden" name="page" id="page" value="1">
-                            <input type="hidden" name="telefonados" id="telefonados" {% if telefonadosStr %}
-                                value="{{ telefonadosStr }}" {% endif %}>
-                            <button name="botao" onclick="validar(event)" class="botao btn-principal linhaMRReset">Buscar</button>
+                <div class="linhaFormulario">
+                    <div class="flexivel">
+                        <div id="campoEstado" class="campo">
+                            <label id="lbEstado" for="inputEstado">Estado:</label>
+                            <input autocomplete="off" name="inputEstado" id="inputEstado" list="estado"
+                                value="{{current_user.get_hemocentro().get_estado().nome}}">
+                            <datalist name="estado" id="estado">
+                                {% for estado in estados %}
+                                <option value="{{estado.nome}}"></option>
+                                {% endfor %}
+                            </datalist>
                         </div>
+                        <div id="campoMunicipio" class="campo">
+                            <label id="lbMunicipio" for="municipio">Município:</label>
+                            <input autocomplete="off" name="inputMunicipio" id="inputMunicipio" list="municipio"
+                                value="{{current_user.get_hemocentro().get_municipio_nome()}}">
+                            <datalist name="municipio" id="municipio">
+                                {% for cidade in cidades %}
+                                <option value="{{cidade.nome}}"></option>
+                                {% endfor %}
+                            </datalist>
+                        </div>
+                        <div class="campo" id="divTipagem">
+                            <label id="lbTipagem" for="tipagem">Tipo sanguíneo:</label>
+                            <select name="tipagem" id="tipagem" onfocus="remover('tipo')">
+                                <option value="null">Selecione</option>
+                                <option {% if tipo_sanguineo=="A+" %} selected="selected" {% endif %} value="A+">A+
+                                </option>
+                                <option {% if tipo_sanguineo=="A-" %} selected="selected" {% endif %} value="A-">A-
+                                </option>
+                                <option {% if tipo_sanguineo=="B+" %} selected="selected" {% endif %} value="B+">B+
+                                </option>
+                                <option {% if tipo_sanguineo=="B-" %} selected="selected" {% endif %} value="B-">B-
+                                </option>
+                                <option {% if tipo_sanguineo=="AB+" %} selected="selected" {% endif %} value="AB+">AB+
+                                </option>
+                                <option {% if tipo_sanguineo=="AB-" %} selected="selected" {% endif %} value="AB-">AB-
+                                </option>
+                                <option {% if tipo_sanguineo=="O+" %} selected="selected" {% endif %} value="O+">O+
+                                </option>
+                                <option {% if tipo_sanguineo=="O-" %} selected="selected" {% endif %} value="O-">O-
+                                </option>
+                            </select>
+                        </div>
+                        <div class="campo linhaMRReset" id="divIP">
+                            <label for="itens">Itens por página:</label>
+                            <input {% if itens %} value="{{ itens }}" {% endif %} type="number" id="itens" name="itens"
+                                autocomplete="off" max=50>
+                        </div>
+                        <input type="hidden" name="page" id="page" value="1">
+                        <input type="hidden" name="telefonados" id="telefonados" {% if telefonadosStr %}
+                            value="{{ telefonadosStr }}" {% endif %}>
+                    </div>
+                </div>
+
+                {% if resultado %}
+                <div class="linhaBotoes ultimaLinhaInput SpcBtw">
+                    {% else %}
+                    <div class="linhaBotoes linhaSolitaria SpcBtw">
+                        {% endif%}
+                        <button name="botao" onclick="validar(event)" class="botao btn-principal">Buscar</button>
                         <button name="botao" class="botao btn-secundario linhaMRReset">Marcar Telefonados</button>
                     </div>
 
@@ -124,7 +134,7 @@
                     </table>
 
                     <div class="linhaFormulario paginador">
-                
+
                         <nav>
                             {% if paginas.pages >= 6 %}
                             <ul class="pagination">
@@ -136,8 +146,8 @@
                                     </button>
                                 </li>
                                 <li>
-                                    <button name="botao" onclick="adicionarPagina(1)" class="iconesnP" {% if not paginas.prev_num==None %}
-                                        {% endif %}>
+                                    <button name="botao" onclick="adicionarPagina(1)" class="iconesnP" {% if not
+                                        paginas.prev_num==None %} {% endif %}>
                                         <span aria-hidden="true">&laquo;</span>
                                     </button>
                                 </li>
@@ -149,7 +159,8 @@
                                 </li>
                                 {% endif %}
                                 <li>
-                                    <button name="botao" onclick="adicionarPagina('{{ paginas.page }}')" class="ativo" disable>
+                                    <button name="botao" onclick="adicionarPagina('{{ paginas.page }}')" class="ativo"
+                                        disable>
                                         {{ paginas.page }}
                                     </button>
                                 </li>
@@ -161,8 +172,8 @@
                                 </li>
                                 {% endif %}
                                 <li>
-                                    <button name="botao" onclick="adicionarPagina('{{ paginas.next_num }}')" class="iconesnP" {% if not paginas.next_num==None %}
-                                        {% endif %}>
+                                    <button name="botao" onclick="adicionarPagina('{{ paginas.next_num }}')"
+                                        class="iconesnP" {% if not paginas.next_num==None %} {% endif %}>
                                         <span aria-hidden="true">&raquo;</span>
                                     </button>
                                 </li>
@@ -177,22 +188,23 @@
                             {% else %}
                             <ul class="pagination">
                                 <li>
-                                    <button name="botao" onclick="adicionarPagina('{{paginas.prev_num}}')" class="iconesnP" {% if not paginas.prev_num==None %}
-                                        {% endif %}>
+                                    <button name="botao" onclick="adicionarPagina('{{paginas.prev_num}}')"
+                                        class="iconesnP" {% if not paginas.prev_num==None %} {% endif %}>
                                         <span aria-hidden="true">&laquo;</span>
                                     </button>
                                 </li>
-        
+
                                 {% for page in paginas.iter_pages() %}
                                 <li {% if page==paginas.page %} disable {% endif %}>
-                                    <button name="botao" onclick="adicionarPagina('{{page}}')" class="{% if page==paginas.page %} ativo {% endif %}">
+                                    <button name="botao" onclick="adicionarPagina('{{page}}')"
+                                        class="{% if page==paginas.page %} ativo {% endif %}">
                                         {{ page }}</button>
                                 </li>
                                 {% endfor %}
-        
+
                                 <li>
-                                    <button name="botao" onclick="adicionarPagina('{{paginas.next_num}}')" class="iconesnP" {% if not paginas.next_num==None %}
-                                        {% endif %}>
+                                    <button name="botao" onclick="adicionarPagina('{{paginas.next_num}}')"
+                                        class="iconesnP" {% if not paginas.next_num==None %} {% endif %}>
                                         <span aria-hidden="true">&raquo;</span>
                                     </button>
                                 </li>

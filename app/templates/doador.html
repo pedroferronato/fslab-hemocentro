@@ -12,10 +12,14 @@
     <div class="bread noselect">
         <p>Inicial ></p>
         <p>Doadores ></p>
+        {% if doador and doador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor %}
+        <p>Doador</p>
+        {% else %}
         {% if alterar %}
         <p>Alterar doador</p>
         {% else %}
         <p>Novo doador</p>
+        {% endif %}
         {% endif %}
 
     </div>
@@ -23,11 +27,17 @@
     <div class="cartao noselect">
 
         <div class="titulo">
+
+            {% if doador and doador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor %}
+            <h1>Doador</h1>
+            {% else %}
             {% if alterar %}
             <h1>Alterar doador</h1>
             {% else %}
             <h1>Novo doador</h1>
             {% endif %}
+            {% endif %}
+            
         </div>
 
         <div class="formulario">
@@ -199,7 +209,7 @@
                         </div>
                     </div>
 
-                    <div class="linhaFormulario ultimaLinhaInput">
+                    <div class="linhaFormulario ultimaLinhaInput {% if doador and doador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor %} linhaSolitaria {% endif %}">
                         <div class="campo" id="divMae">
                             <label id="lbMae" for="mae">Nome da mãe:</label>
                             <input name="mae" type="text" id="mae" autocomplete="off" {% if reload %}
@@ -215,7 +225,7 @@
                     </div>
 
                     {% if alterar %}
-
+                    {% if doador.hemocentro_id == current_user.hemocentro_id or current_user.servidor %}
                     <div class="linhaBotoes SpcBtw">
                         <button type="submit" class="botao btn-principal">Alterar</button>
                         <button type="button" class="botao btn-alerta linhaMRReset" data-bs-toggle="modal"
@@ -242,7 +252,7 @@
                             </div>
                         </div>
                     </div>
-
+                    {% endif %}
                     {% else %}
 
                     <div class="linhaBotoes">

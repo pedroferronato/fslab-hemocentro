@@ -11,7 +11,7 @@
     <div class="bread noselect">
         <p>Inicial ></p>
         <p>Hemocentros ></p>
-        <p>Consultar Hemocentros</p>
+        <p>Consultar hemocentros</p>
     </div>
 
     <div class="cartao noselect">
@@ -19,23 +19,36 @@
             <h1>Consultar hemocentro</h1>
         </div>
         <div class="formulario">
-            <form action="/hemocentro/consultar" method="GET">
+            <form action="/hemocentro/consultar/resultado" method="GET">
                 <div class="linhaFormulario linhaSolitaria">
                     <div class="campo" id="divNome">
                         <label for="nome">Nome:</label>
-                        <input type="text" id="nome" name="nome" autocomplete="off">
+                        <input value="{{ nome_pesquisado }}" type="text" id="nome" name="nome" autocomplete="off">
                     </div>
-                    <div class="campo" id="divMunicipio">
-                        <label for="municipio">Município:</label>
-                        <select name="municipio" id="municipio">
-                            <option value="null" selected="selected" disabled>Selecione</option>
-                            {% for cidade in cidades %}
-                            <option value="{{cidade.cidade_registrada}}">{{cidade.cidade_registrada}}</option>
+                    <div class="campo">
+                        <div class="flexivel SpcBtw AlgEnd">
+                            <label id="lbEstado" for="inputEstado">Estado:</label>
+                        </div>
+                        <input value="{{ estado_pesquisado }}" autocomplete="off" name="inputEstado" id="inputEstado" list="estado">
+                        <datalist name="estado" id="estado">
+                            {% for estado in estados %}
+                            <option value="{{estado.nome}}"></option>
                             {% endfor %}
-                        </select>
+                        </datalist>
+                    </div>
+                    <div class="campo">
+                        <div class="flexivel SpcBtw AlgEnd">
+                            <label id="lbMunicipio" for="inputMunicipio">Município:</label>
+                        </div>
+                        <input value="{{ municipio_pesquisado }}" autocomplete="off" name="inputMunicipio" id="inputMunicipio" list="municipio">
+                        <datalist name="municipio" id="municipio">
+                            {% for cidade in cidades %}
+                            <option value="{{cidade.nome}}"></option>
+                            {% endfor %}
+                        </datalist>
                     </div>
                     <button type="submit" class="botao btn-principal" onclick="validarCampos(event)">Consultar</button>
-                    <button type="button" class="botao btn-secundario linhaMRReset">Limpar</button>
+                    <button type="button" class="botao btn-secundario linhaMRReset" onclick="limpar()">Limpar</button>
 
                 </div>
             </form>
@@ -48,7 +61,7 @@
         </div>
     {% endif %}
 
-    {% if resultado %}
+    {% if lista_hemocentro %}
 
     {% for hemocentro in lista_hemocentro %}
     <div class="cartao">
@@ -63,14 +76,16 @@
                     </div>
                     <div id="divResultados">
                         <p class="hemocentroResultado">{{ hemocentro.nome }}</p>
-                        <p class="hemocentroResultado mt16">{{ hemocentro.municipio }}</p>
+                        <p class="hemocentroResultado mt16">{{ hemocentro.get_municipio_nome() }}</p>
                         <p class="hemocentroResultado mt16">{{ hemocentro.telefone }}</p>
                         <a href="">
                             <p class="hemocentroResultado mt16">Consultar...</p>
                         </a>
                     </div>
                 </div>
-                <a href="/hemocentro/alterar/{{ hemocentro.id }}"><span class="material-icons editar">edit</span></a>
+                {% if current_user.servidor %}
+                    <a href="/hemocentro/alterar/{{ hemocentro.id }}"><span class="material-icons editar">edit</span></a>
+                {% endif %}
 
             </div>
         </div>
@@ -99,9 +114,10 @@
 
 {% block codigos %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="{{ url_for('static', filename='js/validarConsultaHemocentro.js') }}"></script>
+<script src="{{ url_for('static', filename='js/estadoCidade.js') }}"></script>
 {% if sucesso == "sucesso" %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="{{ url_for('static', filename='js/mensagensSucesso.js') }}"></script>
 {% endif %}
 {% endblock %}

@@ -76,10 +76,11 @@ def novo_doador():
 @flaskApp.route('/doador/alterar/<doador_numRegistro>', methods=['GET', 'POST'])
 @login_required
 def alterar_doador(doador_numRegistro):
-    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(nome='Rondônia').first().id).order_by(Municipio.nome).all()
+    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(id=current_user.get_hemocentro().get_estado().id).first().id).order_by(Municipio.nome).all()
+    estados = Estado.query.all()
     if request.method == 'GET':
         doador = Doador.query.filter_by(numero_registro=doador_numRegistro).first()
-        return render_template("doador.html", alterar=True, doador=doador, cidades=cidade_registradas)
+        return render_template("doador.html", alterar=True, doador=doador, cidades=cidade_registradas, estados=estados)
     elif request.method == 'POST':
         nome = request.form['nome']
         cpf = request.form['cpf']
@@ -124,23 +125,26 @@ def alterar_doador(doador_numRegistro):
 def consultar_doador():
     registro_alterado = request.args.get('registro_alterado')
     mensagem = request.args.get('mensagem')
-
-    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(nome='Rondônia').first().id).order_by(Municipio.nome).all()
+    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(id=current_user.get_hemocentro().get_estado().id).first().id).order_by(Municipio.nome).all()
+    estados = Estado.query.all()
 
     if registro_alterado:
-        return render_template("consultaDoadores.html", cidades=cidade_registradas, registro_alterado=registro_alterado, mensagem=mensagem)
+        return render_template("consultaDoadores.html", cidades=cidade_registradas, registro_alterado=registro_alterado, mensagem=mensagem, estados=estados)
     else:
-        return render_template("consultaDoadores.html", cidades=cidade_registradas, mensagem=mensagem)
+        return render_template("consultaDoadores.html", cidades=cidade_registradas, mensagem=mensagem, estados=estados)
 
 
 @flaskApp.route('/doador/consulta') 
 @login_required
 def consulta_doador():
-    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(nome='Rondônia').first().id).order_by(Municipio.nome).all()
+    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(id=current_user.get_hemocentro().get_estado().id).first().id).order_by(Municipio.nome).all()
+    estados = Estado.query.all()
     nome = request.args.get('nome')
     tipo_sanguineo = request.args.get('tipoSangue')
     numero_registro = request.args.get('registro')
-    municipio = request.args.get('municipio')
+    municipio = request.args.get('inputMunicipio')
+    estado = request.args.get('inputEstado')
+    municipio_pesquisado = municipio
 
     parametros = []
 
@@ -150,7 +154,8 @@ def consulta_doador():
        parametros.append(Doador.tipo_sanguineo == tipo_sanguineo)
     if numero_registro:
        parametros.append(Doador.numero_registro == numero_registro)
-    if municipio and municipio != "null":
+    if municipio:
+       municipio = Municipio.query.filter_by(nome=municipio, uf=Estado.query.filter_by(nome=estado).first().id).first().id
        parametros.append(Doador.municipio == municipio)
 
 
@@ -173,9 +178,10 @@ def consulta_doador():
     lista_doador = paginacao.items
 
     if Counter(lista_doador):
-        return render_template("consultaDoadores.html", resultado=True, paginas=paginacao, doadores=lista_doador, cidades=cidade_registradas, itens=itens_pesquisados, nome_pesquisado=nome, tipo_pesquisado=tipo_sanguineo, registro_pesquisado=numero_registro, municipio_pesquisado=municipio)
+        return render_template("consultaDoadores.html", resultado=True, paginas=paginacao, doadores=lista_doador, cidades=cidade_registradas, itens=itens_pesquisados, nome_pesquisado=nome, tipo_pesquisado=tipo_sanguineo, registro_pesquisado=numero_registro, municipio_pesquisado=municipio_pesquisado, estados=estados, estado_pesquisado=request.args.get('inputEstado'))
     else:
-        return render_template("consultaDoadores.html", lista_vazia=True, cidades=cidade_registradas, itens=itens_pesquisados, nome_pesquisado=nome, tipo_pesquisado=tipo_sanguineo, registro_pesquisado=numero_registro, municipio_pesquisado=municipio)
+        return render_template("consultaDoadores.html", lista_vazia=True, cidades=cidade_registradas, itens=itens_pesquisados, nome_pesquisado=nome, tipo_pesquisado=tipo_sanguineo, registro_pesquisado=numero_registro, municipio_pesquisado=municipio_pesquisado, estados=estados, estado_pesquisado=request.args.get('inputEstado'))
+
 
 @flaskApp.route('/doador/deletar/<doador_numRegistro>')
 @login_required

@@ -13,22 +13,30 @@
         <p>Inicial ></p>
         <p>Captadores ></p>
 
+        {% if captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor %}
+        <p>Captador</p>
+        {% else %}
         {% if alterar %}
         <p>Alterar captador</p>
         {% else %}
         <p>Novo captador</p>
         {% endif %}
-
+        {% endif %}
+        
     </div>
 
     <div class="cartao noselect">
 
         <div class="titulo">
 
+            {% if captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor %}
+            <h1>Captador</h1>
+            {% else %}
             {% if alterar %}
             <h1>Alterar captador</h1>
             {% else %}
             <h1>Novo captador</h1>
+            {% endif %}
             {% endif %}
 
         </div>
@@ -36,77 +44,101 @@
         <div class="formulario">
             {% if alterar %}
             <form action="/captador/alterar/{{captador.id}}" method="POST">
-            {% else %}
-            <form action="/captador" method="POST">
-            {% endif %}
-            {% if mensagem == "Inserido" %}
-                <div class="alert alert-success" role="alert">
-                    Captador registrado com sucesso
-                </div>
-            {% endif %}
-            {% if mensagem == "ErroBD" %}
-            <div class="alert2 alert alert-danger" role="alert">
-                O <b>banco de dados</b> já possui um usuário com uma dessas informações.
-            </div>
-            {% endif %}
-            <div class="linhaFormulario">
-                <div class="campo" id="divNome">
-                    <label id="lbNome" for="nome">Nome Completo:</label>
-                    <input type="text" id="nome" name="nome" autocomplete="off" onfocus="removerClasseAlerta('nome')"
-                    {% if captador %} value="{{captador.nome}}" {% endif %}>
-                </div>
-                <div class="campo">
-                    <label for="celular" id="lbCelular">Celular:</label>
-                    <input type="text" id="celular" name="celular" autocomplete="off" onfocus="removerClasseAlerta('celular')"
-                    {% if captador %} value="{{captador.celular}}" {% endif %}>
-                </div>
-                <div class="campo">
-                    <label for="hemocentro" id="lbHemocentro">Hemocentro:</label>
-                    <select name="hemocentro" id="hemocentro" onfocus="removerClasseAlerta('hemocentro')">
-                        <option value="Selecione" {% if not captador %} selected="selected" {% endif %} disabled>Selecione</option>
-                        {% for hemocentro in hemocentros %}
-                            <option {% if captador %} selected="selected" {% endif %} value="{{hemocentro.id}}">{{hemocentro.nome}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="campo">
-                    <label for="admn">Administrador:</label>
-                    <select name="adm" id="adm">
-                        <option value="Captador" {% if captador and captador.administrador == False and captador.servidor == False %} selected="selected" {% else %} selected="selected" {% endif %}>Captador</option>
-                        <option value="Administrador" {% if captador and captador.administrador %} selected="selected" {% endif %}>Administrador</option>
-                        <option value="Servidor" {% if captador and captador.servidor %} selected="selected" {% endif %}>Servidor</option>
-                    </select>
-                </div>
-            </div>
+                {% else %}
+                <form action="/captador" method="POST">
+                    {% endif %}
+                    {% if mensagem == "Inserido" %}
+                    <div class="alert alert-success" role="alert">
+                        Captador registrado com sucesso
+                    </div>
+                    {% endif %}
+                    {% if mensagem == "ErroBD" %}
+                    <div class="alert2 alert alert-danger" role="alert">
+                        O <b>banco de dados</b> já possui um usuário com uma dessas informações.
+                    </div>
+                    {% endif %}
+                    <div class="linhaFormulario">
+                        <div class="campo" id="divNome">
+                            <label id="lbNome" for="nome">Nome Completo:</label>
+                            <input type="text" id="nome" name="nome" autocomplete="off"
+                                onfocus="removerClasseAlerta('nome')" {% if captador %} value="{{captador.nome}}" {%
+                                endif %}>
+                        </div>
+                        <div class="campo">
+                            <label for="celular" id="lbCelular">Celular:</label>
+                            <input type="text" id="celular" name="celular" autocomplete="off"
+                                onfocus="removerClasseAlerta('celular')" {% if captador %} value="{{captador.celular}}"
+                                {% endif %}>
+                        </div>
+                        <div class="campo">
+                            <label for="hemocentro" id="lbHemocentro">Hemocentro:</label>
+                            <select {% if current_user.administrador %} readonly="readonly" {% endif %}
+                                name="hemocentro" id="hemocentro" onfocus="removerClasseAlerta('hemocentro')">
+                                {% if current_user.administrador or current_user.servidor %}
+                                <option value="{{ current_user.get_hemocentro().nome }}">{{
+                                    current_user.get_hemocentro().nome }}</option>
+                                {% else %}
+                                <option value="Selecione">Selecione</option>
+                                {% for hemocentro in hemocentros %}
+                                <option {% if captador %} selected="selected" {% endif %} value="{{hemocentro.id}}">
+                                    {{hemocentro.nome}}</option>
+                                {% endfor %}
+                                {% endif %}
+                            </select>
+                        </div>
+                        <div class="campo">
+                            <label for="admn">Administrador:</label>
+                            <select name="adm" id="adm">
+                                <option value="Captador" {% if captador and captador.administrador==False and
+                                    captador.servidor==False %} selected="selected" {% else %} selected="selected" {%
+                                    endif %}>Captador</option>
+                                <option value="Administrador" {% if captador and captador.administrador %}
+                                    selected="selected" {% endif %}>Administrador</option>
+                                {% if current_user.servidor %}
+                                <option value="Servidor" {% if captador and captador.servidor %} selected="selected" {%
+                                    endif %}>Servidor</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
 
-            <div class="linhaFormulario ultimaLinhaInput">
-                <div class="campo {% if captador %} campoAlterar" id="tamMaxEmail" {% endif %}">
-                    <label {% if mensagem == 'ErroBD' %} class="txt-alerta" {% endif %} for="mail" id="lbMail">E-mail:</label>
-                    <input {% if mensagem == 'ErroBD' %} class="borda-alerta" {% endif %} type="email" id="mail" name="mail" autocomplete="off" onfocus="removerClasseAlerta('mail')"
-                    {% if captador %} value="{{captador.email}}"{% endif %}>
-                </div>
-                <div class="campo {% if captador %} campoAlterar" id="tamMaxLogin" {% endif %}">
-                    <label {% if mensagem == 'ErroBD' %} class="txt-alerta" {% endif %} for="login" id="lbLogin">Login:</label>
-                    <input {% if mensagem == 'ErroBD' %} class="borda-alerta" {% endif %} type="text" id="login" name="login" autocomplete="off" onfocus="removerClasseAlerta('login')"
-                    {% if captador %} value="{{captador.login}}" {% endif %}>
-                </div>
-                {% if not captador %}
-                <div class="campo">
-                    <label for="senha" id="lbSenha">Senha:</label>
-                    <input type="password" id="senha" name="senha" autocomplete="off" onfocus="removerClasseAlerta('senha')">
-                </div>
-                <div class="campo">
-                    <label for="senha" id="lbConfirmarSenha">Confirmar senha: </label>
-                    <input type="password" id="confirmarSenha" name="confirmarSenha" autocomplete="off" onfocus="removerClasseAlerta('confirmarSenha')">
-                </div>
-                {% endif %}
-            </div>
+                    <div
+                        class="linhaFormulario ultimaLinhaInput {% if captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor %} linhaSolitaria {% endif %}">
+                        <div class="campo {% if captador %} campoAlterar" id="tamMaxEmail" {% endif %}">
+                            <label {% if mensagem=='ErroBD' %} class="txt-alerta" {% endif %} for="mail"
+                                id="lbMail">E-mail:</label>
+                            <input {% if mensagem=='ErroBD' %} class="borda-alerta" {% endif %} type="email" id="mail"
+                                name="mail" autocomplete="off" onfocus="removerClasseAlerta('mail')" {% if captador %}
+                                value="{{captador.email}}" {% endif %}>
+                        </div>
+                        <div class="campo {% if captador %} campoAlterar" id="tamMaxLogin" {% endif %}">
+                            <label {% if mensagem=='ErroBD' %} class="txt-alerta" {% endif %} for="login"
+                                id="lbLogin">Login:</label>
+                            <input {% if mensagem=='ErroBD' %} class="borda-alerta" {% endif %} type="text" id="login"
+                                name="login" autocomplete="off" onfocus="removerClasseAlerta('login')" {% if captador %}
+                                value="{{captador.login}}" {% endif %}>
+                        </div>
+                        {% if not captador %}
+                        <div class="campo">
+                            <label for="senha" id="lbSenha">Senha:</label>
+                            <input type="password" id="senha" name="senha" autocomplete="off"
+                                onfocus="removerClasseAlerta('senha')">
+                        </div>
+                        <div class="campo">
+                            <label for="senha" id="lbConfirmarSenha">Confirmar senha: </label>
+                            <input type="password" id="confirmarSenha" name="confirmarSenha" autocomplete="off"
+                                onfocus="removerClasseAlerta('confirmarSenha')">
+                        </div>
+                        {% endif %}
+                    </div>
 
-            {% if alterar %}
-            <div class="linhaBotoes SpcBtw">
-                <button onclick="validarCampos(event)" class="botao btn-principal linhaMRReset">Alterar</button>
-                <button type="button" class="botao btn-alerta linhaMRReset" data-bs-toggle="modal"
+                    {% if alterar %}
+                    {% if captador.hemocentro_id == current_user.hemocentro_id or current_user.servidor %}
+                    <div class="linhaBotoes SpcBtw">
+                        <button onclick="validarCampos(event)" class="botao btn-principal linhaMRReset">Alterar</button>
+                        <button type="button" class="botao btn-alerta linhaMRReset" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">Excluir cadastro</button>
+
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                             aria-hidden="true">
                             <div class="modal-dialog">
@@ -128,14 +160,18 @@
                                 </div>
                             </div>
                         </div>
-            </div>
-            {% else %}
-            <div class="linhaBotoes">
-                <button onclick="validarCampos(event)" name="inserir" value="Inserir e continuar" class="botao btn-principal">Inserir e continuar</button>
-                <button onclick="validarCampos(event)" name="inserir" value="Inserir" class="botao btn-principal">Inserir</button>
-                <button type="button" onclick="limpar()" class="botao btn-secundario linhaMRReset">Limpar</button>
-            </div>
-            {% endif %}
+                    </div>
+                    {% endif %}
+                    {% else %}
+                    <div class="linhaBotoes">
+                        <button onclick="validarCampos(event)" name="inserir" value="Inserir e continuar"
+                            class="botao btn-principal">Inserir e continuar</button>
+                        <button onclick="validarCampos(event)" name="inserir" value="Inserir"
+                            class="botao btn-principal">Inserir</button>
+                        <button type="button" onclick="limpar()"
+                            class="botao btn-secundario linhaMRReset">Limpar</button>
+                    </div>
+                    {% endif %}
 
         </div>
     </div>
@@ -148,4 +184,4 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 <script src="{{ url_for('static', filename='js/mascaras.js') }}"></script>
 <script src="{{ url_for('static', filename='js/captador.js') }}"></script>
-{% endblock  %}
+{% endblock %}

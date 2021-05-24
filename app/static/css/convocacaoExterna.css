@@ -1,0 +1,19 @@
+#campoEstado {
+    flex: 3
+}
+
+#campoMunicipio {
+    flex: 4;
+}
+
+#divTipagem {
+    flex: 2;
+}
+
+#divIP {
+    flex: 3;
+}
+
+.flexivel {
+    width: 100%;
+}

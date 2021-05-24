@@ -10,6 +10,7 @@ var lbMunicipio = document.getElementById("lbMunicipio")
 $('#inputEstado').focusout(function () {
     if ( estaContidoNoPadrao(estado, inputEstado) ) {
         municipio.innerHTML = ""
+        inputMunicipio.value = ""
         getCidades().then(resposta => {
             resposta.forEach(element => {
                 var option = document.createElement('option');
