@@ -422,3 +422,59 @@ input[type=number], input[type=number]::-webkit-inner-spin-button, input[type=nu
 #resultadosEncontrados {
     padding-bottom: 16px;
 }
+
+.dashboardSuperior {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    justify-content: space-evenly;
+    max-width: 100%;
+}
+
+.dashboardSuperior .cartao {
+    max-height: auto;
+    width: 200px;
+    padding: 20px 10px !important;
+    text-align: center;
+    font-size: 24px;
+    margin: 0 20px;
+    margin-top: 36px;
+}
+
+.dashboardSuperior .cartao h1 {
+    font-size: 36px;
+}
+
+.dashboardInferior {
+    display: flex;
+    justify-content: space-between;
+    max-width: 100%;
+    margin-top: 36px;
+}
+
+.graficoRS {
+    max-width: 100%;
+    height: auto;
+}
+
+.dashboardInferior .divGrafico {
+    margin-right: 24px;
+}
+
+.dashboardInferior .divTabela {
+    max-width: 280px;
+
+}
+
+@media only screen and (max-width: 1050px) {
+    .dashboardInferior {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .dashboardInferior .divGrafico {
+        margin-right: 0;
+    }
+    .divTabela{
+        margin-top: 36px;
+    }
+  }

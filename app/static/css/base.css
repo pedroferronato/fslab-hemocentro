@@ -235,9 +235,24 @@ main {
     justify-items: center;
 }
 
-.imagemPaginaInicial img {
+.imagemPaginaInicialDiv img {
     max-width: 500px;
     max-height: 200px;
+}
+
+.imagemPaginaInicialDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.imagemPaginaInicialDiv a {
+    max-width: 250px;
+    margin-top: 24px !important;
+}
+
+.imagemPaginaInicialDiv a:hover {
+    color: white !important;
 }
 
 .linkAtivo {

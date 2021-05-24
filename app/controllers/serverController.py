@@ -36,7 +36,7 @@ def login():
             return render_template("login.html", mensagem=mensagem)
         else:
             login_user(captador, remember=False)
-            return redirect('/inicio')
+            return redirect('/')
 
 
 @flaskApp.route('/logout')
@@ -56,12 +56,19 @@ def recuperar_senha():
     return render_template("recuperarSenha.html")
 
 
-@flaskApp.route('/inicio')
+@flaskApp.route('/')
 @login_required
 def inicial():
     sucesso = request.args.get('sucesso')
 
     return render_template("paginaInicial.html", sucesso=sucesso)
+
+
+@flaskApp.route('/dashboard')
+@login_required
+def dashboard():
+
+    return render_template("dashboard.html")
 
 
 @flaskApp.route('/perfil')
