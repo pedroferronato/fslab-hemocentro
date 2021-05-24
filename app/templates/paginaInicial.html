@@ -1,10 +1,18 @@
 {% extends "base.html" %}
 
+{% block cabecalho %}
+<link href="{{ url_for('static', filename='css/baseConteudo.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block conteudo %}
 
 <div class="imagemPaginaInicial noselect">
-    <img src="/static/images/{{ current_user.get_hemocentro().get_img() }}">
-</div> 
+    <div class="imagemPaginaInicialDiv">
+        <img src="/static/images/{{ current_user.get_hemocentro().get_img() }}">
+        <a href="/dashboard" class="botao btn-principal linhaMRReset">Mostrar estatíticas</a>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block codigos %}

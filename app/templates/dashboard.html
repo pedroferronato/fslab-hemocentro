@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block cabecalho %}
+<link href="{{ url_for('static', filename='css/baseConteudo.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block conteudo %}
+<div class="dashboardSuperior">
+    <div class="cartao">
+        <h1>1204</h1>
+        <p>Doações<br>2021</p>
+    </div>
+    <div class="cartao">
+        <h1>102</h1>
+        <p>Doações<br>Maio</p>
+    </div>
+    <div class="cartao">
+        <h1>6</h1>
+        <p>Doações<br>hoje</p>
+    </div>
+</div>
+<div class="dashboardInferior">
+    <div class="cartao divGrafico">
+        <div class="graficoRS">
+            <canvas class="grafico"></canvas>
+        </div>
+    </div>
+    <div class="cartao divTabela">
+        <table class="table table-striped tabela">
+            <thead>
+                <tr>
+                    <th scope="col">Mês</th>
+                    <th scope="col">Doações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Janeiro</td>
+                    <td>22</td>
+                </tr>
+                <tr>
+                    <td>Fevereiro</td>
+                    <td>15</td>
+                </tr>
+                <tr>
+                    <td>Março</td>
+                    <td>67</td>
+                </tr>
+                <tr>
+                    <td>Abril</td>
+                    <td>34</td>
+                </tr>
+                <tr>
+                    <td>Maio</td>
+                    <td>22</td>
+                </tr>
+                <tr>
+                    <td>Junho</td>
+                    <td>188</td>
+                </tr>
+                <tr>
+                    <td>Julho</td>
+                    <td>24</td>
+                </tr>
+                <tr>
+                    <td>Agosto</td>
+                    <td>67</td>
+                </tr>
+                <tr>
+                    <td>Setembro</td>
+                    <td>45</td>
+                </tr>
+                <tr>
+                    <td>Outubro</td>
+                    <td>35</td>
+                </tr>
+                <tr>
+                    <td>Novembro</td>
+                    <td>13</td>
+                </tr>
+                <tr>
+                    <td>Dezembro</td>
+                    <td>85</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block codigos %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.0/chart.min.js"></script>
+<script>
+    var ctx = document.getElementsByClassName("grafico");
+
+    var chartGraph = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+            datasets: [
+                {
+                    label: "DOAÇÕES 2021",
+                    data: [39, 46, 33, 51, 52, 48, 17, 27, 45, 69, 42, 12],
+                    backgroundColor: 'rgba(172,0,17,0.75)',
+                },
+            ]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: "RELATÓRIO DE DOAÇÃO ANUAL",
+                    font: {
+                        size: 36,
+                    }
+                },
+                legend: {
+                    display: false,
+                }
+            }
+        },
+    });
+
+</script>
+{% endblock %}
