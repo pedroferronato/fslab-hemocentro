@@ -13,7 +13,7 @@
         <p>Inicial ></p>
         <p>Captadores ></p>
 
-        {% if captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor %}
+        {% if captador and captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor %}
         <p>Captador</p>
         {% else %}
         {% if alterar %}
@@ -29,7 +29,7 @@
 
         <div class="titulo">
 
-            {% if captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor %}
+            {% if captador and captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor %}
             <h1>Captador</h1>
             {% else %}
             {% if alterar %}
@@ -72,18 +72,12 @@
                         </div>
                         <div class="campo">
                             <label for="hemocentro" id="lbHemocentro">Hemocentro:</label>
-                            <select {% if current_user.administrador %} readonly="readonly" {% endif %}
-                                name="hemocentro" id="hemocentro" onfocus="removerClasseAlerta('hemocentro')">
-                                {% if current_user.administrador or current_user.servidor %}
-                                <option value="{{ current_user.get_hemocentro().nome }}">{{
-                                    current_user.get_hemocentro().nome }}</option>
-                                {% else %}
+                            <select name="hemocentro" id="hemocentro" onfocus="removerClasseAlerta('hemocentro')">
                                 <option value="Selecione">Selecione</option>
                                 {% for hemocentro in hemocentros %}
                                 <option {% if captador %} selected="selected" {% endif %} value="{{hemocentro.id}}">
                                     {{hemocentro.nome}}</option>
                                 {% endfor %}
-                                {% endif %}
                             </select>
                         </div>
                         <div class="campo">
@@ -103,7 +97,7 @@
                     </div>
 
                     <div
-                        class="linhaFormulario ultimaLinhaInput {% if captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor %} linhaSolitaria {% endif %}">
+                        class="linhaFormulario ultimaLinhaInput {% if captador and captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor %} linhaSolitaria {% endif %}">
                         <div class="campo {% if captador %} campoAlterar" id="tamMaxEmail" {% endif %}">
                             <label {% if mensagem=='ErroBD' %} class="txt-alerta" {% endif %} for="mail"
                                 id="lbMail">E-mail:</label>
