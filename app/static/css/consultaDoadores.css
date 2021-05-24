@@ -11,9 +11,13 @@
 }
 
 #divItens {
-    flex: 3;
+    flex: 2;
 }
 
-#divMunicipio {
+.divEstado {
+    flex: 4;
+}
+
+.divMunicipio {
     flex: 4;
 }

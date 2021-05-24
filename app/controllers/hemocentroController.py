@@ -1,3 +1,4 @@
+from typing import MutableSequence
 from app import flaskApp, db
 from app.models.hemocentro import Hemocentro
 from app.models.municipio import Municipio
@@ -70,30 +71,32 @@ def alterar_hemocentro(hemocentro_id):
 @flaskApp.route('/hemocentro/consultar') 
 @login_required
 def consultar_hemocentro():
-    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(nome='Rondônia').first().id).order_by(Municipio.nome).all()
+    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(id=current_user.get_hemocentro().get_estado().id).first().id).order_by(Municipio.nome).all()
+    estados = Estado.query.all()
+    return render_template("consultaHemocentro.html", cidades=cidade_registradas, estados=estados)
+
+
+@flaskApp.route('/hemocentro/consultar/resultado') 
+@login_required
+def consultar_hemocentro_resultado():
+    cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(id=current_user.get_hemocentro().get_estado().id).first().id).order_by(Municipio.nome).all()
+    estados = Estado.query.all()
+
     nome = request.args.get('nome')
-    municipio = request.args.get('municipio')
+    estado = request.args.get('inputEstado')
+    municipio = request.args.get('inputMunicipio')
+    municipio_pesquisado = municipio
+    
+    parametros = []
 
-    sucesso = request.args.get('sucesso')
+    if nome:
+        parametros.append(Hemocentro.nome.like("%" + nome + "%"))
+    if municipio:
+        municipio = Municipio.query.filter_by(nome=municipio, uf=Estado.query.filter_by(nome=estado).first().id).first().id
+        parametros.append(Hemocentro.municipio == municipio)
 
-    if nome and municipio:
-        nome = '%' + nome + '%'
-        municipio = '%' + municipio + '%'
-        lista_hemocentro = Hemocentro.query.filter(Hemocentro.nome.like(nome), Hemocentro.municipio.like(municipio))
-    elif nome:
-        nome = '%' + nome + '%'
-        lista_hemocentro = Hemocentro.query.filter(Hemocentro.nome.like(nome))
-    elif municipio:
-        municipio = '%' + municipio + '%'
-        lista_hemocentro = Hemocentro.query.filter(Hemocentro.municipio.like(municipio))
-    else:
-        return render_template("consultaHemocentro.html", sucesso=sucesso, cidades=cidade_registradas)
-
-    if lista_hemocentro.count() > 0:
-        return render_template("consultaHemocentro.html", resultado=True, lista_hemocentro=lista_hemocentro, cidades=cidade_registradas)
-    else:
-        return render_template("consultaHemocentro.html", lista_vazia=True, cidades=cidade_registradas)
-
+    lista_hemocentros = Hemocentro.query.filter(*parametros).all()
+    return render_template("consultaHemocentro.html", cidades=cidade_registradas, estados=estados, lista_hemocentro=lista_hemocentros, nome_pesquisado=nome, estado_pesquisado=estado, municipio_pesquisado=municipio_pesquisado)
 
 @flaskApp.route('/hemocentro/deletar/<hemocentro_id>') 
 @login_required

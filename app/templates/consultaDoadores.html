@@ -30,7 +30,7 @@
         {% endif %}
         <div class="formulario">
             <form action="/doador/consulta" method="GET">
-                <div class="linhaFormulario linhaSolitaria">
+                <div class="linhaFormulario">
                     <div class="campo" id="divNome">
                         <label for="nome">Nome:</label>
                         <input name="nome" type="text" id="nome" autocomplete="off" {% if nome_pesquisado %}
@@ -64,15 +64,33 @@
                             %} value="{{ registro_pesquisado }}" {% endif %} {% if registro_alterado %}
                             value="{{ registro_alterado }}" {% endif %}>
                     </div>
-                    <div class="campo" id="divMunicipio">
-                        <label for="municipio">Município:</label>
-                        <select name="municipio" id="municipio">
-                            <option value="null">Selecione</option>
-                            {% for cidade in cidades %}
-                            <option {% if municipio_pesquisado==cidade.id %} selected="selected" {% endif
-                                %} value="{{cidade.id}}">{{cidade.nome}}</option>
+                </div>
+                <div class="linhaFormulario linhaSolitaria">
+                    <div class="campo divEstado">
+                        <div class="flexivel SpcBtw AlgEnd">
+                            <label id="lbEstado" for="inputEstado">Estado:</label>
+                        </div>
+                        <input {% if estado_pesquisado %}
+                            value="{{ estado_pesquisado }}"
+                        {% endif %} autocomplete="off" name="inputEstado" id="inputEstado" list="estado">
+                        <datalist name="estado" id="estado">
+                            {% for estado in estados %}
+                            <option value="{{estado.nome}}"></option>
                             {% endfor %}
-                        </select>
+                        </datalist>
+                    </div>
+                    <div class="campo divMunicipio">
+                        <div class="flexivel SpcBtw AlgEnd">
+                            <label id="lbMunicipio" for="inputMunicipio">Município:</label>
+                        </div>
+                        <input {% if municipio_pesquisado %}
+                            value="{{ municipio_pesquisado }}"
+                        {% endif %} autocomplete="off" name="inputMunicipio" id="inputMunicipio" list="municipio">
+                        <datalist name="municipio" id="municipio">
+                            {% for cidade in cidades %}
+                            <option value="{{cidade.nome}}"></option>
+                            {% endfor %}
+                        </datalist>
                     </div>
                     <div class="campo" id="divItens">
                         <label for="itens">Itens por pág.:</label>
@@ -80,7 +98,7 @@
                             value="{{ itens }}" {% endif %}>
                     </div>
                     <div>
-                        <button type="submit" class="botao btn-principal" onclick="validarCampos(event)">Buscar</button>
+                        <button class="botao btn-principal linhaMRReset" type="submit" class="botao btn-principal" onclick="validarCampos(event)">Buscar</button>
                     </div>
                 </div>
             </form>
@@ -127,7 +145,7 @@
                             -
                             {% endif %}
                         </td>
-                        <td>{{ doador.municipio}}</td>
+                        <td>{{ doador.get_municipio() }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -245,4 +263,6 @@
 {% block codigos %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="{{ url_for('static', filename='js/validarConsultaDoador.js') }}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/estadoCidade.js') }}"></script>
 {% endblock %}
