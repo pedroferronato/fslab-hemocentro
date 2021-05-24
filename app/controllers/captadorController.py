@@ -74,7 +74,7 @@ def alterar_captador(captador_id):
             cap = Captador.query.filter_by(id=captador_id).first()
             cap.nome = nome
             cap.celular = celular
-            cap.hemocentro_id = int(hemocentro)
+            cap.hemocentro_id = hemocentro
             cap.email = mail
             cap.login = login
             if adm == 'Captador':
@@ -86,11 +86,10 @@ def alterar_captador(captador_id):
             elif adm == 'Servidor':
                 cap.administrador = True
                 cap.servidor = True
-            else:
-                pass
             db.session.add(cap)
             db.session.commit()
-        except:
+        except Exception as e:
+            print(e)
             return redirect(url_for("alterar_captador", mensagem="ErroBD", captador_id=captador_id))
             # TODO ERRO: 500 - PÁGINA BANCO DE DADOS
 
