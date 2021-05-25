@@ -1,10 +1,11 @@
 from app import flaskApp, login_manager, db
 from app.models.captador import Captador
+from app.models.doacao import Doacao
 from app.models.estado import Estado
 from app.models.municipio import Municipio
 from flask import render_template, redirect, request, session, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
-from datetime import timedelta
+from datetime import timedelta, date
 import bcrypt
 
 @flaskApp.before_request
@@ -60,15 +61,40 @@ def recuperar_senha():
 @login_required
 def inicial():
     sucesso = request.args.get('sucesso')
-
     return render_template("paginaInicial.html", sucesso=sucesso)
 
 
 @flaskApp.route('/dashboard')
 @login_required
 def dashboard():
+    hoje = date.today()
+    diasDoMes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    meses = ["Janeiro", "Fevereiro", "Março","Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
+    relatorioDoacoes = []
+    for x in range(1,13):
+        relatorioDoacoes.append({
+            meses[x-1]:
+            Doacao.query.filter(Doacao.data.between(str(hoje.year)+'-'+str(x)+'-01',str(hoje.year)+'-'+str(x)+'-'+str(diasDoMes[x-1]))).count()
+        })
+    diaHoje = Doacao.query.filter(Doacao.data.between(str(hoje.year)+'-'+(str(hoje.month))+'-'+(str(hoje.day)),(str(hoje.year))+'-'+(str(hoje.month))+'-'+(str(hoje.day)))).count()
+    mes = Doacao.query.filter(Doacao.data.between(str(hoje.year)+'-'+(str(hoje.month))+'-01',(str(hoje.year))+'-'+(str(hoje.month))+'-'+(str(hoje.day)))).count()
+    anual = Doacao.query.filter(Doacao.data.between(str(hoje.year)+'-01-01',str(hoje.year)+'-12-31')).count()
 
-    return render_template("dashboard.html")
+    return render_template("dashboard.html", relatorioDoacoes=relatorioDoacoes, diaHoje=diaHoje, mes=mes, anual=anual, hoje = [hoje.day, meses[hoje.month - 1], hoje.year])
+
+
+# @flaskApp.route('/dashboard/carregamento')
+# def dashboard_carregamento():
+#     hoje = date.today()
+#     diasDoMes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+#     relatorioDoacoes = []
+
+#     for x in range(1,13):
+#         relatorioDoacoes.append(Doacao.query.filter(Doacao.data.between(str(hoje.year)+'-'+str(x)+'-01',str(hoje.year)+'-'+str(x)+'-'+str(diasDoMes[x-1]))).count())
+
+#     response = jsonify(relatorioDoacoes)
+#     response.headers.add('Access-Control-Allow-Origin', '*')
+#     return response
 
 
 @flaskApp.route('/perfil')
@@ -103,10 +129,10 @@ def alterar_perfil():
         return redirect('/login')
 
 
-
 @flaskApp.route('/alterar-senha') # TODO: USAR ALGUMA FORMA DE IDENTIFICAÇÃO
 def alterar_senha():
     return render_template("alterarSenha.html")
+
 
 @flaskApp.route('/cidades/<estado>')
 def get_cidade(estado):
