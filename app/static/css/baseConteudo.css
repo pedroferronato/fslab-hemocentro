@@ -83,7 +83,7 @@ h1 {
     flex: 1 1 auto;
 }
 
-.campo input, .campo select {
+.campo input:not(input[type="file"]), .campo select {
     background: #FFFFFF;
     border: 1px solid #000000;
     color: black;
@@ -97,6 +97,21 @@ h1 {
     line-height: 0px;
     width: 100%;
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+input[type="file"]::-webkit-file-upload-button {
+    height: 40px;
+    background-color: var(--cinzaBotao);
+    padding: 8px 16px;
+    border-radius: 5px;
+    border: none;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #ffffff;
+    outline: none !important;
+    cursor: pointer;
 }
 
 .campo input:focus, .campo select:focus {
@@ -278,7 +293,9 @@ ul.pagination {
     margin-bottom: 16px;
 }
 
-ul.pagination li {display: inline;}
+ul.pagination li {
+    display: inline;
+}
 
 ul.pagination li a, ul.pagination li button {
     text-align: center;
@@ -291,7 +308,6 @@ ul.pagination li a, ul.pagination li button {
     border: 1px solid var(--cinzaBotao);
     background-color: var(--cinzaBotao);
     text-decoration: none;
-    
 }
 
 ul.pagination li a.ativo, ul.pagination li button.ativo {
@@ -299,16 +315,16 @@ ul.pagination li a.ativo, ul.pagination li button.ativo {
     color: var(--cinzaBotao);
 }
 
-.pagination :first-child{
+.pagination :first-child {
     border-radius: 3px;
 }
 
-.page-item:focus, .page-link:focus, .page-link:active{
+.page-item:focus, .page-link:focus, .page-link:active {
     outline: none !important;
     box-shadow: none !important;
 }
 
-.rowActive:hover{
+.rowActive:hover {
     cursor: pointer !important;
     background-color: var(--cinzaLinha) !important;
 }
@@ -463,7 +479,6 @@ input[type=number], input[type=number]::-webkit-inner-spin-button, input[type=nu
 
 .dashboardInferior .divTabela {
     max-width: 280px;
-
 }
 
 @media only screen and (max-width: 1050px) {
@@ -474,7 +489,7 @@ input[type=number], input[type=number]::-webkit-inner-spin-button, input[type=nu
     .dashboardInferior .divGrafico {
         margin-right: 0;
     }
-    .divTabela{
+    .divTabela {
         margin-top: 36px;
     }
-  }
+}

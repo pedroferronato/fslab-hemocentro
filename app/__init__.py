@@ -9,11 +9,15 @@ import os
 
 load_dotenv()
 
+UPLOAD_FOLDER = '/static/images'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'svg'}
+
 flaskApp = Flask(__name__)
 flaskApp.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://'+ os.getenv("DB_USUARIO") +':'+ os.getenv("DB_SENHA") +'@'+ os.getenv("DB_LOCAL") + '/' + os.getenv("DB_BASEDEDADOS")
 flaskApp.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 flaskApp.config['SECRET_KEY'] = os.getenv("SECRET")
 flaskApp.config['JSON_AS_ASCII'] = False
+flaskApp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 db = SQLAlchemy(flaskApp)
 migrate = Migrate(flaskApp, db, compare_type=True)

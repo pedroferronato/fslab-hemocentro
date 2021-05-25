@@ -66,13 +66,6 @@ function removerClasseAlerta(elemento){
     }
 }
 
-function limpar() {
-    nome.value = ""
-    telefone.value = ""
-    document.getElementById("img").value = ""
-    municipio.value = "selecione"
-}
-
 function adicionarCidade() {
     let nomeSafe = document.getElementById("nomeSafe")
     let telefoneSafe = document.getElementById("telefoneSafe")

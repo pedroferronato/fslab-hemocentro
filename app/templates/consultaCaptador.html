@@ -34,10 +34,9 @@
                     <div class="campo" id="divNomeHemocentro">
                         <label for="hemocentro">Hemocentro:</label>
                         <select name="hemocentro" id="hemocentro">
-                            <option value="" {% if not hemocentro_pesquisado %} selected="selected" {% endif %}>Todos
-                            </option>
+                            <option value="">Todos</option>
                             {% for h in hemocentros %}
-                            <option value="{{h.id}}" {% if h.id==hemocentro_pesquisado %} selected="selected" {% endif
+                            <option value="{{h.id}}" {% if h.nome==hemocentro_pesquisado %} selected="selected" {% endif
                                 %}>{{h.nome}}</option>
                             {% endfor %}
                         </select>
@@ -96,7 +95,7 @@
                             {% for hemocentro in hemocentros %}
                                 {% if hemocentro.id == captador.hemocentro_id %}
                                     <td>{{ hemocentro.nome }}</td>
-                                    <td>{{ hemocentro.municipio }}</td>
+                                    <td>{{ hemocentro.get_municipio_nome() }}</td>
                                 {% endif %}
                             {% endfor %}
                     </tr>

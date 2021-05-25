@@ -30,9 +30,9 @@
 
         <div class="formulario">
             {% if alterar %}
-            <form action="/hemocentro/alterar/{{hemocentro.id}}" method="POST">
+            <form action="/hemocentro/alterar/{{hemocentro.id}}" method="POST" enctype="multipart/form-data">
                 {% else %}
-                <form action="/hemocentro" method="POST">
+                <form action="/hemocentro" method="POST" enctype="multipart/form-data">
                     {% endif %}
                     {% if sucesso %}
                     <div class="alert alert-success" role="alert">
@@ -43,10 +43,7 @@
                         <div class="campo" id="divNome">
                             <label id="lbNome" for="nome">Nome:</label>
                             <input type="text" id="nome" name="nome" autocomplete="off"
-                                onfocus="removerClasseAlerta('nome')" 
-                                {% if reload %}
-                                value="{{ nomeBKP }}" 
-                                {% endif %} 
+                                onfocus="removerClasseAlerta('nome')"
                                 {% if alterar %} 
                                 value="{{ hemocentro.nome }}" 
                                 {% endif %}>
@@ -54,9 +51,6 @@
                         <div class="campo">
                             <label id="lbTelefone" for="telefone">Telefone:</label>
                             <input type="text" id="telefone" name="telefone" autocomplete="off"
-                            {% if reload %}
-                                value="{{ telefoneBKP }}" 
-                            {% endif %} 
                             {% if alterar %}
                                 value="{{ hemocentro.telefone }}" 
                             {% endif %} onfocus="removerClasseAlerta('telefone')">
@@ -85,13 +79,7 @@
                         </div>
                         <div class="campo">
                             <label for="img">Imagem:</label>
-                            <input type="text" id="img" name="img" autocomplete="off"
-                            {% if reload %}
-                                value="{{ imgBKP }}" 
-                            {% endif %}  
-                            {% if alterar %}
-                            value="{{hemocentro.urlImg}}" 
-                            {% endif %}>
+                            <input type="file" id="img" name="img" autocomplete="off">
                         </div>
                     </div>
 
@@ -131,8 +119,6 @@
                             value="Inserir e continuar" />
                         <input onclick="validarCampos(event)" type="submit" name="inserir" class="botao btn-principal"
                             value="Inserir" />
-                        <button type="button" class="botao btn-secundario linhaMRReset"
-                            onclick="limpar()">Limpar</button>
                     </div>
 
                     {% endif %}
