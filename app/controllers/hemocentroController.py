@@ -1,10 +1,16 @@
-from typing import MutableSequence
-from app import flaskApp, db
+import os
+from werkzeug.utils import secure_filename
+from app import ALLOWED_EXTENSIONS, flaskApp, db
+import app
 from app.models.hemocentro import Hemocentro
 from app.models.municipio import Municipio
 from app.models.estado import Estado
 from flask import render_template, redirect, request, url_for
 from flask_login import login_required, current_user
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @flaskApp.route('/hemocentro', methods=['GET', 'POST'])
@@ -28,10 +34,19 @@ def novo_hemocentro():
         estado = request.form['inputEstado']
         municipio = request.form['inputMunicipio']
         municipio = Municipio.query.filter_by(nome=municipio, uf=Estado.query.filter_by(nome=estado).first().id).first().id
-        img = request.form['img']
+        # img = request.form['img']
 
-        if img == "" or img == None:
-            img = "dummy.png"
+        img = "hemocentro3.png"
+        
+        file = request.files['img']
+
+        if file.filename == "":
+            img = "hemocentro3.png"
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            img = filename
+            file.save(os.path.join('./app/static/images', filename))
+
         try:
             hemocentro = Hemocentro(nome=nome, municipio=municipio, telefone=telefone, urlImg=img)
             db.session.add(hemocentro)

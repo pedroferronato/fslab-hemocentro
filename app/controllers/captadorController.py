@@ -151,6 +151,20 @@ def consultar_captador():
         return render_template("consultaCaptador.html", lista_vazia=True, resultado=False, hemocentros=hemocentro_registrados, hemocentro_pesquisado=hemocentro_pesquisado, captador_pesquisado=nome_pesquisado, itens_pesquisado=itens_pesquisado,mensagem=mensagem)
 
 
+@flaskApp.route('/captador/<hemocentro>')
+@login_required
+def consultar_por_hemocentro(hemocentro):
+    hemocentro_id = Hemocentro.query.filter_by(nome=hemocentro).first().id
+    captadores = Captador.query.filter_by(hemocentro_id=hemocentro_id)
+    hemocentro_registrados = Hemocentro.query.all()
+
+    per_page = 5
+
+    paginacao = captadores.paginate(page=1, per_page=per_page)
+
+    return render_template("consultaCaptador.html", resultado=True, paginas = paginacao, hemocentros=hemocentro_registrados, hemocentro_pesquisado=hemocentro, lista_captador=paginacao.items, itens_pesquisado=per_page)
+
+
 @flaskApp.route('/captador/deletar/<captador_id>') 
 @login_required
 def deletar_captador(captador_id):
