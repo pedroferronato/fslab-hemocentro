@@ -5,7 +5,7 @@ from app.models.captador import Captador
 from collections import Counter
 from sqlalchemy import exc
 import bcrypt
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 
 @login_manager.user_loader
@@ -16,10 +16,9 @@ def get_user(captador_id):
 @flaskApp.route('/captador', methods=['GET', 'POST'])
 @login_required
 def novo_captador():
-    mensagem = request.args.get('mensagem')
-    senhasDiferentes = request.args.get('senhas')
-
     hemocentros = Hemocentro.query.all()
+    mensagem = request.args.get('mensagem')
+
     if request.method == 'GET':
         return render_template("captador.html", mensagem=mensagem, hemocentros=hemocentros)
     elif request.method == 'POST':
@@ -29,7 +28,10 @@ def novo_captador():
 
         nome = request.form['nome']
         celular = request.form['celular']
-        hemocentro = request.form['hemocentro']
+        if current_user.servidor:
+            hemocentro = request.form['hemocentro']
+        else:
+            hemocentro = current_user.hemocentro_id
         adm = request.form['adm']
         mail = request.form['mail']
         login = request.form['login']
@@ -47,7 +49,6 @@ def novo_captador():
             db.session.commit()
         except:
             return redirect(url_for("novo_captador", mensagem="ErroBD"))
-            # TODO: PAGINA 500 - OU MANTER OS DADOS
 
         if continuar:
             return redirect(url_for("novo_captador", mensagem="Inserido"))

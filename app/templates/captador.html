@@ -49,12 +49,12 @@
                     {% endif %}
                     {% if mensagem == "Inserido" %}
                     <div class="alert alert-success" role="alert">
-                        Captador registrado com sucesso
+                        Captador registrado com sucesso!
                     </div>
                     {% endif %}
                     {% if mensagem == "ErroBD" %}
                     <div class="alert2 alert alert-danger" role="alert">
-                        O <b>banco de dados</b> já possui um usuário com uma dessas informações.
+                        O <b>banco de dados</b> já possui um usuário com login ou e-mail informado.
                     </div>
                     {% endif %}
                     <div class="linhaFormulario">
@@ -72,6 +72,15 @@
                         </div>
                         <div class="campo">
                             <label for="hemocentro" id="lbHemocentro">Hemocentro:</label>
+                            {% if not current_user.servidor %}
+                            <input type="text" id="hemocentro" name="hemocentro" autocomplete="off" readonly
+                            {% for hemocentro in hemocentros %} 
+                            {% if current_user.hemocentro_id == hemocentro.id %}
+                            value="{{hemocentro.nome}}"      
+                            {% endif %}
+                            {% endfor %}>
+                            {% endif %}
+                            {% if current_user.servidor %}
                             <select name="hemocentro" id="hemocentro" onfocus="removerClasseAlerta('hemocentro')">
                                 <option value="Selecione">Selecione</option>
                                 {% for hemocentro in hemocentros %}
@@ -79,6 +88,7 @@
                                     {{hemocentro.nome}}</option>
                                 {% endfor %}
                             </select>
+                            {% endif %}
                         </div>
                         <div class="campo">
                             <label for="admn">Administrador:</label>
@@ -86,8 +96,10 @@
                                 <option value="Captador" {% if captador and captador.administrador==False and
                                     captador.servidor==False %} selected="selected" {% else %} selected="selected" {%
                                     endif %}>Captador</option>
+                                {% if current_user.administrador or current_user.servidor %}
                                 <option value="Administrador" {% if captador and captador.administrador %}
                                     selected="selected" {% endif %}>Administrador</option>
+                                {% endif %}
                                 {% if current_user.servidor %}
                                 <option value="Servidor" {% if captador and captador.servidor %} selected="selected" {%
                                     endif %}>Servidor</option>
@@ -115,12 +127,12 @@
                         {% if not captador %}
                         <div class="campo">
                             <label for="senha" id="lbSenha">Senha:</label>
-                            <input type="password" id="senha" name="senha" autocomplete="off"
+                            <input type="password" id="senha" name="senha" maxlength="16" autocomplete="off"
                                 onfocus="removerClasseAlerta('senha')">
                         </div>
                         <div class="campo">
                             <label for="senha" id="lbConfirmarSenha">Confirmar senha: </label>
-                            <input type="password" id="confirmarSenha" name="confirmarSenha" autocomplete="off"
+                            <input type="password" id="confirmarSenha" name="confirmarSenha" maxlength="16" autocomplete="off"
                                 onfocus="removerClasseAlerta('confirmarSenha')">
                         </div>
                         {% endif %}
