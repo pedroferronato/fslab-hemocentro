@@ -7,15 +7,15 @@
 {% block conteudo %}
 <div class="dashboardSuperior">
     <div class="cartao">
-        <h1>1204</h1>
-        <p>Doações<br>2021</p>
+        <h1>{{anual}}</h1>
+        <p>Doações<br>{{hoje[2]}}</p>
     </div>
     <div class="cartao">
-        <h1>102</h1>
-        <p>Doações<br>Maio</p>
+        <h1>{{mes}}</h1>
+        <p>Doações<br>{{hoje[1]}}</p>
     </div>
     <div class="cartao">
-        <h1>6</h1>
+        <h1>{{diaHoje}}</h1>
         <p>Doações<br>hoje</p>
     </div>
 </div>
@@ -34,54 +34,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Janeiro</td>
-                    <td>22</td>
-                </tr>
-                <tr>
-                    <td>Fevereiro</td>
-                    <td>15</td>
-                </tr>
-                <tr>
-                    <td>Março</td>
-                    <td>67</td>
-                </tr>
-                <tr>
-                    <td>Abril</td>
-                    <td>34</td>
-                </tr>
-                <tr>
-                    <td>Maio</td>
-                    <td>22</td>
-                </tr>
-                <tr>
-                    <td>Junho</td>
-                    <td>188</td>
-                </tr>
-                <tr>
-                    <td>Julho</td>
-                    <td>24</td>
-                </tr>
-                <tr>
-                    <td>Agosto</td>
-                    <td>67</td>
-                </tr>
-                <tr>
-                    <td>Setembro</td>
-                    <td>45</td>
-                </tr>
-                <tr>
-                    <td>Outubro</td>
-                    <td>35</td>
-                </tr>
-                <tr>
-                    <td>Novembro</td>
-                    <td>13</td>
-                </tr>
-                <tr>
-                    <td>Dezembro</td>
-                    <td>85</td>
-                </tr>
+                {% for doacoes in relatorioDoacoes %}
+                    {% for key, value in doacoes.items() %}
+                        <tr>
+                            <td>{{key}}</td>
+                            <td class="valor">{{value}}</td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
             </tbody>
         </table>
     </div>
@@ -92,36 +52,7 @@
 
 {% block codigos %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.0/chart.min.js"></script>
-<script>
-    var ctx = document.getElementsByClassName("grafico");
-
-    var chartGraph = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
-            datasets: [
-                {
-                    label: "DOAÇÕES 2021",
-                    data: [39, 46, 33, 51, 52, 48, 17, 27, 45, 69, 42, 12],
-                    backgroundColor: 'rgba(172,0,17,0.75)',
-                },
-            ]
-        },
-        options: {
-            plugins: {
-                title: {
-                    display: true,
-                    text: "RELATÓRIO DE DOAÇÃO ANUAL",
-                    font: {
-                        size: 36,
-                    }
-                },
-                legend: {
-                    display: false,
-                }
-            }
-        },
-    });
-
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 {% endblock %}
