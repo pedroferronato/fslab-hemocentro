@@ -141,9 +141,9 @@ function removerClasseAlerta(elemento){
 function limpar() {
     nome.value = ""
     celular.value = ""
-    hemocentro.value = "Selecione"
     mail.value = ""
     login.value = ""
     senha.value = ""
     confirmarSenha.value = ""
+    adm.value = "Captador"
 }
