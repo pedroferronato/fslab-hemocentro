@@ -114,6 +114,10 @@ input[type="file"]::-webkit-file-upload-button {
     cursor: pointer;
 }
 
+.ast {
+    font-size: 20px !important;
+}
+
 .campo input:focus, .campo select:focus {
     outline: none;
     background-color: #fcfcfc;

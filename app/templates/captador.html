@@ -59,19 +59,34 @@
                     {% endif %}
                     <div class="linhaFormulario">
                         <div class="campo" id="divNome">
-                            <label id="lbNome" for="nome">Nome Completo:</label>
+                            <div class="flexivel">
+                                <label id="lbNome" for="nome">Nome Completo:</label>
+                                {% if not (captador and captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor) %}
+                                <label class="txt-alerta ast">&nbsp;*</label>
+                                {% endif %}
+                            </div>
                             <input type="text" id="nome" name="nome" autocomplete="off"
                                 onfocus="removerClasseAlerta('nome')" {% if captador %} value="{{captador.nome}}" {%
                                 endif %}>
                         </div>
                         <div class="campo">
-                            <label for="celular" id="lbCelular">Celular:</label>
+                            <div class="flexivel">
+                                <label for="celular" id="lbCelular">Celular:</label>
+                                {% if not (captador and captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor) %}
+                                <label class="txt-alerta ast">&nbsp;*</label>
+                                {% endif %}
+                            </div>
                             <input type="text" id="celular" name="celular" autocomplete="off"
                                 onfocus="removerClasseAlerta('celular')" {% if captador %} value="{{captador.celular}}"
                                 {% endif %}>
                         </div>
                         <div class="campo">
-                            <label for="hemocentro" id="lbHemocentro">Hemocentro:</label>
+                            <div class="flexivel">
+                                <label for="hemocentro" id="lbHemocentro">Hemocentro:</label>
+                                {% if not (captador and captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor) %}
+                                <label class="txt-alerta ast">&nbsp;*</label>
+                                {% endif %}
+                            </div>
                             {% if not current_user.servidor %}
                             <input type="text" id="hemocentro" name="hemocentro" autocomplete="off" readonly
                             {% for hemocentro in hemocentros %} 
@@ -91,7 +106,12 @@
                             {% endif %}
                         </div>
                         <div class="campo">
-                            <label for="admn">Administrador:</label>
+                            <div class="flexivel">
+                                <label for="admn">Administrador:</label>
+                                {% if not (captador and captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor) %}
+                                <label class="txt-alerta ast">&nbsp;*</label>
+                                {% endif %}
+                            </div>
                             <select name="adm" id="adm">
                                 <option value="Captador" {% if captador and captador.administrador==False and
                                     captador.servidor==False %} selected="selected" {% else %} selected="selected" {%
@@ -111,32 +131,57 @@
                     <div
                         class="linhaFormulario ultimaLinhaInput {% if captador and captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor %} linhaSolitaria {% endif %}">
                         <div class="campo {% if captador %} campoAlterar" id="tamMaxEmail" {% endif %}">
-                            <label {% if mensagem=='ErroBD' %} class="txt-alerta" {% endif %} for="mail"
-                                id="lbMail">E-mail:</label>
+                            <div class="flexivel">
+                                <label {% if mensagem=='ErroBD' %} class="txt-alerta" {% endif %} for="mail" id="lbMail">E-mail:</label>
+                                {% if not (captador and captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor) %}
+                                <label class="txt-alerta ast">&nbsp;*</label>
+                                {% endif %}
+                            </div>
                             <input {% if mensagem=='ErroBD' %} class="borda-alerta" {% endif %} type="email" id="mail"
                                 name="mail" autocomplete="off" onfocus="removerClasseAlerta('mail')" {% if captador %}
                                 value="{{captador.email}}" {% endif %}>
                         </div>
                         <div class="campo {% if captador %} campoAlterar" id="tamMaxLogin" {% endif %}">
-                            <label {% if mensagem=='ErroBD' %} class="txt-alerta" {% endif %} for="login"
-                                id="lbLogin">Login:</label>
+                            <div class="flexivel">
+                                <label {% if mensagem=='ErroBD' %} class="txt-alerta" {% endif %} for="login" id="lbLogin">Login:</label>
+                                {% if not (captador and captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor) %}
+                                <label class="txt-alerta ast">&nbsp;*</label>
+                                {% endif %}
+                            </div>
                             <input {% if mensagem=='ErroBD' %} class="borda-alerta" {% endif %} type="text" id="login"
                                 name="login" autocomplete="off" onfocus="removerClasseAlerta('login')" {% if captador %}
                                 value="{{captador.login}}" {% endif %}>
                         </div>
                         {% if not captador %}
                         <div class="campo">
-                            <label for="senha" id="lbSenha">Senha:</label>
+                            <div class="flexivel">
+                                <label for="senha" id="lbSenha">Senha:</label>
+                                {% if not (captador and captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor) %}
+                                <label class="txt-alerta ast">&nbsp;*</label>
+                                {% endif %}
+                            </div>
                             <input type="password" id="senha" name="senha" maxlength="16" autocomplete="off"
                                 onfocus="removerClasseAlerta('senha')">
                         </div>
                         <div class="campo">
-                            <label for="senha" id="lbConfirmarSenha">Confirmar senha: </label>
+                            <div class="flexivel">
+                                <label for="senha" id="lbConfirmarSenha">Confirmar senha: </label>
+                                {% if not (captador and captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor) %}
+                                <label class="txt-alerta ast">&nbsp;*</label>
+                                {% endif %}
+                            </div>
                             <input type="password" id="confirmarSenha" name="confirmarSenha" maxlength="16" autocomplete="off"
                                 onfocus="removerClasseAlerta('confirmarSenha')">
                         </div>
                         {% endif %}
                     </div>
+
+                    {% if not (captador and captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor) %}
+                    <div class="linhaFormulario flexivel">
+                        <label class="txt-alerta ast">*</label>
+                        <p>&ensp;Campos obrigatórios</p>
+                    </div>
+                    {% endif %}
 
                     {% if alterar %}
                     {% if captador.hemocentro_id == current_user.hemocentro_id or current_user.servidor %}

@@ -7,6 +7,7 @@ from app.models.municipio import Municipio
 from app.models.estado import Estado
 from flask import render_template, redirect, request, url_for
 from flask_login import login_required, current_user
+import uuid
 
 
 def allowed_file(filename):
@@ -43,9 +44,9 @@ def novo_hemocentro():
         if file.filename == "":
             img = "hemocentro3.png"
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            img = filename
-            file.save(os.path.join('./app/static/images', filename))
+            img = uuid.uuid4()
+            img = str(img) + '.' + file.filename.rsplit('.', 1)[1].lower()
+            file.save(os.path.join('./app/static/images', img))
 
         try:
             hemocentro = Hemocentro(nome=nome, municipio=municipio, telefone=telefone, urlImg=img)

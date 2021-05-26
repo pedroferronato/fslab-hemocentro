@@ -41,7 +41,10 @@
                     {% endif %}
                     <div class="linhaFormulario ultimaLinhaInput">
                         <div class="campo" id="divNome">
-                            <label id="lbNome" for="nome">Nome:</label>
+                            <div class="flexivel">
+                                <label id="lbNome" for="nome">Nome:</label>
+                                <label class="txt-alerta ast">&nbsp;*</label>
+                            </div>
                             <input type="text" id="nome" name="nome" autocomplete="off"
                                 onfocus="removerClasseAlerta('nome')"
                                 {% if alterar %} 
@@ -49,15 +52,19 @@
                                 {% endif %}>
                         </div>
                         <div class="campo">
-                            <label id="lbTelefone" for="telefone">Telefone:</label>
+                            <div class="flexivel">
+                                <label id="lbTelefone" for="telefone">Telefone:</label>
+                                <label class="txt-alerta ast">&nbsp;*</label>
+                            </div>
                             <input type="text" id="telefone" name="telefone" autocomplete="off"
                             {% if alterar %}
                                 value="{{ hemocentro.telefone }}" 
                             {% endif %} onfocus="removerClasseAlerta('telefone')">
                         </div>
                         <div class="campo">
-                            <div class="flexivel SpcBtw AlgEnd">
+                            <div class="flexivel">
                                 <label id="lbEstado" for="inputEstado">Estado:</label>
+                                <label class="txt-alerta ast">&nbsp;*</label>
                             </div>
                             <input autocomplete="off" name="inputEstado" id="inputEstado" list="estado" value="{{current_user.get_hemocentro().get_estado().nome}}">
                             <datalist name="estado" id="estado">
@@ -67,8 +74,9 @@
                             </datalist>
                         </div>
                         <div class="campo">
-                            <div class="flexivel SpcBtw AlgEnd">
+                            <div class="flexivel">
                                 <label id="lbMunicipio" for="municipio">Município:</label>
+                                <label class="txt-alerta ast">&nbsp;*</label>
                             </div>
                             <input autocomplete="off" name="inputMunicipio" id="inputMunicipio" list="municipio" value="{{current_user.get_hemocentro().get_municipio_nome()}}">
                             <datalist name="municipio" id="municipio">
@@ -79,10 +87,15 @@
                         </div>
                         <div class="campo">
                             <label for="img">Imagem:</label>
-                            <input type="file" id="img" name="img" autocomplete="off">
+                            <input type="file" id="img" name="img" autocomplete="off" accept="image/*">
                         </div>
                     </div>
 
+                    <div class="linhaFormulario flexivel">
+                        <label class="txt-alerta ast">*</label>
+                        <p>&ensp;Campos obrigatórios</p>
+                    </div>
+                    
                     {% if alterar %}
 
                     <div class="linhaBotoes SpcBtw">

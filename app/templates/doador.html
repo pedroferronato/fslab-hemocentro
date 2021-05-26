@@ -53,27 +53,37 @@
                     {% endif %}
                     <div class="linhaFormulario">
                         <div class="campo" id="divRegistro">
-                            <label id="lbNumRegistro" for="numRegistro">Nº registro:</label>
+                            <div class="flexivel">
+                                <label id="lbNumRegistro" for="numRegistro">Nº registro:</label>
+                                <label class="txt-alerta ast">&nbsp;*</label>
+                            </div>
                             <input name="numRegistro" type="number" id="numRegistro" autocomplete="off"
-                                onfocus="removerClasseAlerta('numRegistro')" {% if reload %}
-                                value="{{ numRegistroBKP }}" {% endif %} {% if alterar %}
+                                onfocus="removerClasseAlerta('numRegistro')" {% if alterar %}
                                 value="{{ doador.numero_registro }}" disabled {% endif %}>
-
                         </div>
                         <div class="campo" id="divNome">
-                            <label id="lbNome" for="nome">Nome Completo:</label>
+                            <div class="flexivel">
+                                <label id="lbNome" for="nome">Nome Completo:</label>
+                                <label class="txt-alerta ast">&nbsp;*</label>
+                            </div>
                             <input name="nome" type="text" id="nome" autocomplete="off"
                                 onfocus="removerClasseAlerta('nome')" {% if reload %} value="{{ nomeBKP }}" {% endif %}
                                 {% if alterar %} value="{{ doador.nome }}" {% endif %}>
                         </div>
                         <div class="campo" id="divCpf">
-                            <label id="lbCpf" for="cpf">CPF:</label>
+                            <div class="flexivel">
+                                <label id="lbCpf" for="cpf">CPF:</label>
+                                <label class="txt-alerta ast">&nbsp;*</label>
+                            </div>
                             <input name="cpf" type="text" id="cpf" autocomplete="off"
                                 onfocus="removerClasseAlerta('cpf')" {% if reload %} value="{{ cpfBKP }}" {% endif %} {%
                                 if alterar %} value="{{ doador.cpf }}" {% endif %}>
                         </div>
                         <div class="campo" id="divSexo">
-                            <label id="lbSexo" for="sexo">Sexo:</label>
+                            <div class="flexivel">
+                                <label id="lbSexo" for="sexo">Sexo:</label>
+                                <label class="txt-alerta ast">&nbsp;*</label>
+                            </div>
                             <select name="sexo" id="sexo" onfocus="removerClasseAlerta('sexo')">
                                 <option value="selecione" selected="selected" >Selecione</option>
                                 <option {% if (alterar and doador.tipo_sanguineo == 'fem') or (reload and sexoBKP == 'fem') %} selected="selected" {% endif %} value="fem">Feminino</option>
@@ -81,7 +91,10 @@
                             </select> 
                         </div>
                         <div class="campo" id="divSangue">
-                            <label id="lbTipoSangue" for="tipoSangue">Tipo sanguíneo:</label>
+                            <div class="flexivel">
+                                <label id="lbTipoSangue" for="tipoSangue">Tipo sanguíneo:</label>
+                                <label class="txt-alerta ast">&nbsp;*</label>
+                            </div>
                             <select name="tipoSangue" id="tipoSangue" onfocus="removerClasseAlerta('tipoSangue')">
                                 <option value="selecione">Selecione</option>
                                 <option {% if (alterar and doador.tipo_sanguineo == 'A+') or (reload and tipoSangueBKP == 'A+') %} selected="selected" {% endif %} value="A+">A+</option>
@@ -98,13 +111,19 @@
 
                     <div class="linhaFormulario">
                         <div class="campo">
-                            <label id="lbNascimento" for="nascimento">Data de Nascimento:</label>
+                            <div class="flexivel">
+                                <label id="lbNascimento" for="nascimento">Data de Nascimento:</label>
+                                <label class="txt-alerta ast">&nbsp;*</label>
+                            </div>
                             <input class="data" name="nascimento" type="text" id="nascimento" autocomplete="off"
                                 onfocus="removerClasseAlerta('nascimento')" {% if reload %} value="{{ nascimentoBKP }}"
                                 {% endif %} {% if alterar %} value="{{ doador.data_de_nascimento.strftime('%d-%m-%Y') }}" {% endif %}>
                         </div>
                         <div class="campo">
-                            <label id="lbSus" for="sus">Cadastro do SUS:</label>
+                            <div class="flexivel">
+                                <label id="lbSus" for="sus">Cadastro do SUS:</label>
+                                <label class="txt-alerta ast">&nbsp;*</label>
+                            </div>
                             <input name="sus" type="text" id="sus" autocomplete="off"
                                 onfocus="removerClasseAlerta('sus')" {% if reload %} value="{{ susBKP }}" {% endif %} {%
                                 if alterar %} value="{{ doador.cadastro_SUS }}" {% endif %}>
@@ -153,8 +172,9 @@
                             </select>
                         </div>
                         <div class="campo">
-                            <div class="flexivel SpcBtw AlgEnd">
+                            <div class="flexivel">
                                 <label id="lbEstado" for="inputEstado">Estado:</label>
+                                <label class="txt-alerta ast">&nbsp;*</label>
                             </div>
                             <input autocomplete="off" name="inputEstado" id="inputEstado" list="estado" value="{{current_user.get_hemocentro().get_estado().nome}}">
                             <datalist name="estado" id="estado">
@@ -164,8 +184,9 @@
                             </datalist>
                         </div>
                         <div class="campo">
-                            <div class="flexivel SpcBtw AlgEnd">
+                            <div class="flexivel">
                                 <label id="lbMunicipio" for="municipio">Município:</label>
+                                <label class="txt-alerta ast">&nbsp;*</label>
                             </div>
                             <input autocomplete="off" name="inputMunicipio" id="inputMunicipio" list="municipio" value="{{current_user.get_hemocentro().get_municipio_nome()}}">
                             <datalist name="municipio" id="municipio">
@@ -222,6 +243,11 @@
                                 value="{{ paiBKP }}" {% endif %} {% if alterar %} value="{{ doador.nome_pai }}" {% endif
                                 %}>
                         </div>
+                    </div>
+
+                    <div class="linhaFormulario flexivel">
+                        <label class="txt-alerta ast">*</label>
+                        <p>&ensp;Campos obrigatórios</p>
                     </div>
 
                     {% if alterar %}

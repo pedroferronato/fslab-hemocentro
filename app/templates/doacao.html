@@ -61,7 +61,10 @@
             {% endif %}
             <div class="linhaFormulario">
                 <div class="campo" id="divRegistro">
-                    <label for="numRegistro" id="lbRegistro">Nº registro:</label>
+                    <div class="flexivel">
+                        <label for="numRegistro" id="lbRegistro">Nº registro:</label>
+                        <label class="txt-alerta ast">&nbsp;*</label>
+                    </div>
                     <div class="flexivel AlgCenter">
                         <input maxlength="12" type="text" id="numRegistro" name="numRegistro" autocomplete="off" 
                         {% if doador %} value="{{doador.numero_registro}}" {% endif %}
@@ -71,19 +74,28 @@
                 </div>
                 <input name="botao" class="material-icons iconesS btnPesquisa" value="search" type="submit" onclick="procurarDoador(event)"></input>
                 <div class="campo" id="divNome">
-                    <label for="nome" id="lbNome">Nome do doador:</label>
+                    <div class="flexivel">
+                        <label for="nome" id="lbNome">Nome do doador:</label>
+                        <label class="txt-alerta ast">&nbsp;*</label>
+                    </div>
                     <input type="text" id="nome" name="nome" readonly 
                     {% if doador %} value="{{doador.nome}}" {% endif %}
                     onfocus="removerClasseAlerta('nome')">
                 </div>
                 <div class="campo" id="divTipo">
-                    <label for="tipoSangue" id="lbTipo">Tipo:</label>
+                    <div class="flexivel">
+                        <label for="tipoSangue" id="lbTipo">Tipo:</label>
+                        <label class="txt-alerta ast">&nbsp;*</label>
+                    </div>
                     <input type="text" id="tipoSangue" name="tipoSangue" readonly 
                     {% if doador %} value="{{doador.tipo_sanguineo}}" {% endif %}
                     onfocus="removerClasseAlerta('tipoSangue')">
                 </div>
                 <div class="campo" id="divFidelidade">
-                    <label for="fidelidade" id="lbFidelidade">Fidelidade:</label>
+                    <div class="flexivel">
+                        <label for="fidelidade" id="lbFidelidade">Fidelidade:</label>
+                        <label class="txt-alerta ast">&nbsp;*</label>
+                    </div>
                     <select id="fidelidade" name="fidelidade"
                     onfocus="removerClasseAlerta('fidelidade')">
                     <option value="Selecione" {% if not doador %} selected="select" {% endif %}>Selecione</option>
@@ -94,12 +106,18 @@
             </div>
             <div class="linhaFormulario ultimaLinhaInput">
                 <div class="campo" id="divData">
-                    <label for="data" id="lbData">Data:</label>
+                    <div class="flexivel">
+                        <label for="data" id="lbData">Data:</label>
+                        <label class="txt-alerta ast">&nbsp;*</label>
+                    </div>
                     <input class="data" type="text" id="data" name="data" value={{date}} autocomplete="off"
                     onfocus="removerClasseAlerta('data')">
                 </div>
                 <div class="campo" id="divConvocacao">
-                    <label for="convocacao" id="lbConvocacao">Convocação:</label>
+                    <div class="flexivel">
+                        <label for="convocacao" id="lbConvocacao">Convocação:</label>
+                        <label class="txt-alerta ast">&nbsp;*</label>
+                    </div>
                     <select name="convocacao" id="convocacao" onfocus="removerClasseAlerta('convocacao')">
                         <option value="Selecione" {% if not convocacao %} selected="select" {% endif %}>Selecione</option>
                         <option value="Reposição" {% if convocacao and convocacao == "Reposição" %} selected="select" {% endif %}>Reposição</option>
@@ -111,6 +129,10 @@
                     <input type="text" id="observacoes" name="observacoes" autocomplete="off"
                         placeholder="Caso não tenha, deixe em branco.">
                 </div>
+            </div>
+            <div class="linhaFormulario flexivel">
+                <label class="txt-alerta ast">*</label>
+                <p>&ensp;Campos obrigatórios</p>
             </div>
             <div class="linhaBotoes">
                 <button onclick="validarCampos(event)" name="botao" value="Inserir e continuar" class="botao btn-principal">Inserir e continuar</button>
