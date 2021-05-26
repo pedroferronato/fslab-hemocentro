@@ -47,7 +47,31 @@
 
                 <div class="linhaBotoes SpcBtw">
                     <input onclick="validar(event)" type="submit" name="botao" class="botao btn-perfil btn-principal" value="Atualizar cadastro">
-                    <input type="submit" name="botao" class="botao btn-perfil btn-alerta linhaMRReset" value="Excluir cadastro">
+                    <input type="button" name="botao" class="botao btn-perfil btn-alerta linhaMRReset" value="Excluir cadastro" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Confirmar exclusão</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Deseja realmente deletar o captador "{{ current_user.nome }}" da base de dados?!
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Fechar</button>
+                                        <a href="/captador/desativar/{{ current_user.id }}"><button type="button"
+                                                class="btn btn-danger">Confirmar</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                 </div>
             </form>
         </div>

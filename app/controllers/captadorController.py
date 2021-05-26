@@ -1,3 +1,4 @@
+from flask_login.utils import logout_user
 from app import flaskApp, login_manager, db
 from flask import render_template, redirect, request, url_for
 from app.models.hemocentro import Hemocentro
@@ -40,11 +41,11 @@ def novo_captador():
 
         try:
             if adm == 'Captador':
-                cap = Captador(nome=nome, celular=celular, hemocentro_id=hemocentro, email=mail, login=login, senha=senha, administrador=False, servidor=False)
+                cap = Captador(nome=nome, celular=celular, hemocentro_id=hemocentro, email=mail, login=login, senha=senha, administrador=False, servidor=False, ativo=True)
             elif adm == 'Administrador':
-                cap = Captador(nome=nome, celular=celular, hemocentro_id=hemocentro, email=mail, login=login, senha=senha, administrador=True, servidor=False)
+                cap = Captador(nome=nome, celular=celular, hemocentro_id=hemocentro, email=mail, login=login, senha=senha, administrador=True, servidor=False, ativo=True)
             elif adm == 'Servidor':
-                cap = Captador(nome=nome, celular=celular, hemocentro_id=hemocentro, email=mail, login=login, senha=senha, administrador=True, servidor=True)
+                cap = Captador(nome=nome, celular=celular, hemocentro_id=hemocentro, email=mail, login=login, senha=senha, administrador=True, servidor=True, ativo=True)
             db.session.add(cap)
             db.session.commit()
         except:
@@ -170,6 +171,18 @@ def consultar_por_hemocentro(hemocentro):
 @login_required
 def deletar_captador(captador_id):
     cap = Captador.query.filter_by(id=captador_id).first()
-    db.session.delete(cap)
+    cap.ativo = False
+    db.session.add(cap)
     db.session.commit()
     return redirect(url_for('consulta_captador', mensagem="deletado"))
+
+
+@flaskApp.route('/captador/desativar/<captador_id>') 
+@login_required
+def desativar_captador(captador_id):
+    cap = Captador.query.filter_by(id=captador_id).first()
+    cap.ativo = False
+    db.session.add(cap)
+    db.session.commit()
+    logout_user()
+    return redirect(url_for('login'))

@@ -16,6 +16,7 @@ class Captador(db.Model, UserMixin):
     senha = db.Column(db.String(100), nullable=False)
     administrador = db.Column(db.Boolean(), default=False)
     servidor = db.Column(db.Boolean(), default=False)
+    ativo = db.Column(db.Boolean(), default=True)
 
 
     def is_authenticated(self):

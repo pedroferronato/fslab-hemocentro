@@ -32,7 +32,7 @@ def login():
         if captador:
             autorizado = bcrypt.checkpw(senha.encode('UTF-8'), captador.senha.encode('UTF-8'))
         
-        if not captador or not autorizado:
+        if not captador or not autorizado or not captador.ativo:
             mensagem = "Login não autorizado"
             return render_template("login.html", mensagem=mensagem)
         else:
@@ -122,11 +122,6 @@ def alterar_perfil():
         db.session.add(captador)
         db.session.commit()
         return render_template("perfil.html")
-    if request.form['botao'] == "Excluir cadastro":
-        db.session.delete(captador)
-        db.session.commit()
-        logout_user()
-        return redirect('/login')
 
 
 @flaskApp.route('/alterar-senha') # TODO: USAR ALGUMA FORMA DE IDENTIFICAÇÃO
