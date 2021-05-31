@@ -252,8 +252,10 @@ function validarCampos(evento) {
         }
         alerta = true
     }
+    let hoje = new Date()
+    let dataSuperiorAAtual = hoje.getDate() < data.value.split('/')[0] || hoje.getMonth() + 1 < data.value.split('/')[1] || hoje.getFullYear() < data.value.split('/')[2];
     
-    if (data.value == undefined || data.value == null || data.value == "" || data.value == " "|| (data.value.length > 0 && data.value.length <= 9) || !validarData(data.value, true)) {
+    if (data.value == undefined || data.value == null || data.value == "" || data.value == " "|| (data.value.length > 0 && data.value.length <= 9) || !validarData(data.value, true) || dataSuperiorAAtual) {
         if (!data.classList.contains('borda-alerta')) {
             data.classList.add('borda-alerta')
             lbData.classList.add('txt-alerta')

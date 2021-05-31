@@ -19,6 +19,16 @@
         </div>
         <div class="formulario">
             <form action="/perfil" method="POST">
+                {% if mensagem == "Alterado" %}
+                <div class="alert alert-success" role="alert">
+                    Captador atualizado com sucesso!
+                </div>
+                {% endif %}
+                {% if mensagem == "ErroBD" %}
+                <div class="alert alert alert-danger" role="alert">
+                    O <b>banco de dados</b> encontrou uma falha nas informações inseridas, por favor, tente novamente com outros valores.
+                </div>
+                {% endif %}
                 <div class="linhaFormulario">
                     <div class="campo" id="divNome">
                         <label id="lbNome" for="nome">Nome completo:</label>

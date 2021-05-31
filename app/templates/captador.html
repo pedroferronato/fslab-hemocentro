@@ -54,7 +54,7 @@
                     {% endif %}
                     {% if mensagem == "ErroBD" %}
                     <div class="alert2 alert alert-danger" role="alert">
-                        O <b>banco de dados</b> já possui um usuário com login ou e-mail informado.
+                        O <b>banco de dados</b> encontrou uma falha nas informações inseridas, por favor, tente novamente com outros valores.
                     </div>
                     {% endif %}
                     <div class="linhaFormulario">
@@ -67,7 +67,9 @@
                             </div>
                             <input type="text" id="nome" name="nome" autocomplete="off"
                                 onfocus="removerClasseAlerta('nome')" {% if captador %} value="{{captador.nome}}" {%
-                                endif %}>
+                                endif %} {% if captador and captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor %}
+                                readonly
+                                {% endif %}>
                         </div>
                         <div class="campo">
                             <div class="flexivel">
@@ -78,6 +80,8 @@
                             </div>
                             <input type="text" id="celular" name="celular" autocomplete="off"
                                 onfocus="removerClasseAlerta('celular')" {% if captador %} value="{{captador.celular}}"
+                                {% endif %} {% if captador and captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor %}
+                                readonly
                                 {% endif %}>
                         </div>
                         <div class="campo">
@@ -112,7 +116,9 @@
                                 <label class="txt-alerta ast">&nbsp;*</label>
                                 {% endif %}
                             </div>
-                            <select name="adm" id="adm">
+                            <select name="adm" id="adm" {% if captador and captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor %}
+                            disabled
+                            {% endif %}>
                                 <option value="Captador" {% if captador and captador.administrador==False and
                                     captador.servidor==False %} selected="selected" {% else %} selected="selected" {%
                                     endif %}>Captador</option>
@@ -139,8 +145,11 @@
                             </div>
                             <input {% if mensagem=='ErroBD' %} class="borda-alerta" {% endif %} type="email" id="mail"
                                 name="mail" autocomplete="off" onfocus="removerClasseAlerta('mail')" {% if captador %}
-                                value="{{captador.email}}" {% endif %}>
+                                value="{{captador.email}}" {% endif %} {% if captador and captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor %}
+                                readonly
+                                {% endif %}>
                         </div>
+                        {% if not (captador and captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor) %}        
                         <div class="campo {% if captador %} campoAlterar" id="tamMaxLogin" {% endif %}">
                             <div class="flexivel">
                                 <label {% if mensagem=='ErroBD' %} class="txt-alerta" {% endif %} for="login" id="lbLogin">Login:</label>
@@ -150,8 +159,9 @@
                             </div>
                             <input {% if mensagem=='ErroBD' %} class="borda-alerta" {% endif %} type="text" id="login"
                                 name="login" autocomplete="off" onfocus="removerClasseAlerta('login')" {% if captador %}
-                                value="{{captador.login}}" {% endif %}>
+                                value="{{captador.login}}" {% endif %} >
                         </div>
+                        {% endif %}
                         {% if not captador %}
                         <div class="campo">
                             <div class="flexivel">

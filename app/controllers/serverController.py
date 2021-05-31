@@ -113,15 +113,19 @@ def alterar_perfil():
 
     captador = Captador.query.filter_by(id=current_user.id).first()
     
-    if request.form['botao'] == "Atualizar cadastro":
-        print("entrou")
-        captador.nome = nome
-        captador.celular = celular
-        captador.email = email
-        captador.login = login
+    captador.nome = nome
+    captador.celular = celular
+    captador.email = email
+    captador.login = login
+
+    try:
         db.session.add(captador)
         db.session.commit()
-        return render_template("perfil.html")
+    except:
+        db.session.rollback()
+        return render_template("perfil.html", mensagem="ErroBD")
+    
+    return render_template("perfil.html", mensagem="Alterado")
 
 
 @flaskApp.route('/alterar-senha') # TODO: USAR ALGUMA FORMA DE IDENTIFICAÇÃO
@@ -134,4 +138,6 @@ def get_cidade(estado):
     estado_id = Estado.query.filter_by(nome=estado).first().id
     cidades = Municipio.query.filter_by(uf=estado_id)
     cidades = [x.nome for x in cidades]
-    return jsonify(cidades)
+    response = jsonify(cidades)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
