@@ -1,3 +1,7 @@
+$(".alert").delay(2000).slideUp(200, function() {
+    $(this).alert('close')
+})
+
 var lbNome = document.getElementById("lbNome")
 var nome = document.getElementById("nome")
 

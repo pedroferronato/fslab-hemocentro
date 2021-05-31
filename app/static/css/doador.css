@@ -1,13 +1,15 @@
 #divNome {
-    flex: 4;
+    flex: 6;
 }
 
 #divRegistro {
-    flex: 2;
+    flex: 1;
+    min-width: 120px;
 }
 
 #divCpf {
-    flex: 2;
+    flex: 1;
+    min-width: 145px;
 }
 
 #divSexo {
