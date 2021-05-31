@@ -34,9 +34,13 @@
                 {% else %}
                 <form action="/hemocentro" method="POST" enctype="multipart/form-data">
                     {% endif %}
-                    {% if sucesso %}
+                    {% if sucesso == "Sucesso" %}
                     <div class="alert alert-success" role="alert">
                         Hemocentro registrado com sucesso
+                    </div>
+                    {% elif sucesso == "Error" %}
+                    <div class="alert alert-danger" role="alert">
+                        O <b>banco de dados</b> encontrou uma falha nas informações inseridas, por favor, tente novamente com outros valores.
                     </div>
                     {% endif %}
                     <div class="linhaFormulario ultimaLinhaInput">

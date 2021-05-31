@@ -47,17 +47,14 @@ def novo_hemocentro():
             img = uuid.uuid4()
             img = str(img) + '.' + file.filename.rsplit('.', 1)[1].lower()
             file.save(os.path.join('./app/static/images', img))
-
         try:
             hemocentro = Hemocentro(nome=nome, municipio=municipio, telefone=telefone, urlImg=img)
             db.session.add(hemocentro)
             db.session.commit()
         except:
-            print("An exception occurred")
-            return render_template("paginaInicial.html", sucesso="") # TODO Gerar uma página de erro
-
+            return redirect(url_for("novo_hemocentro", sucesso="Error"))
         if continuar:
-            return redirect(url_for("novo_hemocentro", sucesso=True))
+            return redirect(url_for("novo_hemocentro", sucesso="Sucesso"))
         else:
             return redirect(url_for('inicial', sucesso="sucesso"))
 
