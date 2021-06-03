@@ -59,6 +59,16 @@
                 <b>Número de registro</b> não encontrado.
             </div>
             {% endif %}
+            {% if mensagem == "ErroBD_5" %}
+            <div class="alert2 alert alert-danger" role="alert">
+                O <b>doador</b> já alcançou oo limite superior de idade (61 anos).
+            </div>
+            {% endif %}
+            {% if mensagem == "ErroBD_6" %}
+            <div class="alert2 alert alert-warning" role="alert">
+                O <b>doador</b> ainda não completou o tempo de cadência de doação desejável (Feminino = 4 meses, Masculino = 3 meses).
+            </div>
+            {% endif %}
             <div class="linhaFormulario">
                 <div class="campo" id="divRegistro">
                     <div class="flexivel">
@@ -72,7 +82,7 @@
                         onfocus="removerClasseAlerta('numRegistro')">
                     </div>
                 </div>
-                <input name="botao" class="material-icons iconesS btnPesquisa" value="search" type="submit" onclick="procurarDoador(event)"></input>
+                <input name="botao" class="material-icons iconesS btnPesquisa" value="search" type="submit">
                 <div class="campo" id="divNome">
                     <div class="flexivel">
                         <label for="nome" id="lbNome">Nome do doador:</label>

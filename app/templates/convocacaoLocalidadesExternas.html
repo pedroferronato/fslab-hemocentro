@@ -92,8 +92,8 @@
                     {% else %}
                     <div class="linhaBotoes linhaSolitaria SpcBtw">
                         {% endif%}
-                        <button name="botao" onclick="validar(event)" class="botao btn-principal">Buscar</button>
-                        <button name="botao" class="botao btn-secundario linhaMRReset">Marcar Telefonados</button>
+                        <input type="submit" name="botao" onclick="validar(event)" class="botao btn-principal" value="Buscar">
+                        <input type="submit" name="botao" class="botao btn-secundario linhaMRReset" value="Marcar Telefonados">
                     </div>
 
                     {% if resultado %}
@@ -101,7 +101,7 @@
                     <table class="table table-striped tabela tabelaFC">
                         <thead>
                             <tr>
-                                <th scope="col"><span class="material-icons icones">check_circle</span></th>
+                                <th scope="col"><span class="material-icons iconesCH">check_circle</span></th>
                                 <th scope="col">Nome</th>
                                 <th scope="col">Telefone</th>
                                 <th scope="col">Notificado</th>
@@ -127,7 +127,13 @@
                                 <td>{% if doador.avisado %}<span class="material-icons notificado">check_circle</span>{%
                                     endif %}</td>
                                 <td>{{ doador.tipo_sanguineo }}</td>
-                                <td>{{ doador.get_ultima_doacao().data }}</td>
+                                <td>
+                                    {% if doador.ultima_doacao %}
+                                    {{doador.ultima_doacao.strftime('%d/%m/%Y')}}
+                                    {% else %}
+                                    -
+                                    {% endif %}
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>

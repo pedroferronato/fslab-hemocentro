@@ -1,3 +1,4 @@
+from dateutil.relativedelta import relativedelta
 from app import flaskApp, db
 from flask import render_template, request, redirect, url_for
 from flask_login import login_required, current_user
@@ -30,6 +31,8 @@ def nova_doacao():
             numRegistro = request.form['numRegistro']
             if not numRegistro == '':
                 doador = Doador.query.filter_by(numero_registro=numRegistro).first()
+                if doador and ( (doador.sexo == "mas" and datetime(doador.ultima_doacao.year, doador.ultima_doacao.month, doador.ultima_doacao.day) > (datetime.today() - relativedelta(months=3))) or (doador.sexo == "fem" and datetime(doador.ultima_doacao.year, doador.ultima_doacao.month, doador.ultima_doacao.day) > (datetime.today() - relativedelta(months=4))) ):
+                     return render_template("doacao.html", date=data, doador=doador, convocacao=convocacao,mensagem="ErroBD_6")
                 if doador:
                     return render_template("doacao.html", date=data, doador=doador, convocacao=convocacao)
                 else:
@@ -43,8 +46,11 @@ def nova_doacao():
             
             numRegistro = request.form['numRegistro']
             nome = request.form['nome']
+
             try:
                 doador = Doador.query.filter_by(numero_registro=numRegistro).first()
+                if doador != None and (doador.legado or doador.get_idade() >= 61):
+                    return redirect(url_for("nova_doacao", date=hoje, mensagem="ErroBD_5"))
                 if doador == None or nome != doador.nome:
                     return redirect(url_for("nova_doacao", date=hoje, mensagem="ErroBD_2"))
             except:
@@ -66,12 +72,12 @@ def nova_doacao():
                 doacao = Doacao(hemocentro_id = hemocentro_id, doador_id= numRegistro, data= data,
                 convocacao=convocacao, observacao = observacoes)
                 try:
+                    doador.ultima_doacao = data
                     doador.contatado = False
                     db.session.add(doador)
                     db.session.add(doacao)
                     db.session.commit()
                 except Exception as e:
-                    print(e)
                     return redirect(url_for("nova_doacao", date=hoje, mensagem="ErroBD"))
 
                 if continuar:

@@ -55,7 +55,12 @@
                         <div class="campo" id="divRegistro">
                             <div class="flexivel">
                                 <label id="lbNumRegistro" for="numRegistro">Nº registro:</label>
+                                {% if doador %}
+                                    
+                                {% if doador.hemocentro_id == current_user.hemocentro_id or current_user.servidor %}
                                 <label class="txt-alerta ast">&nbsp;*</label>
+                                {% endif %}
+                                {% endif %}
                             </div>
                             <input name="numRegistro" type="number" id="numRegistro" autocomplete="off"
                                 onfocus="removerClasseAlerta('numRegistro')" {% if alterar %}
@@ -64,7 +69,12 @@
                         <div class="campo" id="divNome">
                             <div class="flexivel">
                                 <label id="lbNome" for="nome">Nome Completo:</label>
+                                {% if doador %}
+                                    
+                                {% if doador.hemocentro_id == current_user.hemocentro_id or current_user.servidor %}
                                 <label class="txt-alerta ast">&nbsp;*</label>
+                                {% endif %}
+                                {% endif %}
                             </div>
                             <input name="nome" type="text" id="nome" autocomplete="off"
                                 onfocus="removerClasseAlerta('nome')" {% if reload %} value="{{ nomeBKP }}" {% endif %}
@@ -73,7 +83,12 @@
                         <div class="campo" id="divCpf">
                             <div class="flexivel">
                                 <label id="lbCpf" for="cpf">CPF:</label>
+                                {% if doador %}
+                                    
+                                {% if doador.hemocentro_id == current_user.hemocentro_id or current_user.servidor %}
                                 <label class="txt-alerta ast">&nbsp;*</label>
+                                {% endif %}
+                                {% endif %}
                             </div>
                             <input name="cpf" type="text" id="cpf" autocomplete="off"
                                 onfocus="removerClasseAlerta('cpf')" {% if reload %} value="{{ cpfBKP }}" {% endif %} {%
@@ -82,7 +97,12 @@
                         <div class="campo" id="divSexo">
                             <div class="flexivel">
                                 <label id="lbSexo" for="sexo">Sexo:</label>
+                                {% if doador %}
+                                    
+                                {% if doador.hemocentro_id == current_user.hemocentro_id or current_user.servidor %}
                                 <label class="txt-alerta ast">&nbsp;*</label>
+                                {% endif %}
+                                {% endif %}
                             </div>
                             <select name="sexo" id="sexo" onfocus="removerClasseAlerta('sexo')">
                                 <option value="selecione" selected="selected" >Selecione</option>
@@ -93,7 +113,12 @@
                         <div class="campo" id="divSangue">
                             <div class="flexivel">
                                 <label id="lbTipoSangue" for="tipoSangue">Tipo sanguíneo:</label>
+                                {% if doador %}
+                                    
+                                {% if doador.hemocentro_id == current_user.hemocentro_id or current_user.servidor %}
                                 <label class="txt-alerta ast">&nbsp;*</label>
+                                {% endif %}
+                                {% endif %}
                             </div>
                             <select name="tipoSangue" id="tipoSangue" onfocus="removerClasseAlerta('tipoSangue')">
                                 <option value="selecione">Selecione</option>
@@ -113,7 +138,12 @@
                         <div class="campo">
                             <div class="flexivel">
                                 <label id="lbNascimento" for="nascimento">Data de Nascimento:</label>
+                                {% if doador %}
+                                    
+                                {% if doador.hemocentro_id == current_user.hemocentro_id or current_user.servidor %}
                                 <label class="txt-alerta ast">&nbsp;*</label>
+                                {% endif %}
+                                {% endif %}
                             </div>
                             <input class="data" name="nascimento" type="text" id="nascimento" autocomplete="off"
                                 onfocus="removerClasseAlerta('nascimento')" {% if reload %} value="{{ nascimentoBKP }}"
@@ -122,7 +152,12 @@
                         <div class="campo">
                             <div class="flexivel">
                                 <label id="lbSus" for="sus">Cadastro do SUS:</label>
+                                {% if doador %}
+                                    
+                                {% if doador.hemocentro_id == current_user.hemocentro_id or current_user.servidor %}
                                 <label class="txt-alerta ast">&nbsp;*</label>
+                                {% endif %}
+                                {% endif %}
                             </div>
                             <input name="sus" type="text" id="sus" autocomplete="off"
                                 onfocus="removerClasseAlerta('sus')" {% if reload %} value="{{ susBKP }}" {% endif %} {%
@@ -174,7 +209,12 @@
                         <div class="campo">
                             <div class="flexivel">
                                 <label id="lbEstado" for="inputEstado">Estado:</label>
+                                {% if doador %}
+                                    
+                                {% if doador.hemocentro_id == current_user.hemocentro_id or current_user.servidor %}
                                 <label class="txt-alerta ast">&nbsp;*</label>
+                                {% endif %}
+                                {% endif %}
                             </div>
                             <input autocomplete="off" name="inputEstado" id="inputEstado" list="estado" value="{{current_user.get_hemocentro().get_estado().nome}}">
                             <datalist name="estado" id="estado">
@@ -186,7 +226,12 @@
                         <div class="campo">
                             <div class="flexivel">
                                 <label id="lbMunicipio" for="municipio">Município:</label>
+                                {% if doador %}
+                                    
+                                {% if doador.hemocentro_id == current_user.hemocentro_id or current_user.servidor %}
                                 <label class="txt-alerta ast">&nbsp;*</label>
+                                {% endif %}
+                                {% endif %}
                             </div>
                             <input autocomplete="off" name="inputMunicipio" id="inputMunicipio" list="municipio" value="{{current_user.get_hemocentro().get_municipio_nome()}}">
                             <datalist name="municipio" id="municipio">
@@ -245,12 +290,17 @@
                         </div>
                     </div>
 
+                    {% if doador %}
+                    {% if doador.hemocentro_id == current_user.hemocentro_id or current_user.servidor %}
                     <div class="linhaFormulario flexivel">
                         <label class="txt-alerta ast">*</label>
                         <p>&ensp;Campos obrigatórios</p>
                     </div>
+                    {% endif%}
+                    {% endif %}
 
                     {% if alterar %}
+                    {% if doador %}    
                     {% if doador.hemocentro_id == current_user.hemocentro_id or current_user.servidor %}
                     <div class="linhaBotoes SpcBtw">
                         <button type="submit" class="botao btn-principal">Alterar</button>
@@ -278,6 +328,7 @@
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                     {% endif %}
                     {% else %}
 

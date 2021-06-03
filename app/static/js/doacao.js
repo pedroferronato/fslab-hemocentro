@@ -313,10 +313,6 @@ function removerClasseAlerta(elemento){
         lbConvocacao.classList.remove('txt-alerta')
     }
 
-    if (pesquisa.classList.contains('borda-alerta') && elemento == 'pesquisa') {
-        pesquisa.classList.remove('borda-alerta')
-    }
-
 }
 
 function removerClasseAlertaDoacoes(elemento){

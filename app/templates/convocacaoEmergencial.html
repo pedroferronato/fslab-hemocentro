@@ -23,7 +23,13 @@
     <td>{% if doador.celular != "" %} {{ doador.celular }} {% else %} {{ doador.telefone }} {% endif %}</td>
     <td>{% if doador.avisado %}<span class="material-icons notificado">check_circle</span>{% endif %}</td>
     <td>{{ doador.tipo_sanguineo }}</td>
-    <td>{{ doador.get_ultima_doacao().data }}</td>
+    <td>
+        {% if doador.ultima_doacao %}
+        {{doador.ultima_doacao.strftime('%d/%m/%Y')}}
+        {% else %}
+        -
+        {% endif %}
+    </td>
 </tr>
 {% endfor %}
 
