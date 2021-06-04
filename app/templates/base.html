@@ -19,199 +19,244 @@
 
 <body>
     <div class="contentor">
-        <div class="d-flex flex-column p-3 barraLateral">
-            <a href="/">
-                <div class="divisaoLogo d-flex justify-content-center">
-                    <img id="logoBarra" src="/static/images/{{ current_user.get_hemocentro().get_img() }}">
+        <div id="barraLateral">
+            <div class="barraLateralFlex">
+                <div class="logoBarra">
+                    <a href="/">
+                        <div class="divisaoLogo d-flex justify-content-center">
+                            <img id="logoBarra" src="/static/images/{{ current_user.get_hemocentro().get_img() }}">
+                        </div>
+                    </a>
                 </div>
-            </a>
-
-            <div class="navegacao">
-                <div id="sobrepor">
-                    <div class="categoria">
-                        <div class="categoriaTitulo" @click="toggle('doacoes')">
-                            <div>
-                                <span class="material-icons icones" id="icone-doacao">add_location</span>
-                                <p>Doações</p>
+                <div class="navegacao">
+                    <div id="sobrepor">
+                        <div class="categoria">
+                            <div class="categoriaTitulo" @click="toggle('doacoes')">
+                                <div>
+                                    <span class="material-icons icones" id="icone-doacao">add_location</span>
+                                    <p>Doações</p>
+                                </div>
+                                <span v-if="!opcoes['doacoes']" class="material-icons icones">keyboard_arrow_down</span>
+                                <span v-if="opcoes['doacoes']" class="material-icons icones">keyboard_arrow_up</span>
                             </div>
-                            <span v-if="!opcoes['doacoes']" class="material-icons icones">keyboard_arrow_down</span>
-                            <span v-if="opcoes['doacoes']" class="material-icons icones">keyboard_arrow_up</span>
+
+                            <div v-if="opcoes['doacoes']" class="opcoes">
+                                <a href="/doacao">
+                                    <div>
+                                        <span class="material-icons icones">add</span>
+                                        <p>Nova doação</p>
+                                    </div>
+                                </a>
+                                <a href="/consultar-doacao/doador">
+                                    <div>
+                                        <span class="material-icons icones">person_search</span>
+                                        <p>Consultar doações por doador</p>
+                                    </div>
+                                </a>
+                                <a href="/consultar-doacao">
+                                    <div>
+                                        <span class="material-icons icones">today</span>
+                                        <p>Consultar por data</p>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
 
-                        <div v-if="opcoes['doacoes']" class="opcoes">
-                            <a href="/doacao">
+                        <div class="categoria">
+                            <div class="categoriaTitulo" @click="toggle('doadores')">
                                 <div>
-                                    <span class="material-icons icones">add</span>
-                                    <p>Nova doação</p>
+                                    <span class="material-icons icones">person_add</span>
+                                    <p>Doadores</p>
                                 </div>
-                            </a>
-                            <a href="/consultar-doacao/doador">
-                                <div>
-                                    <span class="material-icons icones">person_search</span>
-                                    <p>Consultar doações por doador</p>
-                                </div>
-                            </a>
-                            <a href="/consultar-doacao">
-                                <div>
-                                    <span class="material-icons icones">today</span>
-                                    <p>Consultar por data</p>
-                                </div>
-                            </a>
+                                <span v-if="!opcoes['doadores']"
+                                    class="material-icons icones">keyboard_arrow_down</span>
+                                <span v-if="opcoes['doadores']" class="material-icons icones">keyboard_arrow_up</span>
+                            </div>
+
+                            <div v-if="opcoes['doadores']" class="opcoes">
+                                <a href="/doador">
+                                    <div>
+                                        <span class="material-icons icones">add</span>
+                                        <p>Novo doador</p>
+                                    </div>
+                                </a>
+                                <a href="/doador/consultar">
+                                    <div>
+                                        <span class="material-icons icones">search</span>
+                                        <p>Consultar doadores</p>
+                                    </div>
+                                </a>
+                                <a href="/relatorio-doador">
+                                    <div>
+                                        <span class="material-icons icones">account_box</span>
+                                        <p>Relatório doador</p>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
+
+                        <div class="categoria">
+                            <div class="categoriaTitulo" @click="toggle('chamadas')">
+                                <div>
+                                    <span class="material-icons icones">assignment</span>
+                                    <p>Chamadas</p>
+                                </div>
+                                <span v-if="!opcoes['chamadas']"
+                                    class="material-icons icones">keyboard_arrow_down</span>
+                                <span v-if="opcoes['chamadas']" class="material-icons icones">keyboard_arrow_up</span>
+                            </div>
+
+                            <div v-if="opcoes['chamadas']" class="opcoes">
+                                <a href="/convocacao-tipada">
+                                    <div>
+                                        <span class="material-icons icones">calendar_today</span>
+                                        <p>Convocação tipada</p>
+                                    </div>
+                                </a>
+                                <a href="/convocacao-emergencial">
+                                    <div>
+                                        <span class="material-icons icones">assignment_late</span>
+                                        <p>Emergencial</p>
+                                    </div>
+                                </a>
+                                <a href="/convocacao-localidades-externas">
+                                    <div>
+                                        <span class="material-icons icones">explore</span>
+                                        <p>Localidades externas</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        {% if current_user.administrador %}
+                        <div class="categoria">
+                            <div class="categoriaTitulo" @click="toggle('hemocentros')">
+                                <div>
+                                    <span class="material-icons icones">local_hospital</span>
+                                    <p>Hemocentros</p>
+                                </div>
+                                <span v-if="!opcoes['hemocentros']"
+                                    class="material-icons icones">keyboard_arrow_down</span>
+                                <span v-if="opcoes['hemocentros']"
+                                    class="material-icons icones">keyboard_arrow_up</span>
+                            </div>
+
+                            <div v-if="opcoes['hemocentros']" class="opcoes">
+                                {% if current_user.servidor %}
+                                <a href="/hemocentro">
+                                    <div>
+                                        <span class="material-icons icones">add</span>
+                                        <p>Novo hemocentro</p>
+                                    </div>
+                                </a>
+                                {% endif %}
+                                <a href="/hemocentro/consultar">
+                                    <div>
+                                        <span class="material-icons icones">search</span>
+                                        <p>Consultar hemocentros</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if current_user.administrador %}
+                        <div class="categoria">
+                            <div class="categoriaTitulo" @click="toggle('captadores')">
+                                <div>
+                                    <span class="material-icons icones">portrait</span>
+                                    <p>Captadores</p>
+                                </div>
+                                <span v-if="!opcoes['captadores']"
+                                    class="material-icons icones">keyboard_arrow_down</span>
+                                <span v-if="opcoes['captadores']" class="material-icons icones">keyboard_arrow_up</span>
+                            </div>
+
+                            <div v-if="opcoes['captadores']" class="opcoes">
+                                <a href="/captador">
+                                    <div>
+                                        <span class="material-icons icones">add</span>
+                                        <p>Novo captador</p>
+                                    </div>
+                                </a>
+                                <a href="/captador/consulta">
+                                    <div>
+                                        <span class="material-icons icones">search</span>
+                                        <p>Consultar captadores</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        {% endif %}
+
+
                     </div>
 
-                    <div class="categoria">
-                        <div class="categoriaTitulo" @click="toggle('doadores')">
-                            <div>
-                                <span class="material-icons icones">person_add</span>
-                                <p>Doadores</p>
-                            </div>
-                            <span v-if="!opcoes['doadores']" class="material-icons icones">keyboard_arrow_down</span>
-                            <span v-if="opcoes['doadores']" class="material-icons icones">keyboard_arrow_up</span>
-                        </div>
-
-                        <div v-if="opcoes['doadores']" class="opcoes">
-                            <a href="/doador">
-                                <div>
-                                    <span class="material-icons icones">add</span>
-                                    <p>Novo doador</p>
-                                </div>
-                            </a>
-                            <a href="/doador/consultar">
-                                <div>
-                                    <span class="material-icons icones">search</span>
-                                    <p>Consultar doadores</p>
-                                </div>
-                            </a>
-                            <a href="/relatorio-doador">
-                                <div>
-                                    <span class="material-icons icones">account_box</span>
-                                    <p>Relatório doador</p>
-                                </div>
-                            </a>
-                        </div>
+                    <div class="hemocentro">
+                        <p>{{ current_user.get_hemocentro().get_nome() }}</p>
                     </div>
-
-                    <div class="categoria">
-                        <div class="categoriaTitulo" @click="toggle('chamadas')">
-                            <div>
-                                <span class="material-icons icones">assignment</span>
-                                <p>Chamadas</p>
-                            </div>
-                            <span v-if="!opcoes['chamadas']" class="material-icons icones">keyboard_arrow_down</span>
-                            <span v-if="opcoes['chamadas']" class="material-icons icones">keyboard_arrow_up</span>
-                        </div>
-
-                        <div v-if="opcoes['chamadas']" class="opcoes">
-                            <a href="/convocacao-tipada">
-                                <div>
-                                    <span class="material-icons icones">calendar_today</span>
-                                    <p>Convocação tipada</p>
-                                </div>
-                            </a>
-                            <a href="/convocacao-emergencial">
-                                <div>
-                                    <span class="material-icons icones">assignment_late</span>
-                                    <p>Emergencial</p>
-                                </div>
-                            </a>
-                            <a href="/convocacao-localidades-externas">
-                                <div>
-                                    <span class="material-icons icones">explore</span>
-                                    <p>Localidades externas</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-
-                    {% if  current_user.administrador %}    
-                    <div class="categoria">
-                        <div class="categoriaTitulo" @click="toggle('hemocentros')">
-                            <div>
-                                <span class="material-icons icones">local_hospital</span>
-                                <p>Hemocentros</p>
-                            </div>
-                            <span v-if="!opcoes['hemocentros']" class="material-icons icones">keyboard_arrow_down</span>
-                            <span v-if="opcoes['hemocentros']" class="material-icons icones">keyboard_arrow_up</span>
-                        </div>
-
-                        <div v-if="opcoes['hemocentros']" class="opcoes">
-                            {% if current_user.servidor %}    
-                            <a href="/hemocentro">
-                                <div>
-                                    <span class="material-icons icones">add</span>
-                                    <p>Novo hemocentro</p>
-                                </div>
-                            </a>
-                            {% endif %}
-                            <a href="/hemocentro/consultar">
-                                <div>
-                                    <span class="material-icons icones">search</span>
-                                    <p>Consultar hemocentros</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    {% endif %}
-
-                    {% if current_user.administrador %}    
-                    <div class="categoria">
-                        <div class="categoriaTitulo" @click="toggle('captadores')">
-                            <div>
-                                <span class="material-icons icones">portrait</span>
-                                <p>Captadores</p>
-                            </div>
-                            <span v-if="!opcoes['captadores']" class="material-icons icones">keyboard_arrow_down</span>
-                            <span v-if="opcoes['captadores']" class="material-icons icones">keyboard_arrow_up</span>
-                        </div>
-
-                        <div v-if="opcoes['captadores']" class="opcoes">
-                            <a href="/captador">
-                                <div>
-                                    <span class="material-icons icones">add</span>
-                                    <p>Novo captador</p>
-                                </div>
-                            </a>
-                            <a href="/captador/consulta">
-                                <div>
-                                    <span class="material-icons icones">search</span>
-                                    <p>Consultar captadores</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    {% endif %}
-
-
                 </div>
-
-                <div class="hemocentro">
-                    <p>{{ current_user.get_hemocentro().get_nome() }}</p>
-                </div>
-
             </div>
         </div>
+        <div id="barraLateralSombra" onclick="fecharMenu()"></div>
 
         <div class="caixaAuxiliar">
             <div class="caixaFlex">
                 <div class="barraSuperior">
                     <div>
-                        {% if current_user.administrador and not current_user.servidor%}
-                        <p>Administrador</p>
-                        {% endif %}
+                        <span onclick="abrirMenu()" class="material-icons" id="menu">
+                            menu
+                        </span>
                     </div>
-                    <div class="linha"></div>
-                    <div>
-                        <p>{{ current_user.get_nome() }}</p>
-                        <p id="cargo">{{ current_user.get_cargo() }}</p>
+                    <div class="barraSuperiorConteudo">
+                        <div>
+                            {% if current_user.administrador and not current_user.servidor%}
+                            <p>Administrador</p>
+                            {% endif %}
+                        </div>
+                        <div class="linha"></div>
+                        <div class="nomeCargo">
+                            <p>{{ current_user.get_nome() }}</p>
+                            <p id="cargo">{{ current_user.get_cargo() }}</p>
+                        </div>
+                        <div>
+                            <a href="/logout"><span id="logout" class="material-icons icone">logout</span></a>
+                        </div>
+                        <div>
+                            <a href="/perfil"><span class="material-icons icone">manage_accounts</span></a>
+                        </div>
                     </div>
-                    <div>
-                        <a href="/logout"><span id="logout" class="material-icons icone">logout</span></a>
-                    </div>
-                    <div>
-                        <a href="/perfil"><span class="material-icons icone">manage_accounts</span></a>
+                    <div class="barraSuperiorPerfil">
+                        <span onclick="abrirPerfil()" class="material-icons icone">account_circle</span>
                     </div>
                 </div>
+                <div id="barraLateralPerfil">
+                    <div class="barraLateralPerfilIcon">
+                        <span class="material-icons">
+                            account_circle
+                        </span>
+                    </div>
+                    <div class="barraLateralPerfilInfo">
+                        <p><b>{{ current_user.get_nome() }}</b></p>
+                        <p>{{ current_user.get_cargo() }}</p>
+                    </div>
+                    <div class="barraLateralPerfilDivAcoes">
+                        <a href="/perfil">
+                            <div class="barraLateralPerfilAcoes">
+                                <p>Perfil</p>
+                                <span class="material-icons">person</span>
+                            </div>
+                        </a>
+                        <a href="/logout">
+                            <div class="barraLateralPerfilAcoes">
+                                <p>Sair</p>
+                                <span class="material-icons">logout</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div onclick="fecharPerfil()" id="barraLateralPerfilSombra"></div>
+
                 <main>
                     <div id="conteudoPagina">
                         {% block conteudo %}
@@ -229,6 +274,7 @@
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/base.js') }}"></script>
     <script src="{{ url_for('static', filename='js/dropdowns.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/burguer-bar.js') }}"></script>
     {% block codigos %}
     {% endblock %}
 
