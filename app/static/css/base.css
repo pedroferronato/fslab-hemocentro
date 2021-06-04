@@ -432,6 +432,9 @@ main {
     .barraSuperiorPerfil {
         display: block !important;
     }
+    main {
+        padding: 0 20px;
+    }
 }
 
 @media screen and (max-width: 800px) {
@@ -448,7 +451,7 @@ main {
     }
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1025px) {
     #barraLateral {
         display: block !important;
         position: inherit !important;

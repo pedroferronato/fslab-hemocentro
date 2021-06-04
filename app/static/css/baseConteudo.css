@@ -443,59 +443,134 @@ input[type=number], input[type=number]::-webkit-inner-spin-button, input[type=nu
     padding-bottom: 16px;
 }
 
-.dashboardSuperior {
+.dashboard {
+    margin-top: 24px;
     display: flex;
-    flex-wrap: wrap;
-    margin: 0 auto;
-    justify-content: space-evenly;
-    max-width: 100%;
+    width: 100%;
+    height: 100%;
 }
 
-.dashboardSuperior .cartao {
+.dashboardAuxiliar {
+    display: flex;
+}
+
+.dashboardCards {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    max-height: 100%;
+    align-items: center;
+}
+
+.dashboardCards * {
+    align-items: center;
+}
+
+.dashboardCards .cartao {
     max-height: auto;
-    width: 200px;
+    width: 100%;
+    min-width: 150px;
     padding: 20px 10px !important;
     text-align: center;
     font-size: 24px;
-    margin: 0 20px;
-    margin-top: 36px;
+    margin: 0 !important;
+    margin-bottom: 24px !important;
 }
 
-.dashboardSuperior .cartao h1 {
+.dashboardCards .cartao h1 {
     font-size: 36px;
+}
+
+.divPizza {
+    background-color: #fff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    margin-bottom: 24px;
+    padding: 16px;
+}
+
+.divTabela {
+    min-width: 280px;
+    background-color: #fff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    margin-bottom: 24px;
+    padding: 16px;
 }
 
 .dashboardInferior {
     display: flex;
-    justify-content: space-between;
-    max-width: 100%;
-    margin-top: 36px;
+    margin: 0;
+    margin-left: 20px;
+}
+
+.divGrafico {
+    display: flex;
+    flex: auto;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    margin-bottom: 24px;
+    margin-left: 20px;
+    padding: 16px;
 }
 
 .graficoRS {
-    max-width: 100%;
+    width: 100%;
     height: auto;
 }
 
-.dashboardInferior .divGrafico {
-    margin-right: 24px;
-    max-height: 400px;
-
+.grafico {
+    width: 100%;
+    height: 100%;
 }
 
-.dashboardInferior .divTabela {
-    max-width: 280px;
-}
-
-@media only screen and (max-width: 1050px) {
-    .dashboardInferior {
-        flex-wrap: wrap;
-        justify-content: center;
+@media only screen and (max-width: 1366px) {
+    .dashboard {
+        display: block;
     }
-    .dashboardInferior .divGrafico {
-        margin-right: 0;
+    .dashboardCards {
+        justify-content: space-between;
+    }
+    .dashboardCardsAux {
+        display: flex;
+        width: 100%;
+    }
+    .divPizza {
+        width: 100%;
+        margin-left: 20px;
+    }
+    #pizza {
+        width: 100%;
+    }
+    .divGrafico {
+        margin-left: 0 !important;
+    }
+}
+
+@media only screen and (max-width: 1023px) {
+    .dashboardAuxiliar {
+        display: block;
     }
     .divTabela {
-        margin-top: 36px;
+        min-width: 100% !important;
+    }
+    .dashboardInferior {
+        display: flex;
+        margin-left: 0px;
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .dashboardCardsAux {
+        display: block;
+    }
+    .divPizza {
+        width: 100%;
+        margin-left: 0px;
     }
 }
