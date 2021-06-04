@@ -5,45 +5,54 @@
 {% endblock %}
 
 {% block conteudo %}
-<div class="dashboardSuperior">
-    <div class="cartao">
-        <h1>{{anual}}</h1>
-        <p>Doações<br>{{hoje[2]}}</p>
-    </div>
-    <div class="cartao">
-        <h1>{{mes}}</h1>
-        <p>Doações<br>{{hoje[1]}}</p>
-    </div>
-    <div class="cartao">
-        <h1>{{diaHoje}}</h1>
-        <p>Doações<br>hoje</p>
-    </div>
-</div>
-<div class="dashboardInferior">
-    <div class="cartao divGrafico">
-        <div class="graficoRS">
-            <canvas class="grafico"></canvas>
+<div class="dashboard">
+    <div class="dashboardAuxiliar">
+        <div class="dashboardCardsAux">
+            <div class="dashboardCards">
+                <div class="cartao">
+                    <h1>{{anual}}</h1>
+                    <p>Doações<br>{{hoje[2]}}</p>
+                </div>
+                <div class="cartao">
+                    <h1>{{mes}}</h1>
+                    <p>Doações<br>{{hoje[1]}}</p>
+                </div>
+                <div class="cartao">
+                    <h1>{{diaHoje}}</h1>
+                    <p>Doações<br>hoje</p>
+                </div>
+            </div>
+            <div class="divPizza">
+                <canvas id="pizza"></canvas>
+            </div>
         </div>
-    </div>
-    <div class="cartao divTabela">
-        <table class="table table-striped tabela">
-            <thead>
-                <tr>
-                    <th scope="col">Mês</th>
-                    <th scope="col">Doações</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for doacoes in relatorioDoacoes %}
-                    {% for key, value in doacoes.items() %}
+        <div class="dashboardInferior">
+            <div class="divTabela">
+                <table class="table table-striped tabela">
+                    <thead>
+                        <tr>
+                            <th scope="col">Mês</th>
+                            <th scope="col">Doações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for doacoes in relatorioDoacoes %}
+                        {% for key, value in doacoes.items() %}
                         <tr>
                             <td>{{key}}</td>
                             <td class="valor">{{value}}</td>
                         </tr>
-                    {% endfor %}
-                {% endfor %}
-            </tbody>
-        </table>
+                        {% endfor %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="divGrafico">
+        <div class="graficoRS">
+            <canvas class="grafico"></canvas>
+        </div>
     </div>
 </div>
 
