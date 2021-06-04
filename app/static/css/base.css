@@ -56,10 +56,60 @@ html, body {
     background-color: var(--cinzaFundo);
 }
 
-.barraLateral {
+#barraLateralPerfilSombra{
+    display: none;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.30);
+}
+
+#barraLateralSombra{
+    display: none;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.30);
+}
+
+.barraLateralPerfilInfo {
+    text-align: center;
+    font-size: 20px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--vermelho);
+}
+
+.barraLateralPerfilAcoes {
+    display: flex;
+    font-size: 20px;
+    font-weight: 600;
+    align-items: center;
+    justify-content: end;
+    margin-bottom: 20px;
+}
+
+.barraLateralPerfilAcoes span {
+    margin-left: 8px;
+    font-size: 30px;
+}
+
+.barraLateralPerfilDivAcoes {
+    display: flex;
+    flex-direction: column;
+    margin-top: 36px;
+    align-items: flex-end;
+}
+
+#barraLateralPerfil{
+    display: none;
+    right: 0;
+    position: fixed;
     min-width: 250px;
     max-width: 250px;
-    padding-top: 0px !important;
+    height: 100vh;
+    padding: 0px 20px;
     background-color: white;
     overflow: auto;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25) !important;
@@ -72,24 +122,79 @@ html, body {
     user-select: none;
 }
 
+.barraLateralPerfilIcon span{
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    font-size: 64px;
+    color: var(--vermelho);
+}
+
+#barraLateral {
+    min-width: 250px;
+    max-width: 250px;
+    height: 100vh;
+    padding: 0px 16px;
+    background-color: white;
+    overflow: auto;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25) !important;
+    z-index: 101;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.barraLateralFlex {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 #logoBarra {
     width: 192px;
     height: 52px;
     margin-top: 20px;
 }
 
+
 .barraSuperior {
+    display: flex;
+    padding-left: 16px;
     width: 100%;
     min-height: 90px;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--vermelho);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) !important;
+    z-index: 99;
+}
+
+.barraSuperiorPerfil {
+    display: none !important;
+}
+
+.barraSuperior span {
+    color: white;
+    font-size: 40px;
+    vertical-align: middle;
+}
+
+.barraSuperior div{
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    background-color: var(--vermelho);
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) !important;
-    z-index: 100;
 }
 
-.barraSuperior p {
+.nomeCargo{
+    display: block !important;
+}
+
+.barraSuperior div p {
     margin: 0;
     margin-right: 16px;
     font-style: normal;
@@ -126,13 +231,12 @@ html, body {
 }
 
 .navegacao {
-    width: 100%;
-    height: 100%;
+    flex: auto;
     display: flex;
-    flex-direction: column;
+    flex-flow: column;
     justify-content: space-between;
     padding: 0px;
-    margin-top: 36px;
+    padding-top: 36px;
 }
 
 #icone-doacao {
@@ -195,6 +299,7 @@ html, body {
     font-weight: 600;
     font-size: 18px;
     justify-content: center;
+    margin-bottom: 20px;
 }
 
 .hemocentro p {
@@ -286,7 +391,11 @@ main {
 
 /* width */
 
-.barraLateral::-webkit-scrollbar {
+#barraLateral::-webkit-scrollbar {
+    width: 0px;
+}
+
+#barraLateralPerfil::-webkit-scrollbar {
     width: 0px;
 }
 
@@ -294,10 +403,16 @@ main {
     margin-right: 12px;
     color: #FFFFFF;
     font-size: 32px;
+    vertical-align: middle;
 }
 
 #cargo {
     text-align: end;
+}
+
+#menu {
+    cursor: pointer;
+    display: none;
 }
 
 @media screen and (max-width: 1024px) {
@@ -305,11 +420,54 @@ main {
         max-width: 400px;
         height: auto;
     }
+    #barraLateral {
+        display: none;
+    }
+    #menu {
+        display: block;
+    }
+    .barraSuperiorConteudo {
+        display: none !important;
+    }
+    .barraSuperiorPerfil {
+        display: block !important;
+    }
 }
 
 @media screen and (max-width: 800px) {
     .imagemPaginaInicial img {
         max-width: 300px;
         height: auto;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .imagemPaginaInicial img {
+        max-width: 220px;
+        height: auto;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    #barraLateral {
+        display: block !important;
+        position: inherit !important;
+        min-width: 250px;
+        max-width: 250px;
+        height: 100vh;
+        padding: 0px 16px;
+        background-color: white;
+        overflow: auto;
+        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25) !important;
+        z-index: 101;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    #menu, #barraLateralPerfil, #barraLateralSombra, #barraLateralPerfilSombra {
+        display: none !important;
     }
 }
