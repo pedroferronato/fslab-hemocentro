@@ -20,7 +20,7 @@
         </div>
         <div class="formulario">
             <form action="/hemocentro/consultar/resultado" method="GET">
-                <div class="linhaFormulario linhaSolitaria">
+                <div class="linhaFormulario linhaSolitaria formularioConsultaResponsivo">
                     <div class="campo" id="divNome">
                         <label for="nome">Nome:</label>
                         <input value="{{ nome_pesquisado }}" type="text" id="nome" name="nome" autocomplete="off">
@@ -47,6 +47,7 @@
                             {% endfor %}
                         </datalist>
                     </div>
+                    <div class="mb-24"></div>
                     <button type="submit" class="botao btn-principal" onclick="validarCampos(event)">Consultar</button>
                     <button type="button" class="botao btn-secundario linhaMRReset" onclick="limpar()">Limpar</button>
 
@@ -64,7 +65,7 @@
     {% if lista_hemocentro %}
 
     {% for hemocentro in lista_hemocentro %}
-    <div class="cartao">
+    <div class="cartaoHemocentro">
         <div class="formulario linhaSolitaria">
             <div class="flexivel SpcBtw">
                 <div class="flexivel">

@@ -35,6 +35,16 @@
     padding: 16px;
 }
 
+.cartaoHemocentro {
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    margin-top: 16px;
+    margin-bottom: 24px;
+    padding: 16px;
+}
+
 h1 {
     font-style: normal;
     font-weight: bold;
@@ -548,6 +558,29 @@ input[type=number], input[type=number]::-webkit-inner-spin-button, input[type=nu
     .divGrafico {
         margin-left: 0 !important;
     }
+    .linhaFormulario {
+        margin-bottom: 0px;
+    }
+    .formularioResponsivo {
+        display:inline-block;
+    }
+    .formularioResponsivo .campo {
+        margin-right: 0px;
+        margin-bottom: 12px;
+    }
+    .formularioConsultaResponsivo {
+        display:inline-block;
+    }
+    .formularioConsultaResponsivo .campo{
+        margin-right: 0px;
+        margin-bottom: 12px;
+    }
+    .mb-24 {
+        margin-bottom: 24px !important;
+    }
+    #divItens{
+        max-width: 100% !important;
+    }
 }
 
 @media only screen and (max-width: 1023px) {
@@ -562,6 +595,37 @@ input[type=number], input[type=number]::-webkit-inner-spin-button, input[type=nu
         margin-left: 0px;
         justify-content: center;
         width: 100%;
+    }
+    .cartao {
+        width: 100%;
+        background-color: var(--cinzaFundo);
+        box-shadow: none;
+        border-radius: none;
+        margin-top: 0;
+        margin-bottom: 0;
+        padding: 0;
+    }
+    .contentorConteudo {
+        padding-top: 8px;
+    }
+    .titulo {
+        margin-bottom: 16px;
+    }
+    .bread p {
+        font-size: 12px;
+        line-height: 16px;
+    }
+    .bread {
+        margin-bottom: 24px;
+    }
+    .linhaBotoes{
+        display:block;
+    }
+    .botao {
+        width: 100% !important;
+        height: 50px;
+        margin-right: 0px !important;
+        margin-bottom: 12px !important;
     }
 }
 
