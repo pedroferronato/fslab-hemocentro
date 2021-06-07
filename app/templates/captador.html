@@ -57,7 +57,7 @@
                         O <b>banco de dados</b> encontrou uma falha nas informações inseridas, por favor, tente novamente com outros valores.
                     </div>
                     {% endif %}
-                    <div class="linhaFormulario">
+                    <div class="linhaFormulario formularioResponsivo">
                         <div class="campo" id="divNome">
                             <div class="flexivel">
                                 <label id="lbNome" for="nome">Nome Completo:</label>
@@ -135,7 +135,7 @@
                     </div>
 
                     <div
-                        class="linhaFormulario ultimaLinhaInput {% if captador and captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor %} linhaSolitaria {% endif %}">
+                        class="linhaFormulario ultimaLinhaInput formularioResponsivo{% if captador and captador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor %} linhaSolitaria {% endif %}">
                         <div class="campo {% if captador %} campoAlterar" id="tamMaxEmail" {% endif %}">
                             <div class="flexivel">
                                 <label {% if mensagem=='ErroBD' %} class="txt-alerta" {% endif %} for="mail" id="lbMail">E-mail:</label>
@@ -224,6 +224,7 @@
                     </div>
                     {% endif %}
                     {% else %}
+                    <div class="mb-24"></div>
                     <div class="linhaBotoes">
                         <button onclick="validarCampos(event)" name="inserir" value="Inserir e continuar"
                             class="botao btn-principal">Inserir e continuar</button>

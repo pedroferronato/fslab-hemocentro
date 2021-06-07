@@ -30,7 +30,7 @@
             </div>
             {% endif %}
             <form action="/captador/consultar" method="GET">
-                <div class="linhaFormulario linhaSolitaria">
+                <div class="linhaFormulario linhaSolitaria formularioResponsivo">
                     <div class="campo" id="divNomeHemocentro">
                         <label for="hemocentro">Hemocentro:</label>
                         <select name="hemocentro" id="hemocentro">
@@ -55,6 +55,7 @@
                             itens_pesquisado %} value={{itens_pesquisado}} {% endif %}>
                     </div>
                     <div>
+                    <div class="mb-24"></div>
                         <button type="submit" class="botao btn-principal linhaMRReset">Buscar</button></a>
                     </div>
                 </div>
