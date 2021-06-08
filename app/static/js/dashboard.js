@@ -8,6 +8,15 @@ function getData() {
     return valoresLimpos
 }
 
+function getDataTipo() {
+    let valoresTipo = document.getElementsByClassName("valorTipo")
+    let valoresLimposTipo = []
+    Array.from(valoresTipo).forEach(element => {
+        valoresLimposTipo.push(parseInt(element.innerHTML))
+    });
+    return valoresLimposTipo
+}
+
 var ctx = document.getElementsByClassName("grafico");
 
 var chartGraph = new Chart(ctx, {
@@ -47,7 +56,7 @@ var chartPizza = new Chart(pizza, {
         datasets: [
             {
                 label: "DOAÇÕES 2021",
-                data: getData(),
+                data: getDataTipo(),
                 backgroundColor: [
                  '#71F77F',
                  '#13751D',
@@ -65,7 +74,7 @@ var chartPizza = new Chart(pizza, {
         plugins: {
             title: {
                 display: true,
-                text: "Doações por tipo",
+                text: "Doações anual por tipo",
                 font: {
                     size: 24,
                 }

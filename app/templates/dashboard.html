@@ -54,8 +54,14 @@
             <canvas class="grafico"></canvas>
         </div>
     </div>
+    <div class="esconder">
+        {% for contagem in lista_doacoes_por_tipo %}
+        <ul>
+            <li class="valorTipo">{{contagem}}</li>
+        </ul>
+        {% endfor %}
+    </div>
 </div>
-
 
 {% endblock %}
 
