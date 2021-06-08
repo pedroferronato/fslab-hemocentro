@@ -22,7 +22,7 @@
 
         <div class="formulario">
             <form action="/detalhes-doador" method="GET">
-                <div class="linhaFormulario linhaSolitaria">
+                <div class="linhaFormulario linhaSolitaria formularioResponsivo">
                     <div class="campo" id="divRegistro">
                         <label id="lbRegistro" for="registro">Número de registro:</label>
                         <input type="number" id="registro" name="registro" autocomplete="off">
@@ -35,6 +35,7 @@
                         <label id="lbCpf" for="cpf">CPF:</label>
                         <input type="text" id="cpf" name="cpf" autocomplete="off" onfocus="removerAlerta()">
                     </div>
+                    <div class="mb-24"></div>
                     <button onclick="validarCampos(event)" class="botao btn-principal linhaMRReset">Buscar</button>
                 </div>
             </form>

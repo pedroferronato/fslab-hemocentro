@@ -69,7 +69,7 @@
                 O <b>doador</b> ainda não completou o tempo de cadência de doação desejável (Feminino = 4 meses, Masculino = 3 meses).
             </div>
             {% endif %}
-            <div class="linhaFormulario">
+            <div class="linhaFormulario formularioResponsivo">
                 <div class="campo" id="divRegistro">
                     <div class="flexivel">
                         <label for="numRegistro" id="lbRegistro">Nº registro:</label>
@@ -80,9 +80,11 @@
                         {% if doador %} value="{{doador.numero_registro}}" {% endif %}
                         {% if numero_registro %} value="{{numero_registro}}" {% endif %}
                         onfocus="removerClasseAlerta('numRegistro')">
+                        <div>
+                            <input name="botao" class="material-icons iconesS btnPesquisa" value="search" type="submit">
+                        </div>
                     </div>
                 </div>
-                <input name="botao" class="material-icons iconesS btnPesquisa" value="search" type="submit">
                 <div class="campo" id="divNome">
                     <div class="flexivel">
                         <label for="nome" id="lbNome">Nome do doador:</label>
@@ -114,7 +116,7 @@
                     </select>
                 </div>
             </div>
-            <div class="linhaFormulario ultimaLinhaInput">
+            <div class="linhaFormulario ultimaLinhaInput formularioResponsivo">
                 <div class="campo" id="divData">
                     <div class="flexivel">
                         <label for="data" id="lbData">Data:</label>
@@ -145,6 +147,7 @@
                 <p>&ensp;Campos obrigatórios</p>
             </div>
             <div class="linhaBotoes">
+                <div class="mb-24"></div>
                 <button onclick="validarCampos(event)" name="botao" value="Inserir e continuar" class="botao btn-principal">Inserir e continuar</button>
                 <button onclick="validarCampos(event)" name="botao" value="Inserir" class="botao btn-principal">Inserir</button>
                 <button type="button" onclick="limpar()" class="botao btn-secundario linhaMRReset">Limpar</button>

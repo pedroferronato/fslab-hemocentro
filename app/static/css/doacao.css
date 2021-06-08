@@ -74,3 +74,21 @@
 .btnPesquisa:focus, .btnPesquisa:focus {
     outline: none;
 }
+
+@media only screen and (max-width: 1023px) {
+
+    #divRegistro, #divNome, #divTipo, #divData, #divFidelidade,
+    #divInapto, #divDataFinal, #divConvocacao, #divObservacoes, #divNome,
+    #divCPF, #btnPesquisa {
+        max-width: 100%;
+    }
+    #divRegistro {
+        margin-right: 0;
+    }
+    .btnPesquisa {
+        border: none !important;
+        box-shadow: none !important;
+        font-size: 22px !important;
+        padding: 0 20px 0 40px !important;
+    }
+}

@@ -17,21 +17,26 @@
 
     <div class="cartao">
         <div class="titulo">
-            <div class="flexivel SpcBtw">
-                <div class="flexivel">
+            <div class="flexivel SpcBtw SpcBtwAux">
+                <div class="flexivel formularioResponsivo">
                     <h1>{{ doador.nome }}</h1>
-                    <a href="/doador/alterar/{{ doador.numero_registro }}"><span class="material-icons iconesG">edit</span></a>
-                    <a href="/alterar-inaptidao/{{ doador.numero_registro }}"><span class="material-icons iconesG">healing</span></a>
-                    {% if not doador.inaptidao and not doador.contatado %}    
-                    <a href="/alterar-contatado/{{ doador.numero_registro }}"><span class="material-icons iconesG">phone_in_talk</span></a>
-                    {% endif %}
+                    <div class="flexivel linhaAction">
+                        <a href="/doador/alterar/{{ doador.numero_registro }}"><span
+                                class="material-icons iconesG">edit</span></a>
+                        <a href="/alterar-inaptidao/{{ doador.numero_registro }}"><span
+                                class="material-icons iconesG">healing</span></a>
+                        {% if not doador.inaptidao and not doador.contatado %}
+                        <a href="/alterar-contatado/{{ doador.numero_registro }}"><span
+                                class="material-icons iconesG">phone_in_talk</span></a>
+                        {% endif %}
+                    </div>
                 </div>
                 <p class="tipoSanguineo">{{ doador.tipo_sanguineo }}</p>
             </div>
         </div>
 
         <div class="formulario">
-            <div class="linhaFormulario AlgSrt">
+            <div class="linhaFormulario AlgSrt formularioResponsivo">
                 <div class="dados">
                     <label>Núm. de registro:</label>
                     <p>{{ doador.numero_registro }}</p>
@@ -86,8 +91,8 @@
                 </div>
             </div>
 
-            <div class="linhaFormulario linhaSolitaria SpcBtw AlgSrt" id="linhaMedia">
-                <div class="flexivel">
+            <div class="linhaFormulario linhaSolitaria SpcBtw AlgSrt " id="linhaMedia">
+                <div class="flexivel formularioResponsivo">
                     <div class="dados">
                         <label>Cadastro SUS:</label>
                         <p>{{ doador.cadastro_SUS }}</p>
@@ -123,7 +128,7 @@
                         <label>Cidade:</label>
                         <p>{{ doador.get_municipio() }}</p>
                     </div>
-                    {% if doador.inaptidao %}    
+                    {% if doador.inaptidao %}
                     <div class="dados txt-alerta">
                         <label>Inapto até:</label>
                         <p>{{ doador.final_inaptidao.strftime('%d/%m/%Y') }}</p>
@@ -134,8 +139,7 @@
                 <span onclick="toggleInfo()" id="infoCloseIco"
                     class="material-icons iconesGG escondido">keyboard_arrow_up</span>
             </div>
-
-            <div class="linhaFormulario AlgSrt escondido" id="linhaBaixa">
+            <div class="linhaFormulario AlgSrt escondido formularioResponsivo mb-24" id="linhaBaixa">
                 <div class="dados">
                     <label>Estado civil:</label>
                     <p>

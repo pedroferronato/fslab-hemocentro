@@ -8,3 +8,10 @@
     flex: 3;
 }
 
+@media only screen and (max-width: 1366px) {
+
+    #divInapto,#divData {
+        max-width: 100%;
+    }
+
+}

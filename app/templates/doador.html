@@ -51,7 +51,7 @@
                         Doador registrado com sucesso
                     </div>
                     {% endif %}
-                    <div class="linhaFormulario">
+                    <div class="linhaFormulario formularioResponsivo">
                         <div class="campo" id="divRegistro">
                             <div class="flexivel">
                                 <label id="lbNumRegistro" for="numRegistro">Nº registro:</label>
@@ -134,7 +134,7 @@
                         </div>
                     </div>
 
-                    <div class="linhaFormulario">
+                    <div class="linhaFormulario formularioResponsivo">
                         <div class="campo">
                             <div class="flexivel">
                                 <label id="lbNascimento" for="nascimento">Data de Nascimento:</label>
@@ -183,7 +183,7 @@
                         </div>
                     </div>
 
-                    <div class="linhaFormulario">
+                    <div class="linhaFormulario formularioResponsivo">
                         <div class="campo">
                             <label id="lbMail" for="mail">E-mail:</label>
                             <input name="mail" type="email" id="mail" autocomplete="off" {% if reload %}
@@ -242,7 +242,7 @@
                         </div>
                     </div>
 
-                    <div class="linhaFormulario">
+                    <div class="linhaFormulario formularioResponsivo">
                         <div class="campo">
                             <label id="lbProfissao" for="profissao">Profissão:</label>
                             <input name="profissao" type="text" id="profissao" autocomplete="off" {% if reload %}
@@ -275,7 +275,7 @@
                         </div>
                     </div>
 
-                    <div class="linhaFormulario ultimaLinhaInput {% if doador and doador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor %} linhaSolitaria {% endif %}">
+                    <div class="linhaFormulario ultimaLinhaInput formularioResponsivo mb-24{% if doador and doador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor %} linhaSolitaria {% endif %}">
                         <div class="campo" id="divMae">
                             <label id="lbMae" for="mae">Nome da mãe:</label>
                             <input name="mae" type="text" id="mae" autocomplete="off" {% if reload %}
@@ -298,7 +298,7 @@
                     </div>
                     {% endif%}
                     {% endif %}
-
+                    
                     {% if alterar %}
                     {% if doador %}    
                     {% if doador.hemocentro_id == current_user.hemocentro_id or current_user.servidor %}
