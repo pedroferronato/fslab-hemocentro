@@ -228,7 +228,7 @@
             </thead>
             <tbody>
                 {% for doacao in doador.get_ultimas_dez_doacoes() %}
-                <tr>
+                <tr class="rowActive" onclick="location.href = '/detalhes-doacao/{{ doacao.id }}';">
                     <td>{{ doacao.data.strftime('%d/%m/%Y') }}</td>
                     <td>{{ doacao.convocacao }}</td>
                     <td>{{ doacao.get_local_coleta() }}</td>

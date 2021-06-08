@@ -21,4 +21,3 @@ class Doacao(db.Model):
 
     def __repr__(self):
         return f'Doação: {self.data}'
-

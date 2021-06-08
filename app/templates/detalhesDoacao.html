@@ -10,41 +10,41 @@
     <div class="bread noselect">
         <p>Inicial ></p>
         <p>Doações ></p>
-        <p>35849</p>
+        <p>{{ doacao.id }}</p>
     </div>
 
     <div class="cartao noselect">
         <div class="titulo">
-            <h1>Detalhes da doação 35849</h1>
+            <h1>Detalhes da doação {{ doacao.id }}</h1>
         </div>
         <div class="formulario">
             <div class="linhaFormulario AlgSrt linhaSolitaria">
                 <div class="dados">
                     <label>Núm. de regitro:</label>
-                    <p>65689</p>
+                    <p>{{ doador.numero_registro }}</p>
                 </div>
                 <div class="dados">
                     <div class="flexivel SpcBtw">
                         <label>Doador:</label>
-                        <span class="material-icons iconesS">person</span>
+                        <span class="material-icons iconesS" onclick="location.href = '/detalhes-doador/{{ doador.numero_registro }}';">person</span>
                     </div>
-                    <p>Pedro Luis Ferronato Barreto</p>
+                    <p>{{ doador.nome }}</p>
                 </div>
                 <div class="dados">
                     <label>Tipo:</label>
-                    <p>A+</p>
+                    <p>{{ doador.tipo_sanguineo }}</p>
                 </div>
                 <div class="dados">
                     <label>Fidelidade:</label>
-                    <p>Fidelizado</p>
+                    <p>{{ doador.fidelidade }}</p>
                 </div>
                 <div class="dados">
                     <label>Convocação:</label>
-                    <p>Voluntário</p>
+                    <p>{{ doacao.convocacao }}</p>
                 </div>
                 <div class="dados">
                     <label>Unidade de coleta:</label>
-                    <p>Vilhena</p>
+                    <p>{{ hemocentro.nome }}</p>
                 </div>
             </div>
 
@@ -59,16 +59,12 @@
         <div class="formulario">
             <div class="linhaFormulario AlgSrt linhaSolitaria">
                 <div class="dados">
-                    <label>Inapto:</label>
-                    <p>Inapto</p>
-                </div>
-                <div class="dados">
                     <label>Data:</label>
-                    <p>13/04/2021</p>
+                    <p>{{ doacao.data.strftime('%d/%m/%Y') }}</p>
                 </div>
                 <div class="dados">
                     <label>Observações:</label>
-                    <p>Nenhuma observação</p>
+                    <p>{{ doacao.observacao }}</p>
                 </div>
             </div>
         </div>

@@ -6,6 +6,7 @@ from datetime import date, datetime
 from collections import Counter
 from app.models.doacao import Doacao
 from app.models.doador import Doador
+from app.models.hemocentro import Hemocentro
 
 
 # hemocentro_id = current_user.get_hemocentro().get_id()
@@ -132,10 +133,17 @@ def alterar_doacao():
     return render_template("doacao.html", alterar=True)
 
 
-@flaskApp.route('/detalhes-doacao/id')
+@flaskApp.route('/detalhes-doacao/<num>')
 @login_required
-def detalhes_doacao():
-    return render_template("detalhesDoacao.html")
+def detalhes_doacao(num):
+    doacao = Doacao.query.filter_by(id = num).first()
+    
+    if not doacao:
+        return render_template("consultaDoacoes.html", nenhum_encontrado=True)
+    else:
+        doador = Doador.query.filter_by(numero_registro = doacao.doador_id).first()
+        hemocentro = Hemocentro.query.filter_by(id = doacao.hemocentro_id).first()
+        return render_template("detalhesDoacao.html", doador = doador, doacao=doacao, hemocentro = hemocentro)
 
 
 @flaskApp.route('/consultar-doacao') 
@@ -165,7 +173,7 @@ def consultar_doacao_resultado():
             itens_pesquisados = 10
 
         try:
-            paginacao = db.session.query(Doacao.data, Doador.nome, Doacao.convocacao).filter(Doacao.doador_id == Doador.numero_registro, Doacao.data.between(data, dataFinal)).order_by(Doacao.data.desc()).paginate(page=page, per_page=itens_pesquisados)
+            paginacao = db.session.query(Doacao.id, Doacao.data, Doador.nome, Doacao.convocacao).filter(Doacao.doador_id == Doador.numero_registro, Doacao.data.between(data, dataFinal)).order_by(Doacao.data.desc()).paginate(page=page, per_page=itens_pesquisados)
             lista_doacoes = paginacao.items
             if Counter(lista_doacoes):
                 return render_template("consultarDoacoes.html", resultado=True, paginas=paginacao, doacoes=lista_doacoes, itens=itens_pesquisados, data = dataBKP, dataFinal = dataFinalBKP)
@@ -173,8 +181,6 @@ def consultar_doacao_resultado():
                 return render_template("consultarDoacoes.html", lista_vazia=True, itens=itens_pesquisados, data = dataBKP, dataFinal = dataFinalBKP)
         except Exception as e:
             return render_template("consultarDoacoes.html") 
-
-        return render_template("consultarDoacoes.html") 
 
 
 @flaskApp.route('/consultar-doacao/doador') 
