@@ -1,3 +1,4 @@
+from app.models.doador import Doador
 from app import flaskApp, login_manager, db
 from app.models.captador import Captador
 from app.models.doacao import Doacao
@@ -74,13 +75,23 @@ def dashboard():
     for x in range(1,13):
         relatorioDoacoes.append({
             meses[x-1]:
-            Doacao.query.filter(Doacao.data.between(str(hoje.year)+'-'+str(x)+'-01',str(hoje.year)+'-'+str(x)+'-'+str(diasDoMes[x-1]))).count()
+            Doacao.query.filter(Doacao.data.between(str(hoje.year)+'-'+str(x)+'-01',str(hoje.year)+'-'+str(x)+'-'+str(diasDoMes[x-1])), Doacao.hemocentro_id.like(current_user.get_hemocentro().id)).count()
         })
-    diaHoje = Doacao.query.filter(Doacao.data.between(str(hoje.year)+'-'+(str(hoje.month))+'-'+(str(hoje.day)),(str(hoje.year))+'-'+(str(hoje.month))+'-'+(str(hoje.day)))).count()
-    mes = Doacao.query.filter(Doacao.data.between(str(hoje.year)+'-'+(str(hoje.month))+'-01',(str(hoje.year))+'-'+(str(hoje.month))+'-'+(str(hoje.day)))).count()
-    anual = Doacao.query.filter(Doacao.data.between(str(hoje.year)+'-01-01',str(hoje.year)+'-12-31')).count()
 
-    return render_template("dashboard.html", relatorioDoacoes=relatorioDoacoes, diaHoje=diaHoje, mes=mes, anual=anual, hoje = [hoje.day, meses[hoje.month - 1], hoje.year])
+    aPositivo = db.session.query(Doacao.doador_id).filter(Doacao.doador_id == Doador.numero_registro, Doador.tipo_sanguineo == 'A+', Doacao.hemocentro_id == current_user.get_hemocentro().id, Doacao.data.between(str(hoje.year)+'-01-01',str(hoje.year)+'-12-31'), Doador.hemocentro_id == current_user.get_hemocentro().id).count()
+    aNegativo = db.session.query(Doacao.doador_id).filter(Doacao.doador_id == Doador.numero_registro, Doador.tipo_sanguineo == 'A-', Doacao.hemocentro_id == current_user.get_hemocentro().id, Doacao.data.between(str(hoje.year)+'-01-01',str(hoje.year)+'-12-31'), Doador.hemocentro_id == current_user.get_hemocentro().id).count()
+    bPositivo = db.session.query(Doacao.doador_id).filter(Doacao.doador_id == Doador.numero_registro, Doador.tipo_sanguineo == 'B+', Doacao.hemocentro_id == current_user.get_hemocentro().id, Doacao.data.between(str(hoje.year)+'-01-01',str(hoje.year)+'-12-31'), Doador.hemocentro_id == current_user.get_hemocentro().id).count()
+    bNegativo = db.session.query(Doacao.doador_id).filter(Doacao.doador_id == Doador.numero_registro, Doador.tipo_sanguineo == 'B-', Doacao.hemocentro_id == current_user.get_hemocentro().id, Doacao.data.between(str(hoje.year)+'-01-01',str(hoje.year)+'-12-31'), Doador.hemocentro_id == current_user.get_hemocentro().id).count()
+    abPositivo = db.session.query(Doacao.doador_id).filter(Doacao.doador_id == Doador.numero_registro, Doador.tipo_sanguineo == 'AB+', Doacao.hemocentro_id == current_user.get_hemocentro().id, Doacao.data.between(str(hoje.year)+'-01-01',str(hoje.year)+'-12-31'), Doador.hemocentro_id == current_user.get_hemocentro().id).count()
+    abNegativo = db.session.query(Doacao.doador_id).filter(Doacao.doador_id == Doador.numero_registro, Doador.tipo_sanguineo == 'AB-', Doacao.hemocentro_id == current_user.get_hemocentro().id, Doacao.data.between(str(hoje.year)+'-01-01',str(hoje.year)+'-12-31'), Doador.hemocentro_id == current_user.get_hemocentro().id).count()
+    oPositivo = db.session.query(Doacao.doador_id).filter(Doacao.doador_id == Doador.numero_registro, Doador.tipo_sanguineo == 'O+', Doacao.hemocentro_id == current_user.get_hemocentro().id, Doacao.data.between(str(hoje.year)+'-01-01',str(hoje.year)+'-12-31'), Doador.hemocentro_id == current_user.get_hemocentro().id).count()
+    oNegativo = db.session.query(Doacao.doador_id).filter(Doacao.doador_id == Doador.numero_registro, Doador.tipo_sanguineo == 'O-', Doacao.hemocentro_id == current_user.get_hemocentro().id, Doacao.data.between(str(hoje.year)+'-01-01',str(hoje.year)+'-12-31'), Doador.hemocentro_id == current_user.get_hemocentro().id).count()
+    lista_doacoes_por_tipo = [aPositivo, aNegativo, bPositivo, bNegativo, abPositivo, abNegativo, oPositivo, oNegativo]
+    diaHoje = Doacao.query.filter(Doacao.data.between(str(hoje.year)+'-'+(str(hoje.month))+'-'+(str(hoje.day)),(str(hoje.year))+'-'+(str(hoje.month))+'-'+(str(hoje.day))), Doacao.hemocentro_id.like(current_user.get_hemocentro().id)).count()
+    mes = Doacao.query.filter(Doacao.data.between(str(hoje.year)+'-'+(str(hoje.month))+'-01',(str(hoje.year))+'-'+(str(hoje.month))+'-'+(str(hoje.day))), Doacao.hemocentro_id.like(current_user.get_hemocentro().id)).count()
+    anual = Doacao.query.filter(Doacao.data.between(str(hoje.year)+'-01-01',str(hoje.year)+'-12-31'), Doacao.hemocentro_id.like(current_user.get_hemocentro().id)).count()
+
+    return render_template("dashboard.html", relatorioDoacoes=relatorioDoacoes, diaHoje=diaHoje, mes=mes, anual=anual, hoje = [hoje.day, meses[hoje.month - 1], hoje.year], lista_doacoes_por_tipo=lista_doacoes_por_tipo)
 
 
 # @flaskApp.route('/dashboard/carregamento')

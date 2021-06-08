@@ -1,4 +1,5 @@
 from dateutil.relativedelta import relativedelta
+from sqlalchemy.sql.elements import Null
 from app import flaskApp, db
 from flask import render_template, request, redirect, url_for
 from flask_login import login_required, current_user
@@ -31,9 +32,11 @@ def nova_doacao():
             data = request.form['data']
             numRegistro = request.form['numRegistro']
             if not numRegistro == '':
-                doador = Doador.query.filter_by(numero_registro=numRegistro).first()
-                if doador and ( (doador.sexo == "mas" and datetime(doador.ultima_doacao.year, doador.ultima_doacao.month, doador.ultima_doacao.day) > (datetime.today() - relativedelta(months=3))) or (doador.sexo == "fem" and datetime(doador.ultima_doacao.year, doador.ultima_doacao.month, doador.ultima_doacao.day) > (datetime.today() - relativedelta(months=4))) ):
-                     return render_template("doacao.html", date=data, doador=doador, convocacao=convocacao,mensagem="ErroBD_6")
+                doador = Doador.query.filter(Doador.numero_registro.like(numRegistro), Doador.hemocentro_id.like(current_user.get_hemocentro().id)).first()
+                primeiraDoacao = Doacao.query.filter(Doacao.doador_id.like(numRegistro), Doacao.hemocentro_id.like(current_user.get_hemocentro().id)).count()
+                if primeiraDoacao > 0:
+                    if doador and ( (doador.sexo == "mas" and datetime(doador.ultima_doacao.year, doador.ultima_doacao.month, doador.ultima_doacao.day) > (datetime.today() - relativedelta(months=3))) or (doador.sexo == "fem" and datetime(doador.ultima_doacao.year, doador.ultima_doacao.month, doador.ultima_doacao.day) > (datetime.today() - relativedelta(months=4))) ):
+                        return render_template("doacao.html", date=data, doador=doador, convocacao=convocacao,mensagem="ErroBD_6")
                 if doador:
                     return render_template("doacao.html", date=data, doador=doador, convocacao=convocacao)
                 else:
@@ -49,7 +52,7 @@ def nova_doacao():
             nome = request.form['nome']
 
             try:
-                doador = Doador.query.filter_by(numero_registro=numRegistro).first()
+                doador = Doador.query.filter_by(numero_registro=numRegistro, hemocentro_id=current_user.get_hemocentro().id).first()
                 if doador != None and (doador.legado or doador.get_idade() >= 61):
                     return redirect(url_for("nova_doacao", date=hoje, mensagem="ErroBD_5"))
                 if doador == None or nome != doador.nome:
@@ -108,17 +111,17 @@ def pesquisar_doador():
 
     if nome and cpf:
         nome_pesquisa = '%' + nome + '%'
-        paginate = Doador.query.filter(Doador.nome.like(nome_pesquisa),Doador.cpf.like(cpf)).paginate(page=page, per_page=10)
+        paginate = Doador.query.filter(Doador.nome.like(nome_pesquisa),Doador.cpf.like(cpf), Doador.hemocentro_id.like(current_user.get_hemocentro().id)).paginate(page=page, per_page=10)
         resultadoPesquisa = paginate.items
     elif nome:
         nome_pesquisa = '%' + nome + '%'
-        paginate = Doador.query.filter(Doador.nome.like(nome_pesquisa)).paginate(page=page, per_page=10)
+        paginate = Doador.query.filter(Doador.nome.like(nome_pesquisa), Doador.hemocentro_id.like(current_user.get_hemocentro().id)).paginate(page=page, per_page=10)
         resultadoPesquisa = paginate.items
     elif cpf:
-        paginate = Doador.query.filter_by(cpf=cpf).paginate(page=page, per_page=10)
+        paginate = Doador.query.filter_by(cpf=cpf, hemocentro_id = current_user.get_hemocentro().id).paginate(page=page, per_page=10)
         resultadoPesquisa = paginate.items
     else:
-        paginate = Doador.query.paginate(page=page, per_page=10)
+        paginate = Doador.query.filter(Doador.hemocentro_id.like(current_user.get_hemocentro().id)).paginate(page=page, per_page=10)
         resultadoPesquisa = paginate.items
 
     if Counter(resultadoPesquisa):
