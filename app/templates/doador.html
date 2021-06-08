@@ -263,14 +263,12 @@
                         </div>
                     </div>
 
-                    {% if doador %}
-                    {% if doador.hemocentro_id == current_user.hemocentro_id or current_user.servidor %}
+                    {% if not (doador and doador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor) %}
                     <div class="linhaFormulario flexivel">
                         <label class="txt-alerta ast">*</label>
                         <p>&ensp;Campos obrigatórios</p>
                     </div>
                     {% endif%}
-                    {% endif %}
                     
                     {% if alterar %}
                     {% if doador %}    
