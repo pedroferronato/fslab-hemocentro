@@ -23,13 +23,13 @@
             <div class="formulario">
                 <div class="linhaFormulario">
                     <div class="campo" id="divNome">
-                        <label for="nome">Nome:</label>
-                        <input type="text" id="nome" name="nome" autocomplete="off" {% if nome %} value="{{nome}}" {%
+                        <label id="lbNome" for="nome">Nome:</label>
+                        <input onfocus="removerAlerta('nome')" type="text" id="nome" name="nome" autocomplete="off" {% if nome %} value="{{nome}}" {%
                             endif %}>
                     </div>
                     <div class="campo" id="divCPF">
-                        <label for="cpf">CPF:</label>
-                        <input type="text" id="cpf" name="cpf" autocomplete="off" {% if cpf %} value="{{cpf}}" {% endif
+                        <label id="lbCpf" for="cpf">CPF:</label>
+                        <input onfocus="removerAlerta('cpf')" type="text" id="cpf" name="cpf" autocomplete="off" {% if cpf %} value="{{cpf}}" {% endif
                             %}>
                     </div>
                     <input onclick="validarCampo(event)" type="submit" id="btnPesquisa"
@@ -162,4 +162,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
     <script id="reload" src="{{ url_for('static', filename='js/mascaras.js') }}"></script>
     <script src="{{ url_for('static', filename='js/doacao.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/doacaoDoador.js') }}"></script>
     {% endblock %}

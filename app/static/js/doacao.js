@@ -199,10 +199,13 @@ function validarCampoPesquisa(evento){
 function validarCampo(evento) {
     alerta = false
 
+    var lbCpf = document.getElementById("lbCpf")
+
     if (!cpf.value == undefined || !cpf.value == null || !cpf.value == "" || !cpf.value == " ") {
         if (!validarCPF(cpf.value)){
             if (!cpf.classList.contains('borda-alerta')) {
                 cpf.classList.add('borda-alerta')
+                lbCpf.classList.add('txt-alerta')
             }
             alerta = true;   
         }
