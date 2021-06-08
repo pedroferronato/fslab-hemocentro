@@ -23,13 +23,13 @@
 
         <div class="formulario">
             <form action="/alterar-inaptidao/{{ doador.numero_registro }}" method="POST">
-                <div class="linhaFormulario">
+                <div class="linhaFormulario formularioResponsivo">
                     <div class="dados">
                         <label for="txt">Nome completo:</label>
                         <p>{{ doador.nome }}</p>
                     </div>
                 </div>
-                <div class="linhaFormulario">
+                <div class="linhaFormulario formularioResponsivo">
                     <div class="campo" id="divInapto">
                         <label for="inapto">Inapto:</label>
                         <select onchange="bloquearData()" name="estadoAptidao" id="estadoAptidao">
@@ -43,6 +43,7 @@
                         <label id="lbData" for="data">Data final:</label>
                         <input onfocus="removerClasse()" type="text" class="data" id="data" name="data" autocomplete="off" {% if doador.final_inaptidao %}  value="{{ doador.final_inaptidao.strftime('%d/%m/%Y') }}" {% endif %}>
                     </div>
+                    <div class="mb-24"></div>
                     <div>
                         <button onclick="verificarData(event)" class="botao btn-principal">Atualizar estado</button>
                     </div>

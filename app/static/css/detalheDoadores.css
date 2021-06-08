@@ -11,3 +11,57 @@ label {
     display: none;
     opacity: 0;
 }
+
+.infoIcoCopia, .infoCloseIcoCopia {
+    display: none;
+}
+
+
+@media only screen and (max-width: 1366px) {
+    .SpcBtw{
+        justify-content: unset !important;
+        margin-right: 0 !important;
+    }
+    .SpcBtwAux {
+        justify-content: space-between !important;
+    }
+    label {
+        margin-right: 12px !important;
+        margin-bottom: 0px !important;
+    }
+    #infoIco, #infoCloseIco {
+        display: none;
+    }
+    .infoIcoCopia, .infoCloseIcoCopia {
+        text-align: center;
+        display: block !important;
+    }
+    .escondido {
+        display: block;
+        opacity: 100%;
+    }
+    .mb-24 {
+        margin-bottom: 0;
+    }
+    .cartao {
+        padding-bottom: 1px;
+    }
+    .tipoSanguineo {
+        margin-left: 24px;
+    }
+    .linhaAction a span{
+        margin-top: 16px;
+        margin-left: 0 !important;
+        margin-right: 16px;
+    }
+}
+
+@media only screen and (max-width: 1023px) {
+    .mb-24 {
+        margin-bottom: 24px;
+    }
+}
+
+@media only screen and (max-width: 799px) {
+
+}

@@ -21,7 +21,7 @@
                 <h1>Busca por doador</h1>
             </div>
             <div class="formulario">
-                <div class="linhaFormulario">
+                <div class="linhaFormulario formularioResponsivo">
                     <div class="campo" id="divNome">
                         <label for="nome">Nome:</label>
                         <input type="text" id="nome" name="nome" autocomplete="off" {% if nome %} value="{{nome}}" {%
@@ -32,6 +32,7 @@
                         <input type="text" id="cpf" name="cpf" autocomplete="off" {% if cpf %} value="{{cpf}}" {% endif
                             %}>
                     </div>
+                    <div class="mb-24"></div>
                     <input onclick="validarCampo(event)" type="submit" id="btnPesquisa"
                         class="botao btn-principal linhaMRReset" value="Buscar" />
                 </div>

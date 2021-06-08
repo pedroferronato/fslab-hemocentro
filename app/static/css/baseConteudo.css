@@ -563,8 +563,9 @@ input[type=number], input[type=number]::-webkit-inner-spin-button, input[type=nu
     }
     .formularioResponsivo {
         display:inline-block;
+        width: 100%; 
     }
-    .formularioResponsivo .campo {
+    .formularioResponsivo .campo, .formularioResponsivo .dados{
         margin-right: 0px;
         margin-bottom: 12px;
     }

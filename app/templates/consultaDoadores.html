@@ -30,7 +30,7 @@
         {% endif %}
         <div class="formulario">
             <form action="/doador/consulta" method="GET">
-                <div class="linhaFormulario">
+                <div class="linhaFormulario formularioResponsivo">
                     <div class="campo" id="divNome">
                         <label for="nome">Nome:</label>
                         <input name="nome" type="text" id="nome" autocomplete="off" {% if nome_pesquisado %}
@@ -65,7 +65,7 @@
                             value="{{ registro_alterado }}" {% endif %}>
                     </div>
                 </div>
-                <div class="linhaFormulario linhaSolitaria">
+                <div class="linhaFormulario linhaSolitaria formularioResponsivo">
                     <div class="campo divEstado">
                         <div class="flexivel SpcBtw AlgEnd">
                             <label id="lbEstado" for="inputEstado">Estado:</label>
@@ -97,6 +97,7 @@
                         <input type="number" name="itens" id="itens" autocomplete="off" {% if itens %}
                             value="{{ itens }}" {% endif %}>
                     </div>
+                    <div class="mb-24"></div>
                     <div>
                         <button class="botao btn-principal linhaMRReset" type="submit" class="botao btn-principal" onclick="validarCampos(event)">Buscar</button>
                     </div>

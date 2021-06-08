@@ -35,12 +35,12 @@
             {% endblock %}
 
             {% if resultado %}
-            <div class="linhaFormulario ultimaLinhaInput SpcBtw">
+            <div class="linhaFormulario ultimaLinhaInput SpcBtw formularioResponsivo">
                 {% else %}
-                <div class="linhaFormulario linhaSolitaria SpcBtw">
+                <div class="linhaFormulario linhaSolitaria SpcBtw formularioResponsivo">
                     {% endif%}
 
-                    <div class="flexivel noselect">
+                    <div class="flexivel noselect formularioResponsivo">
                         <div class="campo" id="divTipagem">
                             <label id="lbTipagem" for="tipagem">Tipo sanguíneo:</label>
                             <select onfocus="remover()" name="tipagem" id="tipagem">
@@ -64,6 +64,7 @@
                         <input type="hidden" name="telefonados" id="telefonados" {% if telefonadosStr %}
                             value="{{ telefonadosStr }}"
                         {% endif %}>
+                        <div class="mb-24"></div>
                         <button name="botao" onclick="validar(event)" class="botao btn-principal linhaMRReset">Buscar</button>
                     </div>
                     <input type="submit" name="botao" class="botao btn-secundario linhaMRReset noselect" value="Marcar Telefonados">

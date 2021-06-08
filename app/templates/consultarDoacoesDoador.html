@@ -20,7 +20,7 @@
                 <h1>Consulta de doações por doadores</h1>
             </div>
             <div class="formulario">
-                <div class="linhaFormulario linhaSolitaria">
+                <div class="linhaFormulario linhaSolitaria formularioResponsivo">
                     <div class="campo" id="divNome">
                         <label for="nome">Nome:</label>
                         <input {% if nome %} value="{{ nome }}" {% endif %}type="text" id="nome" name="nome"
@@ -41,6 +41,7 @@
                         <input {% if itens %} value="{{ itens }}" {% endif %} type="number" id="itens" name="itens"
                             autocomplete="off">
                     </div>
+                    <div class="mb-24"></div>
                     <div>
                         <button onclick="validar(event)" class="botao btn-principal linhaMRReset">Buscar</button>
                     </div>

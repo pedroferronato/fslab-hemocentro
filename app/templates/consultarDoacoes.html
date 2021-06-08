@@ -21,7 +21,7 @@
         </div>
         <div class="formulario">
             <form action="/consultar-doacao/resultado" method="POST">
-                <div class="linhaFormulario linhaSolitaria">
+                <div class="linhaFormulario linhaSolitaria formularioResponsivo">
                     <div class="campo" id="divPredefinicoes">
                         <label for="predefinicao">Predefinições:</label>
                         <select onchange="setarData(this)" name="predefinicoes" id="predefinicoes">
@@ -51,6 +51,7 @@
                         <input type="text" name="itens" id="itens" autocomplete="off" {% if itens %} value="{{ itens }}"
                             {% endif %}>
                     </div>
+                    <div class="mb-24"></div>
                     <div>
                         <a><button onclick="validarConsultaDoacao(event)"
                                 class="botao btn-principal linhaMRReset">Buscar</button></a>
