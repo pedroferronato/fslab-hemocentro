@@ -36,12 +36,11 @@
                         <input {% if numeroRegistro %} value="{{ numeroRegistro }}" {% endif %} type="number"
                             id="numeroRegistro" name="numeroRegistro" autocomplete="off">
                     </div>
-                    <div class="campo" id="divItens">
+                    <div class="campo mb-24" id="divItens">
                         <label for="itens">Itens por pág.:</label>
                         <input {% if itens %} value="{{ itens }}" {% endif %} type="number" id="itens" name="itens"
                             autocomplete="off">
                     </div>
-                    <div class="mb-24"></div>
                     <div>
                         <button onclick="validar(event)" class="botao btn-principal linhaMRReset">Buscar</button>
                     </div>
@@ -76,7 +75,7 @@
                     </thead>
                     <tbody>
                         {% for doacao in doacoes %}
-                        <tr>
+                        <tr class="rowActive" onclick="location.href = '/detalhes-doacao/{{ doacao.id }}';">
                             <td>{{ doacao.data.strftime('%d/%m/%Y') }}</td>
                             <td>{{ doador.nome }}</td>
                             <td>{{ doacao.convocacao }}</td>

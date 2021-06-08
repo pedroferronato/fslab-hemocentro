@@ -46,12 +46,11 @@
                             class="data" name="dataFinal" type="text" id="dataFinal" autocomplete="off" {% if dataFinal
                             %} value="{{ dataFinal }}" {% endif %}>
                     </div>
-                    <div class="campo" id="divItens">
+                    <div class="campo mb-24" id="divItens">
                         <label for="itens">Itens por pág.:</label>
                         <input type="text" name="itens" id="itens" autocomplete="off" {% if itens %} value="{{ itens }}"
                             {% endif %}>
                     </div>
-                    <div class="mb-24"></div>
                     <div>
                         <a><button onclick="validarConsultaDoacao(event)"
                                 class="botao btn-principal linhaMRReset">Buscar</button></a>

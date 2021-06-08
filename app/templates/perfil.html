@@ -29,7 +29,7 @@
                     O <b>banco de dados</b> encontrou uma falha nas informações inseridas, por favor, tente novamente com outros valores.
                 </div>
                 {% endif %}
-                <div class="linhaFormulario">
+                <div class="linhaFormulario formularioResponsivo">
                     <div class="campo" id="divNome">
                         <label id="lbNome" for="nome">Nome completo:</label>
                         <input value="{{ current_user.nome }}" type="text" name="nome" id="nome" autocomplete="off">
@@ -44,12 +44,12 @@
                         <input value="{{ current_user.get_hemocentro().nome }}" type="text" readonly>
                     </div>
                 </div>
-                <div class="linhaFormulario ultimaLinhaInput">
+                <div class="linhaFormulario ultimaLinhaInput formularioResponsivo">
                     <div class="campo" id="divEmail">
                         <label id="lbEmail" for="email">E-mail:</label>
                         <input value="{{ current_user.email }}" type="text" id="email" name="email" autocomplete="off">
                     </div>
-                    <div class="campo" id="divLogin">
+                    <div class="campo mb-24" id="divLogin">
                         <label id="lbLogin" for="login">Login:</label>
                         <input value="{{ current_user.login }}" type="text" id="login" name="login" autocomplete="off">
                     </div>

@@ -2,6 +2,7 @@
 
 {% block cabecalho %}
 <link href="{{ url_for('static', filename='css/baseConteudo.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/detalhesDoacao.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
@@ -18,14 +19,14 @@
             <h1>Detalhes da doação {{ doacao.id }}</h1>
         </div>
         <div class="formulario">
-            <div class="linhaFormulario AlgSrt linhaSolitaria">
+            <div class="linhaFormulario AlgSrt linhaSolitaria formularioResponsivo">
                 <div class="dados">
                     <label>Núm. de regitro:</label>
                     <p>{{ doador.numero_registro }}</p>
                 </div>
                 <div class="dados">
                     <div class="flexivel SpcBtw">
-                        <label>Doador:</label>
+                        <label class="marginR">Doador:</label>
                         <span class="material-icons iconesS" onclick="location.href = '/detalhes-doador/{{ doador.numero_registro }}';">person</span>
                     </div>
                     <p>{{ doador.nome }}</p>
@@ -57,7 +58,7 @@
             <h1 class="tituloSecundario">Observações</h1>
         </div>
         <div class="formulario">
-            <div class="linhaFormulario AlgSrt linhaSolitaria">
+            <div class="linhaFormulario AlgSrt linhaSolitaria formularioResponsivo">
                 <div class="dados">
                     <label>Data:</label>
                     <p>{{ doacao.data.strftime('%d/%m/%Y') }}</p>

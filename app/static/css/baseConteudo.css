@@ -179,6 +179,10 @@ option:hover {
     width: 100%;
 }
 
+.marginR {
+    margin-right: 100px;
+}
+
 .SpcBtw {
     justify-content: space-between;
 }
@@ -537,7 +541,7 @@ input[type=number], input[type=number]::-webkit-inner-spin-button, input[type=nu
     height: 100%;
 }
 
-@media only screen and (max-width: 1366px) {
+@media only screen and (max-width: 1239px) {
     .dashboard {
         display: block;
     }
@@ -584,7 +588,7 @@ input[type=number], input[type=number]::-webkit-inner-spin-button, input[type=nu
     }
 }
 
-@media only screen and (max-width: 1023px) {
+@media only screen and (max-width: 1239px) {
     .dashboardAuxiliar {
         display: block;
     }
@@ -613,10 +617,11 @@ input[type=number], input[type=number]::-webkit-inner-spin-button, input[type=nu
         margin-bottom: 16px;
     }
     .bread p {
-        font-size: 12px;
+        font-size: 16px;
         line-height: 16px;
     }
     .bread {
+        margin-top: 24px;
         margin-bottom: 24px;
     }
     .linhaBotoes{
@@ -627,6 +632,12 @@ input[type=number], input[type=number]::-webkit-inner-spin-button, input[type=nu
         height: 50px;
         margin-right: 0px !important;
         margin-bottom: 12px !important;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .bread {
+        display: none;
     }
 }
 
