@@ -22,3 +22,10 @@
     flex:2;
     max-width: 200px;
 }
+
+@media only screen and (max-width: 1239px) {
+    #divNome, #divTelefone, #divHemocentro, #divEmail,
+    #divLogin {
+        max-width: 100%;
+    }
+}

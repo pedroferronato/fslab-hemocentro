@@ -81,7 +81,7 @@
                         {% if numero_registro %} value="{{numero_registro}}" {% endif %}
                         onfocus="removerClasseAlerta('numRegistro')">
                         <div>
-                            <input name="botao" class="material-icons iconesS btnPesquisa" value="search" type="submit">
+                            <input name="botao" class="material-icons iconesS btnPesquisaIcon" value="search" type="submit">
                         </div>
                     </div>
                 </div>
@@ -142,12 +142,11 @@
                         placeholder="Caso não tenha, deixe em branco.">
                 </div>
             </div>
-            <div class="linhaFormulario flexivel">
+            <div class="linhaFormulario flexivel mb-24">
                 <label class="txt-alerta ast">*</label>
                 <p>&ensp;Campos obrigatórios</p>
             </div>
             <div class="linhaBotoes">
-                <div class="mb-24"></div>
                 <button onclick="validarCampos(event)" name="botao" value="Inserir e continuar" class="botao btn-principal">Inserir e continuar</button>
                 <button onclick="validarCampos(event)" name="botao" value="Inserir" class="botao btn-principal">Inserir</button>
                 <button type="button" onclick="limpar()" class="botao btn-secundario linhaMRReset">Limpar</button>

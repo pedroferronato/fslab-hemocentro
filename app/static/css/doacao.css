@@ -1,6 +1,5 @@
 #divRegistro {
-    flex: 2;
-    max-width: 130px;
+    width: 130px;
     margin-right: 12px;
 }
 
@@ -61,7 +60,7 @@
     padding-bottom: 16px;
 }
 
-.btnPesquisa {
+.btnPesquisaIcon {
     height: 40px;
     padding: 0px 8px;
     font-size: 28px;
@@ -71,21 +70,29 @@
     border:none;
 }
 
-.btnPesquisa:focus, .btnPesquisa:focus {
+.btnPesquisaIcon:focus, .btnPesquisaIcon:focus {
     outline: none;
 }
 
-@media only screen and (max-width: 1023px) {
+.btnPesquisaIcon {
+    border: none !important;
+    box-shadow: none !important;
+    font-size: 22px !important;
+    padding: 0 10px 0 20px !important;
+}
+
+@media only screen and (max-width: 1239px) {
 
     #divRegistro, #divNome, #divTipo, #divData, #divFidelidade,
     #divInapto, #divDataFinal, #divConvocacao, #divObservacoes, #divNome,
     #divCPF, #btnPesquisa {
         max-width: 100%;
+        width: 100%;
     }
     #divRegistro {
         margin-right: 0;
     }
-    .btnPesquisa {
+    .btnPesquisaIcon {
         border: none !important;
         box-shadow: none !important;
         font-size: 22px !important;
