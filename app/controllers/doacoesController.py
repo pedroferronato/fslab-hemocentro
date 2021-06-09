@@ -9,8 +9,6 @@ from app.models.doador import Doador
 from app.models.hemocentro import Hemocentro
 
 
-# hemocentro_id = current_user.get_hemocentro().get_id()
-
 @flaskApp.route('/doacao', methods=['GET', 'POST'])
 @login_required
 def nova_doacao():
@@ -79,8 +77,10 @@ def nova_doacao():
                     db.session.add(doacao)
                     db.session.commit()
                 except Exception as e:
+                    flaskApp.logger.info(f'Cadastro doacao - o captador { current_user.nome } de login: { current_user.login } falhou ao registrar a doacao do doador { doador.nome } de id: { str(doador.id) } no hemocentro de id { str(hemocentro_id) }')
                     return redirect(url_for("nova_doacao", date=hoje, mensagem="ErroBD"))
 
+                flaskApp.logger.info(f'Cadastro doacao - o captador { current_user.nome } de login: { current_user.login } registrou a doacao do doador { doador.nome } de id: { str(doador.id) } no hemocentro de id { str(hemocentro_id) }')
                 if continuar:
                     return redirect(url_for("nova_doacao", mensagem="Inserido"))
                 else:
@@ -143,6 +143,7 @@ def detalhes_doacao(num):
     else:
         doador = Doador.query.filter_by(numero_registro = doacao.doador_id).first()
         hemocentro = Hemocentro.query.filter_by(id = doacao.hemocentro_id).first()
+        flaskApp.logger.info(f'Alterar doacao - o captador { current_user.nome } de login: { current_user.login } alterou a doacao de id { str(doacao.id) }')
         return render_template("detalhesDoacao.html", doador = doador, doacao=doacao, hemocentro = hemocentro)
 
 

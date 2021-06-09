@@ -6,6 +6,7 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_login import LoginManager
 from dotenv import load_dotenv
 import os
+import logging
 
 load_dotenv()
 
@@ -18,6 +19,8 @@ flaskApp.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 flaskApp.config['SECRET_KEY'] = os.getenv("SECRET")
 flaskApp.config['JSON_AS_ASCII'] = False
 flaskApp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+logging.basicConfig(filename="registros.log", level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
 
 db = SQLAlchemy(flaskApp)
 migrate = Migrate(flaskApp, db, compare_type=True)

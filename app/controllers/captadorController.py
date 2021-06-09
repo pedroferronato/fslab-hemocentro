@@ -49,12 +49,15 @@ def novo_captador():
             db.session.add(cap)
             db.session.commit()
         except:
+            flaskApp.logger.info(f'Cadastro captador - o captador { current_user.nome } de login: { current_user.login } falhou ao tentar adicionar o captador { cap.nome }')
             return redirect(url_for("novo_captador", mensagem="ErroBD"))
 
+        flaskApp.logger.info(f'Cadastro de Captador - o captador { cap.nome } foi registrado no hemocentro de id: { str(cap.hemocentro_id) } pelo usuario de login: { current_user.login } e nome: { current_user.nome }')
         if continuar:
             return redirect(url_for("novo_captador", mensagem="Inserido"))
         else:
             return redirect(url_for('inicial', sucesso="sucesso"))
+
 
 @flaskApp.route('/captador/alterar/<captador_id>', methods = ['GET', 'POST'])
 @login_required
@@ -72,6 +75,7 @@ def alterar_captador(captador_id):
         adm = request.form['adm']
         mail = request.form['mail']
         login = request.form['login']
+        cap = ''
         try:
             cap = Captador.query.filter_by(id=captador_id).first()
             cap.nome = nome
@@ -91,10 +95,10 @@ def alterar_captador(captador_id):
             db.session.add(cap)
             db.session.commit()
         except Exception as e:
-            print(e)
             return redirect(url_for("alterar_captador", mensagem="ErroBD", captador_id=captador_id))
             # TODO ERRO: 500 - PÁGINA BANCO DE DADOS
 
+        flaskApp.logger.info(f'Alteracao de Captador - o captador { cap.nome }, de id { str(cap.id) } foi alterado pelo usuario de login: { current_user.login } e nome: { current_user.nome }')
         return redirect(url_for("consultar_captador", mensagem="sucesso", nome=cap.nome))
 
 @flaskApp.route('/captador/consulta')
@@ -174,6 +178,7 @@ def deletar_captador(captador_id):
     cap.ativo = False
     db.session.add(cap)
     db.session.commit()
+    flaskApp.logger.info(f'Desativacao de Captador - o captador { cap.nome }, de id { str(cap.id) } foi desativado pelo usuario de login: { current_user.login } e nome: { current_user.nome }')
     return redirect(url_for('consulta_captador', mensagem="deletado"))
 
 
@@ -185,4 +190,5 @@ def desativar_captador(captador_id):
     db.session.add(cap)
     db.session.commit()
     logout_user()
+    flaskApp.logger.info(f'Desativacao de Captador - o captador { cap.nome }, de id { str(cap.id) } desativou a si mesmo')
     return redirect(url_for('login'))

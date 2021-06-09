@@ -62,11 +62,11 @@ def novo_doador():
             nome_mae=mae, nome_pai=pai)
             db.session.add(doador)
             db.session.commit()
-
         except Exception as e:
-            print(e)
+            flaskApp.logger.info(f'Cadastro doador - o captador { current_user.nome } de login: { current_user.login } falhou ao tentar adicionar o doador { doador.nome }')
             return render_template("paginaInicial.html", sucesso="") # TODO Gerar uma página de erro
         
+        flaskApp.logger.info(f'Cadastro de doador - o doador { doador.nome } foi registrado no hemocentro de id: { str(doador.hemocentro_id) } pelo usuario de login: { current_user.login } e nome: { current_user.nome }')
         if continuar:
             return redirect(url_for("novo_doador", sucesso=True))
         else:
@@ -117,6 +117,8 @@ def alterar_doador(doador_numRegistro):
         doador.nome_pai = pai 
         db.session.add(doador)
         db.session.commit()
+
+        flaskApp.logger.info(f'Alteracao de doador - o doador { doador.nome } foi alterado no hemocentro de id: { str(doador.hemocentro_id) } pelo usuario de login: { current_user.login } e nome: { current_user.nome }')
         return redirect(url_for('consultar_doador', mensagem="sucesso", registro_alterado=doador.numero_registro))
 
 
@@ -189,6 +191,8 @@ def deletar_doador(doador_numRegistro):
     doador = Doador.query.filter_by(numero_registro=doador_numRegistro).first()
     db.session.delete(doador)
     db.session.commit()
+
+    flaskApp.logger.info(f'Exclusao de doador - o doador { doador.nome } de id: { str(doador.id) } foi excluído pelo usuario de login: { current_user.login } e nome: { current_user.nome }')
     return redirect(url_for('consultar_doador', mensagem="deletado"))
 
 
@@ -259,6 +263,7 @@ def alterar_inaptidao(num):
         db.session.add(doador)
         db.session.commit()
 
+        flaskApp.logger.info(f'Cadastro de doador - o doador { doador.nome } e id: { str(doador.id) } teve o estado de inaptidao alterado para { str(doador.inaptidao) } pelo usuario de login: { current_user.login } e nome: { current_user.nome }')
         return redirect(url_for('detalhes_doador_num', num=num))
 
 
@@ -270,5 +275,6 @@ def alterar_contatado(num):
     db.session.add(doador)
     db.session.commit()
 
+    flaskApp.logger.info(f'Cadastro de doador - o doador { doador.nome } e id: { str(doador.id) } foi contatado pelo usuario de login: { current_user.login } e nome: { current_user.nome }')
     return redirect(url_for('detalhes_doador_num', num=num))
 

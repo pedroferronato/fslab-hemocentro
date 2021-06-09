@@ -37,12 +37,14 @@ def login():
             return render_template("login.html", mensagem=mensagem)
         else:
             login_user(captador, remember=False)
+            flaskApp.logger.info(f'Login - o captador { current_user.nome } de login: { current_user.login } acessou o sistema')
             return redirect('/')
 
 
 @flaskApp.route('/logout')
 @login_required
 def logout():
+    flaskApp.logger.info(f'Login - o captador { current_user.nome } de login: { current_user.login } saiu do sistema')
     logout_user()
     return redirect('/login')
 
@@ -123,8 +125,10 @@ def alterar_perfil():
         db.session.commit()
     except:
         db.session.rollback()
+        flaskApp.logger.info(f'Perfil - o captador { current_user.nome } de login: { current_user.login } tentou alterar informações em seu perfil, mas falhou')
         return render_template("perfil.html", mensagem="ErroBD")
-    
+
+    flaskApp.logger.info(f'Perfil - o captador { current_user.nome } de login: { current_user.login } alterou informações em seu perfil')
     return render_template("perfil.html", mensagem="Alterado")
 
 
