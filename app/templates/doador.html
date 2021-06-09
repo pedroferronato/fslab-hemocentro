@@ -270,8 +270,7 @@
                     </div>
                     {% endif%}
                     
-                    {% if alterar %}
-                    {% if doador %}    
+                    {% if alterar %} 
                     {% if doador.hemocentro_id == current_user.hemocentro_id or current_user.servidor %}
                     <div class="linhaBotoes SpcBtw">
                         <button type="submit" class="botao btn-principal">Alterar</button>
@@ -299,7 +298,6 @@
                             </div>
                         </div>
                     </div>
-                    {% endif %}
                     {% endif %}
                     {% else %}
 

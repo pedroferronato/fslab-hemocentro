@@ -52,7 +52,10 @@ def novo_hemocentro():
             db.session.add(hemocentro)
             db.session.commit()
         except:
+            flaskApp.logger.info(f'Cadastro hemocentro - o captador { current_user.nome } de login: { current_user.login } falhou ao tentar adicionar o hemocentro { hemocentro.nome }')
             return redirect(url_for("novo_hemocentro", sucesso="Error"))
+
+        flaskApp.logger.info(f'Cadastro hemocentro - o captador { current_user.nome } de login: { current_user.login } adicionou o hemocentro { hemocentro.nome }')
         if continuar:
             return redirect(url_for("novo_hemocentro", sucesso="Sucesso"))
         else:
@@ -78,6 +81,7 @@ def alterar_hemocentro(hemocentro_id):
         db.session.add(hemocentro)
         db.session.commit()
 
+        flaskApp.logger.info(f'Alteracao hemocentro - o captador { current_user.nome } de login: { current_user.login } alterou o hemocentro { hemocentro.nome }')
         return redirect(url_for('consultar_hemocentro', sucesso="sucesso"))
 
 
@@ -117,5 +121,6 @@ def deletar_hemocentro(hemocentro_id):
     hemocentro = Hemocentro.query.filter_by(id=hemocentro_id).first()
     db.session.delete(hemocentro)
     db.session.commit()
+    flaskApp.logger.info(f'Exclusao hemocentro - o captador { current_user.nome } de login: { current_user.login } excluiu o hemocentro { hemocentro.nome }')
     return redirect(url_for('consultar_hemocentro', sucesso="sucesso"))
 
