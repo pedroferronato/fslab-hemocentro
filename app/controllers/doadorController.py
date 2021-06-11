@@ -73,13 +73,13 @@ def novo_doador():
             return redirect(url_for('inicial', sucesso="sucesso"))
 
 
-@flaskApp.route('/doador/alterar/<doador_numRegistro>', methods=['GET', 'POST'])
+@flaskApp.route('/doador/alterar/<doador_numRegistro>/<doador_hemocentroID>', methods=['GET', 'POST'])
 @login_required
-def alterar_doador(doador_numRegistro):
+def alterar_doador(doador_numRegistro, doador_hemocentroID):
     cidade_registradas = Municipio.query.filter_by(uf=Estado.query.filter_by(id=current_user.get_hemocentro().get_estado().id).first().id).order_by(Municipio.nome).all()
     estados = Estado.query.all()
     if request.method == 'GET':
-        doador = Doador.query.filter_by(numero_registro=doador_numRegistro).first()
+        doador = Doador.query.filter_by(numero_registro=doador_numRegistro, hemocentro_id=doador_hemocentroID).first()
         return render_template("doador.html", alterar=True, doador=doador, cidades=cidade_registradas, estados=estados)
     elif request.method == 'POST':
         nome = request.form['nome']
@@ -97,8 +97,7 @@ def alterar_doador(doador_numRegistro):
         localTrabalho = request.form['localTrabalho']
         mae = request.form['mae']
         pai = request.form['pai']
-        doador = Doador.query.filter_by(numero_registro=doador_numRegistro).first()
-
+        doador = Doador.query.filter_by(numero_registro=doador_numRegistro, hemocentro_id=doador_hemocentroID).first()
 
         doador.nome = nome
         doador.cpf = cpf
@@ -160,6 +159,7 @@ def consulta_doador():
        municipio = Municipio.query.filter_by(nome=municipio, uf=Estado.query.filter_by(nome=estado).first().id).first().id
        parametros.append(Doador.municipio == municipio)
 
+    parametros.append(Doador.ativo == True)
 
     page = request.args.get('page')
 
@@ -185,14 +185,15 @@ def consulta_doador():
         return render_template("consultaDoadores.html", lista_vazia=True, cidades=cidade_registradas, itens=itens_pesquisados, nome_pesquisado=nome, tipo_pesquisado=tipo_sanguineo, registro_pesquisado=numero_registro, municipio_pesquisado=municipio_pesquisado, estados=estados, estado_pesquisado=request.args.get('inputEstado'))
 
 
-@flaskApp.route('/doador/deletar/<doador_numRegistro>')
+@flaskApp.route('/doador/deletar/<doador_numRegistro>/<doador_hemocentroId>')
 @login_required
-def deletar_doador(doador_numRegistro):
-    doador = Doador.query.filter_by(numero_registro=doador_numRegistro).first()
-    db.session.delete(doador)
+def deletar_doador(doador_numRegistro, doador_hemocentroId):
+    doador = Doador.query.filter_by(numero_registro=doador_numRegistro, hemocentro_id=doador_hemocentroId).first()
+    doador.ativo = False
+    db.session.add(doador)
     db.session.commit()
 
-    flaskApp.logger.info(f'Exclusao de doador - o doador { doador.nome } de id: { str(doador.id) } foi excluído pelo usuario de login: { current_user.login } e nome: { current_user.nome }')
+    flaskApp.logger.info(f'Desativacao de doador - o doador { doador.nome } de id: { str(doador.numero_registro) } foi desativado pelo usuario de login: { current_user.login } e nome: { current_user.nome }')
     return redirect(url_for('consultar_doador', mensagem="deletado"))
 
 
@@ -218,6 +219,8 @@ def detalhes_doador():
     if cpf:
         parametros.append(Doador.cpf == cpf)
 
+    parametros.append(Doador.ativo == True)
+
     resultado = Doador.query.filter(*parametros)
 
     if resultado.count() == 1:
@@ -228,20 +231,20 @@ def detalhes_doador():
         return render_template("relatorioDoador.html", resultados=resultado.limit(15))
 
 
-@flaskApp.route('/detalhes-doador/<num>') 
+@flaskApp.route('/detalhes-doador/<num>/<hem>') 
 @login_required
-def detalhes_doador_num(num):
-    doador = Doador.query.filter_by(numero_registro=num).first()
+def detalhes_doador_num(num, hem):
+    doador = Doador.query.filter_by(numero_registro=num, hemocentro_id=hem).first()
     if not doador:
         return render_template("relatorioDoador.html", nenhum_encontrado=True)
     else:
         return render_template("detalhesDoador.html", doador=doador)
 
 
-@flaskApp.route('/alterar-inaptidao/<num>', methods=['GET', 'POST'])
+@flaskApp.route('/alterar-inaptidao/<num>/<doador_hemocentroID>', methods=['GET', 'POST'])
 @login_required
-def alterar_inaptidao(num):
-    doador = Doador.query.filter_by(numero_registro=num).first()
+def alterar_inaptidao(num, doador_hemocentroID):
+    doador = Doador.query.filter_by(numero_registro=num, hemocentro_id=doador_hemocentroID).first()
 
     if request.method == "GET":
         if not doador:
@@ -260,21 +263,25 @@ def alterar_inaptidao(num):
             doador.inaptidao = True
             doador.final_inaptidao = data
 
-        db.session.add(doador)
-        db.session.commit()
+        if doador.ativo:
+            db.session.add(doador)
+            db.session.commit()
+        else:
+            flaskApp.logger.info(f'Cadastro de doador - o doador { doador.nome } e id: { str(doador.numero_registro) } recebeu uma tentativa de alteração inválida, sendo que o mesmo está desativado, pelo usuario de login: { current_user.login } e nome: { current_user.nome }')
+            return redirect(url_for('detalhes_doador_num', num=num, hem=doador_hemocentroID))
+        
+        flaskApp.logger.info(f'Cadastro de doador - o doador { doador.nome } e id: { str(doador.numero_registro) } teve o estado de inaptidao alterado para { str(doador.inaptidao) } pelo usuario de login: { current_user.login } e nome: { current_user.nome }')
+        return redirect(url_for('detalhes_doador_num', num=num, hem=doador_hemocentroID))
 
-        flaskApp.logger.info(f'Cadastro de doador - o doador { doador.nome } e id: { str(doador.id) } teve o estado de inaptidao alterado para { str(doador.inaptidao) } pelo usuario de login: { current_user.login } e nome: { current_user.nome }')
-        return redirect(url_for('detalhes_doador_num', num=num))
 
-
-@flaskApp.route('/alterar-contatado/<num>')
+@flaskApp.route('/alterar-contatado/<num>/<doador_hemocentroID>')
 @login_required
-def alterar_contatado(num):
-    doador = Doador.query.filter_by(numero_registro=num).first()
+def alterar_contatado(num, doador_hemocentroID):
+    doador = Doador.query.filter_by(numero_registro=num, hemocentro_id=doador_hemocentroID).first()
     doador.contatado = True
     db.session.add(doador)
     db.session.commit()
 
-    flaskApp.logger.info(f'Cadastro de doador - o doador { doador.nome } e id: { str(doador.id) } foi contatado pelo usuario de login: { current_user.login } e nome: { current_user.nome }')
-    return redirect(url_for('detalhes_doador_num', num=num))
+    flaskApp.logger.info(f'Cadastro de doador - o doador { doador.nome } e id: { str(doador.numero_registro) } foi contatado pelo usuario de login: { current_user.login } e nome: { current_user.nome }')
+    return redirect(url_for('detalhes_doador_num', num=num, hem=doador_hemocentroID))
 
