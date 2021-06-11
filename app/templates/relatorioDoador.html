@@ -57,16 +57,14 @@
                         <th scope="col">Nome</th>
                         <th scope="col">CPF</th>
                         <th scope="col">Tipo sanguíneo</th>
-                        <th scope="col">Detalhes</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for doador in resultados %}
-                    <tr class="rowActive">
+                    <tr class="rowActive" onclick="location.href = '/detalhes-doador/{{ doador.numero_registro }}/{{ doador.hemocentro_id }}';">
                         <td>{{ doador.nome }}</td>
                         <td>{{ doador.cpf }}</td>
                         <td>{{ doador.tipo_sanguineo }}</td>
-                        <td><a href="/detalhes-doador/{{ doador.numero_registro }}"><span class="material-icons iconesM">search</span></a></td>
                     </tr>
                     {% endfor %}
                 </tbody>

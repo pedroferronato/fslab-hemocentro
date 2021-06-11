@@ -111,17 +111,17 @@ def pesquisar_doador():
 
     if nome and cpf:
         nome_pesquisa = '%' + nome + '%'
-        paginate = Doador.query.filter(Doador.nome.like(nome_pesquisa),Doador.cpf.like(cpf), Doador.hemocentro_id.like(current_user.get_hemocentro().id)).paginate(page=page, per_page=10)
+        paginate = Doador.query.filter(Doador.ativo == True, Doador.nome.like(nome_pesquisa),Doador.cpf.like(cpf), Doador.hemocentro_id.like(current_user.get_hemocentro().id)).paginate(page=page, per_page=10)
         resultadoPesquisa = paginate.items
     elif nome:
         nome_pesquisa = '%' + nome + '%'
-        paginate = Doador.query.filter(Doador.nome.like(nome_pesquisa), Doador.hemocentro_id.like(current_user.get_hemocentro().id)).paginate(page=page, per_page=10)
+        paginate = Doador.query.filter(Doador.ativo == True, Doador.nome.like(nome_pesquisa), Doador.hemocentro_id.like(current_user.get_hemocentro().id)).paginate(page=page, per_page=10)
         resultadoPesquisa = paginate.items
     elif cpf:
-        paginate = Doador.query.filter_by(cpf=cpf, hemocentro_id = current_user.get_hemocentro().id).paginate(page=page, per_page=10)
+        paginate = Doador.query.filter_by(ativo=True, cpf=cpf, hemocentro_id = current_user.get_hemocentro().id).paginate(page=page, per_page=10)
         resultadoPesquisa = paginate.items
     else:
-        paginate = Doador.query.filter(Doador.hemocentro_id.like(current_user.get_hemocentro().id)).paginate(page=page, per_page=10)
+        paginate = Doador.query.filter(Doador.ativo == True, Doador.hemocentro_id.like(current_user.get_hemocentro().id)).paginate(page=page, per_page=10)
         resultadoPesquisa = paginate.items
 
     if Counter(resultadoPesquisa):

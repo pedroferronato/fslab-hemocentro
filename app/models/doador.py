@@ -35,6 +35,7 @@ class Doador(db.Model):
     final_inaptidao = db.Column(db.Date())
     legado = db.Column(db.Boolean(), default=False)
     ultima_doacao = db.Column(db.Date())
+    ativo = db.Column(db.Boolean(), default=1)
 
 
     def __repr__(self):
