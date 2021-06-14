@@ -122,8 +122,8 @@
                     <tr>
                         <th scope="col">Nome</th>
                         <th scope="col">Tipo</th>
-                        <th scope="col">Fidelidade</th>
                         <th scope="col">Última doação</th>
+                        <th scope="col">Hemocentro</th>
                         <th scope="col">Municipio</th>
                     </tr>
                 </thead>
@@ -133,18 +133,14 @@
                         <td>{{ doador.nome }}</td>
                         <td>{{ doador.tipo_sanguineo }}</td>
                         <td>
-                            {% if doador.fidelidade %}
-                            {{ doador.fidelidade }}
-                            {% else %}
-                            -
-                            {% endif %}
-                        </td>
-                        <td>
                             {% if doador.ultima_doacao %}
                             {{ doador.ultima_doacao.strftime('%d/%m/%Y') }}
                             {% else %}
                             -
                             {% endif %}
+                        </td>
+                        <td>
+                            {{ doador.get_hemocentro_nome() }}
                         </td>
                         <td>{{ doador.get_municipio() }}</td>
                     </tr>

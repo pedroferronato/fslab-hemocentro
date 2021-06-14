@@ -56,7 +56,7 @@
             {% endif %}
             {% if mensagem == "ErroBD_4" %}
             <div class="alert2 alert alert-danger" role="alert">
-                <b>Número de registro</b> não encontrado.
+                <b>Número de registro não encontrado ou usuário inativo</b>.
             </div>
             {% endif %}
             {% if mensagem == "ErroBD_5" %}
@@ -136,7 +136,8 @@
                         <option value="Voluntário" {% if convocacao and convocacao == "Voluntário" %} selected="select" {% endif %}>Voluntário</option>
                     </select>
                 </div>
-                <input id="hemocentro_id" name="hemocentro_id" value="{{hemocentro_id}}" hidden/>
+                <input id="hemocentro_id" name="hemocentro_id" value="{% if hemocentro_id == None %}
+                {{ current_user.get_hemocentro().id }} {% else %} {{hemocentro_id}} {% endif %}" hidden/>
                 <div class="campo" id="divObservacoes">
                     <label for="observacoes">Observações:</label>
                     <input type="text" id="observacoes" name="observacoes" autocomplete="off"

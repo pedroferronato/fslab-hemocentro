@@ -49,12 +49,13 @@ def chamada_tipada_resultado():
             )
         )
     )
+    filtros.append(Doador.ativo == True)
     filtros.append(Doador.contatado == False)
     filtros.append(Doador.hemocentro_id == current_user.get_hemocentro().get_id())
     filtros.append(Doador.tipo_sanguineo == tipo)
     filtros.append(Doador.inaptidao == False)
     filtros.append(Doador.legado == False)
-    filtros.append(Doador.idade < 70)
+    filtros.append(and_(Doador.idade < 70, Doador.idade > 15))
 
     resultado = Doador.query.filter(*filtros).limit(100).from_self().order_by(Doador.municipio != current_user.get_hemocentro().get_municipio()).order_by(Doador.ultima_doacao.desc())
 
@@ -115,12 +116,13 @@ def chamada_emergencial_resultado():
             )
         )
     )
+    filtros.append(Doador.ativo == True)
     filtros.append(Doador.contatado == False)
     filtros.append(Doador.hemocentro_id == current_user.get_hemocentro().get_id())
     filtros.append(Doador.tipo_sanguineo == tipo)
     filtros.append(Doador.inaptidao == False)
     filtros.append(Doador.legado == False)
-    filtros.append(Doador.idade < 70)
+    filtros.append(and_(Doador.idade < 70, Doador.idade > 15))
 
     resultado = Doador.query.filter(*filtros).limit(100).from_self().order_by(Doador.municipio != current_user.get_hemocentro().get_municipio()).order_by(Doador.ultima_doacao.desc())
 
@@ -190,12 +192,13 @@ def chamada_localidades_externas_resultado():
             )
         )
     )
+    filtros.append(Doador.ativo == True)
     filtros.append(Doador.contatado == False)
     filtros.append(Doador.tipo_sanguineo == tipo)
     filtros.append(Doador.municipio == int(municipio))
     filtros.append(Doador.inaptidao == False)
     filtros.append(Doador.legado == False)
-    filtros.append(Doador.idade < 70)
+    filtros.append(and_(Doador.idade < 70, Doador.idade > 15))
 
     resultado = Doador.query.filter(*filtros).limit(100).from_self().order_by(Doador.ultima_doacao.desc())
 

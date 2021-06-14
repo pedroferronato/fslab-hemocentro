@@ -52,17 +52,15 @@
                     </div>
                     {% endif %}
                     <div class="linhaFormulario formularioResponsivo">
+                        {% if alterar %}
                         <div class="campo" id="divRegistro">
                             <div class="flexivel">
                                 <label id="lbNumRegistro" for="numRegistro">Nº registro:</label>
-                                {% if not (doador and doador.hemocentro_id != current_user.hemocentro_id and not current_user.servidor) %}
-                                <label class="txt-alerta ast">&nbsp;*</label>
-                                {% endif %}
                             </div>
-                            <input name="numRegistro" type="number" id="numRegistro" autocomplete="off"
-                                onfocus="removerClasseAlerta('numRegistro')" {% if alterar %}
-                                value="{{ doador.numero_registro }}" disabled {% endif %}>
+                            <input name="numRegistro" type="number" id="numRegistro" autocomplete="off" value="{{doador.numero_registro}}"
+                                onfocus="removerClasseAlerta('numRegistro')" readonly>
                         </div>
+                        {% endif %}
                         <div class="campo" id="divNome">
                             <div class="flexivel">
                                 <label id="lbNome" for="nome">Nome Completo:</label>                                    
