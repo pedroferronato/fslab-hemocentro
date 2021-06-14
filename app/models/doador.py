@@ -10,7 +10,7 @@ from dateutil.relativedelta import relativedelta
 class Doador(db.Model):
     __tablename__ = 'doadores'
 
-    numero_registro = db.Column(db.Integer, primary_key=True, autoincrement=False)
+    numero_registro = db.Column(db.Integer, primary_key=True, autoincrement=True)
     hemocentro_id = db.Column(db.Integer, db.ForeignKey('hemocentros.id'), primary_key=True, autoincrement=False)
     nome = db.Column(db.String(200), nullable=False)
     cpf = db.Column(db.String(50), nullable=False)
@@ -61,7 +61,6 @@ class Doador(db.Model):
         lista = []
         lista.append(Doacao.doador_id == self.numero_registro)
         lista.append(Doacao.doador_hemocentro_id == self.hemocentro_id)
-        print(self.numero_registro, self.hemocentro_id)
         return Doacao.query.filter(*lista).order_by(Doacao.data.desc()).first()
 
 
@@ -69,7 +68,6 @@ class Doador(db.Model):
         lista = []
         lista.append(Doacao.doador_id == self.numero_registro)
         lista.append(Doacao.doador_hemocentro_id == self.hemocentro_id)
-        print(self.numero_registro, self.hemocentro_id)
         return len(Doacao.query.filter(*lista).all())
 
 
@@ -77,7 +75,6 @@ class Doador(db.Model):
         lista = []
         lista.append(Doacao.doador_id == self.numero_registro)
         lista.append(Doacao.doador_hemocentro_id == self.hemocentro_id)
-        print(self.numero_registro, self.hemocentro_id)
         return Doacao.query.filter(*lista).order_by(Doacao.data.desc()).limit(10).all()
 
 

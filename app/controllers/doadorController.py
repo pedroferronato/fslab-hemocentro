@@ -24,7 +24,6 @@ def novo_doador():
         if request.form['inserir'] == 'Inserir e continuar':
             continuar = True
 
-        num_registro = request.form['numRegistro']
         nome = request.form['nome']
         cpf = request.form['cpf']
         sexo = request.form['sexo']
@@ -56,7 +55,7 @@ def novo_doador():
         pai = request.form['pai']
 
         try:
-            doador = Doador(numero_registro=num_registro, hemocentro_id = current_user.get_hemocentro().get_id(), nome=nome, cpf=cpf, sexo=sexo, tipo_sanguineo=tipo_sangue, data_de_nascimento=data_nascimento,
+            doador = Doador(hemocentro_id = current_user.get_hemocentro().get_id(), nome=nome, cpf=cpf, sexo=sexo, tipo_sanguineo=tipo_sangue, data_de_nascimento=data_nascimento,
             cadastro_SUS=sus, estado_civil=estado_civil, celular=celular, telefone=telefone, email=mail, municipio=municipio,
             profissao=profissao, local_trabalho=local_trabalho, inaptidao=estado_aptidao, final_inaptidao=data_inaptidao, contatos_preferidos= aviso,
             nome_mae=mae, nome_pai=pai)
@@ -158,7 +157,6 @@ def consulta_doador():
     if municipio:
        municipio = Municipio.query.filter_by(nome=municipio, uf=Estado.query.filter_by(nome=estado).first().id).first().id
        parametros.append(Doador.municipio == municipio)
-    parametros.append(Doador.hemocentro_id == current_user.get_hemocentro().id)
     parametros.append(Doador.ativo == True)
 
     page = request.args.get('page')

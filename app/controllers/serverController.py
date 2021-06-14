@@ -1,3 +1,4 @@
+from flask.helpers import url_for
 from app.models.doador import Doador
 from app import flaskApp, login_manager, db
 from app.models.captador import Captador
@@ -94,20 +95,6 @@ def dashboard():
     anual = Doacao.query.filter(Doacao.data.between(str(hoje.year)+'-01-01',str(hoje.year)+'-12-31'), Doacao.hemocentro_id.like(current_user.get_hemocentro().id)).count()
 
     return render_template("dashboard.html", relatorioDoacoes=relatorioDoacoes, diaHoje=diaHoje, mes=mes, anual=anual, hoje = [hoje.day, meses[hoje.month - 1], hoje.year], lista_doacoes_por_tipo=lista_doacoes_por_tipo)
-
-
-# @flaskApp.route('/dashboard/carregamento')
-# def dashboard_carregamento():
-#     hoje = date.today()
-#     diasDoMes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-#     relatorioDoacoes = []
-
-#     for x in range(1,13):
-#         relatorioDoacoes.append(Doacao.query.filter(Doacao.data.between(str(hoje.year)+'-'+str(x)+'-01',str(hoje.year)+'-'+str(x)+'-'+str(diasDoMes[x-1]))).count())
-
-#     response = jsonify(relatorioDoacoes)
-#     response.headers.add('Access-Control-Allow-Origin', '*')
-#     return response
 
 
 @flaskApp.route('/perfil')

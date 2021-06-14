@@ -32,10 +32,7 @@ def nova_doacao():
             numRegistro = request.form['numRegistro']
             hemocentro_id = request.form['hemocentro_id']
             if not numRegistro == '':
-                if hemocentro_id:
-                    doador = Doador.query.filter(Doador.numero_registro.like(numRegistro), Doador.hemocentro_id.like(hemocentro_id)).first()
-                else:
-                    doador = Doador.query.filter(Doador.numero_registro.like(numRegistro), Doador.hemocentro_id.like(current_user.get_hemocentro().id)).first()
+                doador = Doador.query.filter(Doador.ativo == True, Doador.numero_registro == numRegistro, Doador.hemocentro_id == hemocentro_id).first()
                 primeiraDoacao = Doacao.query.filter(Doacao.doador_id.like(numRegistro), Doacao.hemocentro_id.like(current_user.get_hemocentro().id)).count()
                 if primeiraDoacao > 0:
                     if doador and ( (doador.sexo == "mas" and datetime(doador.ultima_doacao.year, doador.ultima_doacao.month, doador.ultima_doacao.day) > (datetime.today() - relativedelta(months=3))) or (doador.sexo == "fem" and datetime(doador.ultima_doacao.year, doador.ultima_doacao.month, doador.ultima_doacao.day) > (datetime.today() - relativedelta(months=4))) ):
@@ -123,10 +120,9 @@ def pesquisar_doador():
         paginate = Doador.query.filter(Doador.ativo == True,Doador.nome.like(nome_pesquisa)).paginate(page=page, per_page=10)
         resultadoPesquisa = paginate.items
     elif cpf:
-        paginate = Doador.query.filter_by(Doador.ativo = True, cpf=cpf).paginate(page=page, per_page=10)
+        paginate = Doador.query.filter_by(ativo = True, cpf=cpf).paginate(page=page, per_page=10)
         resultadoPesquisa = paginate.items
     else:
-      #TODO: SE DER ERRO É AQUI
         paginate = Doador.query.filter(Doador.ativo == True).paginate(page=page, per_page=10)
         resultadoPesquisa = paginate.items
 
@@ -134,12 +130,6 @@ def pesquisar_doador():
         return render_template("doacaoDoador.html", resultadoPesquisa=resultadoPesquisa, paginate=paginate,nome=nome,cpf=cpf)
     else:
         return render_template("doacaoDoador.html", lista_vazia=True,nome=nome,cpf=cpf)
-
-
-@flaskApp.route('/alterar-doacao') # '/alterar_doacao/<id>'
-@login_required
-def alterar_doacao():
-    return render_template("doacao.html", alterar=True)
 
 
 @flaskApp.route('/detalhes-doacao/<num>')
@@ -150,9 +140,8 @@ def detalhes_doacao(num):
     if not doacao:
         return render_template("consultaDoacoes.html", nenhum_encontrado=True)
     else:
-        doador = Doador.query.filter_by(numero_registro = doacao.doador_id).first()
+        doador = Doador.query.filter_by(numero_registro = doacao.doador_id, hemocentro_id = doacao.doador_hemocentro_id).first()
         hemocentro = Hemocentro.query.filter_by(id = doacao.hemocentro_id).first()
-        flaskApp.logger.info(f'Alterar doacao - o captador { current_user.nome } de login: { current_user.login } alterou a doacao de id { str(doacao.id) }')
         return render_template("detalhesDoacao.html", doador = doador, doacao=doacao, hemocentro = hemocentro)
 
 
