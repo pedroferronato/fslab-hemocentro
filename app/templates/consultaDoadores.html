@@ -129,7 +129,7 @@
                 </thead>
                 <tbody>
                     {% for doador in doadores %}
-                    <tr class="rowActive" onclick="location.href = '/detalhes-doador/{{ doador.numero_registro }}';">
+                    <tr class="rowActive" onclick="location.href = '/detalhes-doador/{{ doador.numero_registro }}/{{ doador.hemocentro_id }}';">
                         <td>{{ doador.nome }}</td>
                         <td>{{ doador.tipo_sanguineo }}</td>
                         <td>

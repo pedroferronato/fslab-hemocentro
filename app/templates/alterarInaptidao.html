@@ -15,6 +15,7 @@
         <p>Alterar inaptidão</p>
     </div>
 
+    {% if doador.ativo %}
     <div class="cartao noselect">
 
         <div class="titulo">
@@ -41,7 +42,9 @@
                     </div>
                     <div class="campo" id="divData">
                         <label id="lbData" for="data">Data final:</label>
-                        <input onfocus="removerClasse()" type="text" class="data" id="data" name="data" autocomplete="off" {% if doador.final_inaptidao %}  value="{{ doador.final_inaptidao.strftime('%d/%m/%Y') }}" {% endif %}>
+                        <input onfocus="removerClasse()" type="text" class="data" id="data" name="data"
+                            autocomplete="off" {% if doador.final_inaptidao %}
+                            value="{{ doador.final_inaptidao.strftime('%d/%m/%Y') }}" {% endif %}>
                     </div>
                     <div class="mb-24"></div>
                     <div>
@@ -52,6 +55,13 @@
         </div>
 
     </div>
+    {% else %}
+    <div class="cartao noselect">
+
+        <h1>Doador desativado</h1>
+
+    </div>
+    {% endif %}
 </div>
 
 </div>

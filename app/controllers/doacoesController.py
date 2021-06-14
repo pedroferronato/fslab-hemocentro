@@ -116,17 +116,18 @@ def pesquisar_doador():
 
     if nome and cpf:
         nome_pesquisa = '%' + nome + '%'
-        paginate = Doador.query.filter(Doador.nome.like(nome_pesquisa),Doador.cpf.like(cpf)).paginate(page=page, per_page=10)
+        paginate = Doador.query.filter(Doador.ativo == True,Doador.nome.like(nome_pesquisa),Doador.cpf.like(cpf)).paginate(page=page, per_page=10)
         resultadoPesquisa = paginate.items
     elif nome:
         nome_pesquisa = '%' + nome + '%'
-        paginate = Doador.query.filter(Doador.nome.like(nome_pesquisa)).paginate(page=page, per_page=10)
+        paginate = Doador.query.filter(Doador.ativo == True,Doador.nome.like(nome_pesquisa)).paginate(page=page, per_page=10)
         resultadoPesquisa = paginate.items
     elif cpf:
-        paginate = Doador.query.filter_by(cpf=cpf).paginate(page=page, per_page=10)
+        paginate = Doador.query.filter_by(Doador.ativo = True, cpf=cpf).paginate(page=page, per_page=10)
         resultadoPesquisa = paginate.items
     else:
-        paginate = Doador.query.paginate(page=page, per_page=10)
+      #TODO: SE DER ERRO É AQUI
+        paginate = Doador.query.filter(Doador.ativo == True).paginate(page=page, per_page=10)
         resultadoPesquisa = paginate.items
 
     if Counter(resultadoPesquisa):

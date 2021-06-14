@@ -42,7 +42,7 @@
 
         <div class="formulario">
             {% if alterar %}
-            <form action="/doador/alterar/{{doador.numero_registro}}" method="POST">
+            <form action="/doador/alterar/{{doador.numero_registro}}/{{ doador.hemocentro_id }}" method="POST">
                 {% else %}
                 <form action="/doador" method="POST">
                     {% endif %}
@@ -291,7 +291,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Fechar</button>
-                                        <a href="/doador/deletar/{{ doador.numero_registro }}"><button type="button"
+                                        <a href="/doador/deletar/{{ doador.numero_registro }}/{{ doador.hemocentro_id }}"><button type="button"
                                                 class="btn btn-danger">Confirmar</button></a>
                                     </div>
                                 </div>

@@ -20,16 +20,18 @@
             <div class="flexivel SpcBtw SpcBtwAux">
                 <div class="flexivel formularioResponsivo">
                     <h1>{{ doador.nome }}</h1>
+                    {% if doador.ativo %}    
                     <div class="flexivel linhaAction">
-                        <a href="/doador/alterar/{{ doador.numero_registro }}"><span
+                        <a href="/doador/alterar/{{ doador.numero_registro }}/{{ doador.hemocentro_id }}"><span
                                 class="material-icons iconesG">edit</span></a>
-                        <a href="/alterar-inaptidao/{{ doador.numero_registro }}"><span
+                        <a href="/alterar-inaptidao/{{ doador.numero_registro }}/{{ doador.hemocentro_id }}"><span
                                 class="material-icons iconesG">healing</span></a>
                         {% if not doador.inaptidao and not doador.contatado %}
-                        <a href="/alterar-contatado/{{ doador.numero_registro }}"><span
+                        <a href="/alterar-contatado/{{ doador.numero_registro }}/{{ doador.hemocentro_id }}"><span
                                 class="material-icons iconesG">phone_in_talk</span></a>
                         {% endif %}
                     </div>
+                    {% endif %}
                 </div>
                 <p class="tipoSanguineo">{{ doador.tipo_sanguineo }}</p>
             </div>
