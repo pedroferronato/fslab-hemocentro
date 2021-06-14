@@ -136,6 +136,7 @@
                         <option value="Voluntário" {% if convocacao and convocacao == "Voluntário" %} selected="select" {% endif %}>Voluntário</option>
                     </select>
                 </div>
+                <input id="hemocentro_id" name="hemocentro_id" value="{{hemocentro_id}}" hidden/>
                 <div class="campo" id="divObservacoes">
                     <label for="observacoes">Observações:</label>
                     <input type="text" id="observacoes" name="observacoes" autocomplete="off"
@@ -151,6 +152,7 @@
                 <button onclick="validarCampos(event)" name="botao" value="Inserir" class="botao btn-principal">Inserir</button>
                 <button type="button" onclick="limpar()" class="botao btn-secundario linhaMRReset">Limpar</button>
             </div>
+            </form>
         </div>
     </div>
 </div>

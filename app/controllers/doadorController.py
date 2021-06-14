@@ -158,7 +158,7 @@ def consulta_doador():
     if municipio:
        municipio = Municipio.query.filter_by(nome=municipio, uf=Estado.query.filter_by(nome=estado).first().id).first().id
        parametros.append(Doador.municipio == municipio)
-
+    parametros.append(Doador.hemocentro_id == current_user.get_hemocentro().id)
     parametros.append(Doador.ativo == True)
 
     page = request.args.get('page')
@@ -218,9 +218,8 @@ def detalhes_doador():
         parametros.append(Doador.nome.like("%{}%".format(nome)))
     if cpf:
         parametros.append(Doador.cpf == cpf)
-
+    parametros.append(Doador.hemocentro_id == current_user.get_hemocentro().id)
     parametros.append(Doador.ativo == True)
-
     resultado = Doador.query.filter(*parametros)
 
     if resultado.count() == 1:
