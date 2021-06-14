@@ -1,7 +1,8 @@
 from app import db
 from app.models.doacao import Doacao
 from app.models.municipio import Municipio
-
+from app.models.hemocentro import Hemocentro
+from flask_login import current_user
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 
@@ -56,17 +57,32 @@ class Doador(db.Model):
 
 
     def get_ultima_doacao(self):
-        return Doacao.query.order_by(Doacao.data.desc()).filter_by(doador_id=self.numero_registro).first()
+        lista = []
+        lista.append(Doacao.doador_id == self.numero_registro)
+        lista.append(Doacao.doador_hemocentro_id == self.hemocentro_id)
+        print(self.numero_registro, self.hemocentro_id)
+        return Doacao.query.filter(*lista).order_by(Doacao.data.desc()).first()
 
 
     def get_total_doacoes(self):
-        return len(Doacao.query.filter_by(doador_id=self.numero_registro).all())
+        lista = []
+        lista.append(Doacao.doador_id == self.numero_registro)
+        lista.append(Doacao.doador_hemocentro_id == self.hemocentro_id)
+        print(self.numero_registro, self.hemocentro_id)
+        return len(Doacao.query.filter(*lista).all())
 
 
     def get_ultimas_dez_doacoes(self):
-        return Doacao.query.filter_by(doador_id=self.numero_registro).order_by(Doacao.data.desc()).limit(10).all()
+        lista = []
+        lista.append(Doacao.doador_id == self.numero_registro)
+        lista.append(Doacao.doador_hemocentro_id == self.hemocentro_id)
+        print(self.numero_registro, self.hemocentro_id)
+        return Doacao.query.filter(*lista).order_by(Doacao.data.desc()).limit(10).all()
 
 
     def get_municipio(self):
         return Municipio.query.filter_by(id=self.municipio).first().nome
+
+    def get_hemocentro_nome(self):
+        return Hemocentro.query.filter_by(id=self.hemocentro_id).first().nome
 

@@ -10,6 +10,7 @@ class Doacao(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     hemocentro_id = db.Column(db.Integer, db.ForeignKey('hemocentros.id'), nullable=False)
     doador_id = db.Column(db.Integer, db.ForeignKey('doadores.numero_registro'), nullable=False)
+    doador_hemocentro_id = db.Column(db.Integer, db.ForeignKey('doadores.hemocentro_id'), nullable=False)
     data = db.Column(db.Date(), nullable=False)
     convocacao = db.Column(db.String(50))
     observacao = db.Column(db.String(200))

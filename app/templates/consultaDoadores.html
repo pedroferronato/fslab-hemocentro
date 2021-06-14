@@ -141,7 +141,7 @@
                         </td>
                         <td>
                             {% if doador.ultima_doacao %}
-                            {{ doador.ultima_doacao }}
+                            {{ doador.ultima_doacao.strftime('%d/%m/%Y') }}
                             {% else %}
                             -
                             {% endif %}

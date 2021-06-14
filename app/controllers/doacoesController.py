@@ -19,9 +19,10 @@ def nova_doacao():
     numero_registro = request.args.get('numero_registro')
     nome = request.args.get('nome')
     tipoSangue = request.args.get('tipoSangue')
+    hemocentro_id = request.args.get('hemocentro_id')
 
     if request.method == 'GET':
-        return render_template("doacao.html", date=hoje, mensagem=mensagem,numero_registro=numero_registro,nome=nome,tipoSangue=tipoSangue)
+        return render_template("doacao.html", date=hoje, mensagem=mensagem,numero_registro=numero_registro,nome=nome,tipoSangue=tipoSangue, hemocentro_id=hemocentro_id)
 
     elif request.method == 'POST':
 
@@ -29,16 +30,20 @@ def nova_doacao():
             convocacao = request.form['convocacao']
             data = request.form['data']
             numRegistro = request.form['numRegistro']
+            hemocentro_id = request.form['hemocentro_id']
             if not numRegistro == '':
-                doador = Doador.query.filter(Doador.numero_registro.like(numRegistro), Doador.hemocentro_id.like(current_user.get_hemocentro().id)).first()
+                if hemocentro_id:
+                    doador = Doador.query.filter(Doador.numero_registro.like(numRegistro), Doador.hemocentro_id.like(hemocentro_id)).first()
+                else:
+                    doador = Doador.query.filter(Doador.numero_registro.like(numRegistro), Doador.hemocentro_id.like(current_user.get_hemocentro().id)).first()
                 primeiraDoacao = Doacao.query.filter(Doacao.doador_id.like(numRegistro), Doacao.hemocentro_id.like(current_user.get_hemocentro().id)).count()
                 if primeiraDoacao > 0:
                     if doador and ( (doador.sexo == "mas" and datetime(doador.ultima_doacao.year, doador.ultima_doacao.month, doador.ultima_doacao.day) > (datetime.today() - relativedelta(months=3))) or (doador.sexo == "fem" and datetime(doador.ultima_doacao.year, doador.ultima_doacao.month, doador.ultima_doacao.day) > (datetime.today() - relativedelta(months=4))) ):
-                        return render_template("doacao.html", date=data, doador=doador, convocacao=convocacao,mensagem="ErroBD_6")
+                        return render_template("doacao.html", date=data, doador=doador, hemocentro_id=hemocentro_id , convocacao=convocacao,mensagem="ErroBD_6")
                 if doador:
-                    return render_template("doacao.html", date=data, doador=doador, convocacao=convocacao)
+                    return render_template("doacao.html", date=data, doador=doador, hemocentro_id=hemocentro_id , convocacao=convocacao)
                 else:
-                    return render_template("doacao.html", date=data, convocacao=convocacao,mensagem="ErroBD_4")
+                    return render_template("doacao.html", date=data, hemocentro_id=hemocentro_id, convocacao=convocacao,mensagem="ErroBD_4")
             else:
                 return redirect(url_for("pesquisa_doador"))
         elif request.form['botao'] == "Inserir e continuar" or request.form['botao'] == "Inserir":
@@ -52,11 +57,11 @@ def nova_doacao():
             try:
                 doador = Doador.query.filter_by(numero_registro=numRegistro, hemocentro_id=current_user.get_hemocentro().id).first()
                 if doador != None and (doador.legado or doador.get_idade() >= 61):
-                    return redirect(url_for("nova_doacao", date=hoje, mensagem="ErroBD_5"))
+                    return redirect(url_for("nova_doacao", date=hoje, mensagem="ErroBD_5",hemocentro_id=hemocentro_id))
                 if doador == None or nome != doador.nome:
-                    return redirect(url_for("nova_doacao", date=hoje, mensagem="ErroBD_2"))
+                    return redirect(url_for("nova_doacao", date=hoje, mensagem="ErroBD_2", hemocentro_id=hemocentro_id))
             except:
-                return redirect(url_for("nova_doacao", date=hoje, mensagem="ErroBD_2"))
+                return redirect(url_for("nova_doacao", date=hoje, mensagem="ErroBD_2", hemocentro_id=hemocentro_id))
             else:
                 fidelidade = request.form['fidelidade']
                 if doador.fidelidade != fidelidade:
@@ -65,14 +70,14 @@ def nova_doacao():
                         db.session.add(doador)
                         db.session.commit()
                     except:
-                        return redirect(url_for("doacao.html", date=hoje, mensagem="ErroBD_3"))
+                        return redirect(url_for("doacao.html", date=hoje, mensagem="ErroBD_3", hemocentro_id=hemocentro_id))
                 data = request.form['data']
                 data = datetime.strptime(data, '%d/%m/%Y').date()
                 convocacao = request.form['convocacao']
                 observacoes = request.form['observacoes']
                 hemocentro_id = current_user.get_hemocentro().get_id()
                 doacao = Doacao(hemocentro_id = hemocentro_id, doador_id= numRegistro, data= data,
-                convocacao=convocacao, observacao = observacoes)
+                convocacao=convocacao, observacao = observacoes, doador_hemocentro_id = doador.hemocentro_id)
                 try:
                     doador.ultima_doacao = data
                     doador.contatado = False
@@ -80,10 +85,10 @@ def nova_doacao():
                     db.session.add(doacao)
                     db.session.commit()
                 except Exception as e:
-                    flaskApp.logger.info(f'Cadastro doacao - o captador { current_user.nome } de login: { current_user.login } falhou ao registrar a doacao do doador { doador.nome } de id: { str(doador.id) } no hemocentro de id { str(hemocentro_id) }')
-                    return redirect(url_for("nova_doacao", date=hoje, mensagem="ErroBD"))
+                    flaskApp.logger.info(f'Cadastro doacao - o captador { current_user.nome } de login: { current_user.login } falhou ao registrar a doacao do doador { doador.nome } no hemocentro de id { str(hemocentro_id) }')
+                    return redirect(url_for("nova_doacao", date=hoje, mensagem="ErroBD", hemocentro_id=hemocentro_id))
 
-                flaskApp.logger.info(f'Cadastro doacao - o captador { current_user.nome } de login: { current_user.login } registrou a doacao do doador { doador.nome } de id: { str(doador.id) } no hemocentro de id { str(hemocentro_id) }')
+                flaskApp.logger.info(f'Cadastro doacao - o captador { current_user.nome } de login: { current_user.login } registrou a doacao do doador { doador.nome } no hemocentro de id { str(hemocentro_id) }')
                 if continuar:
                     return redirect(url_for("nova_doacao", mensagem="Inserido"))
                 else:
@@ -111,17 +116,17 @@ def pesquisar_doador():
 
     if nome and cpf:
         nome_pesquisa = '%' + nome + '%'
-        paginate = Doador.query.filter(Doador.nome.like(nome_pesquisa),Doador.cpf.like(cpf), Doador.hemocentro_id.like(current_user.get_hemocentro().id)).paginate(page=page, per_page=10)
+        paginate = Doador.query.filter(Doador.nome.like(nome_pesquisa),Doador.cpf.like(cpf)).paginate(page=page, per_page=10)
         resultadoPesquisa = paginate.items
     elif nome:
         nome_pesquisa = '%' + nome + '%'
-        paginate = Doador.query.filter(Doador.nome.like(nome_pesquisa), Doador.hemocentro_id.like(current_user.get_hemocentro().id)).paginate(page=page, per_page=10)
+        paginate = Doador.query.filter(Doador.nome.like(nome_pesquisa)).paginate(page=page, per_page=10)
         resultadoPesquisa = paginate.items
     elif cpf:
-        paginate = Doador.query.filter_by(cpf=cpf, hemocentro_id = current_user.get_hemocentro().id).paginate(page=page, per_page=10)
+        paginate = Doador.query.filter_by(cpf=cpf).paginate(page=page, per_page=10)
         resultadoPesquisa = paginate.items
     else:
-        paginate = Doador.query.filter(Doador.hemocentro_id.like(current_user.get_hemocentro().id)).paginate(page=page, per_page=10)
+        paginate = Doador.query.paginate(page=page, per_page=10)
         resultadoPesquisa = paginate.items
 
     if Counter(resultadoPesquisa):
@@ -177,7 +182,7 @@ def consultar_doacao_resultado():
             itens_pesquisados = 10
 
         try:
-            paginacao = db.session.query(Doacao.id, Doacao.data, Doador.nome, Doacao.convocacao).filter(Doacao.doador_id == Doador.numero_registro, Doacao.data.between(data, dataFinal)).order_by(Doacao.data.desc()).paginate(page=page, per_page=itens_pesquisados)
+            paginacao = db.session.query(Doacao.id, Doacao.data, Doador.nome, Doacao.convocacao).filter(Doacao.doador_id == Doador.numero_registro, Doacao.hemocentro_id == current_user.hemocentro_id, Doacao.data.between(data, dataFinal)).order_by(Doacao.data.desc()).paginate(page=page, per_page=itens_pesquisados)
             lista_doacoes = paginacao.items
             if Counter(lista_doacoes):
                 return render_template("consultarDoacoes.html", resultado=True, paginas=paginacao, doacoes=lista_doacoes, itens=itens_pesquisados, data = dataBKP, dataFinal = dataFinalBKP)
@@ -221,11 +226,12 @@ def consulta_doacao_por_doador():
        parametros.append(Doador.cpf == cpf)
     if numero_registro:
        parametros.append(Doador.numero_registro == numero_registro)
-
+    parametros.append(Doador.hemocentro_id == current_user.get_hemocentro().id)
+    
     doador = Doador.query.filter(*parametros).first()
 
     if doador:
-        doacoes = Doacao.query.filter_by(doador_id=doador.numero_registro).order_by(Doacao.data.desc())
+        doacoes = Doacao.query.filter(Doacao.doador_id == doador.numero_registro, Doacao.hemocentro_id == current_user.hemocentro_id).order_by(Doacao.data.desc())
         if doacoes.count() > 0:
             doacoes = doacoes.paginate(page=page, per_page=itens_pesquisados)
             return render_template("consultarDoacoesDoador.html", resultado=True, doacoes=doacoes.items, doador=doador, itens=itens_pesquisados, paginas=doacoes, nome=nome, cpf=cpf, numeroRegistro=numero_registro)

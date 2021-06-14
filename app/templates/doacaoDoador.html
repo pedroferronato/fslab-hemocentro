@@ -46,7 +46,7 @@
             <table class="table table-striped tabela">
                 <thead class="noselect">
                     <tr>
-                        <th scope="col">Nº Registro</th>
+                        <th scope="col">Hemocentro</th>
                         <th scope="col">Nome</th>
                         <th scope="col">Tipo</th>
                     </tr>
@@ -54,8 +54,8 @@
                 <tbody>
                     {% for resultado in resultadoPesquisa %}
                     <tr class="rowActive"
-                        onclick="location.href = '/doacao?numero_registro={{resultado.numero_registro}}&date={{date}}&convocacao={{convocacao}}';">
-                        <td>{{resultado.numero_registro}}</td>
+                        onclick="location.href = '/doacao?numero_registro={{resultado.numero_registro}}&date={{date}}&convocacao={{convocacao}}&hemocentro_id={{resultado.hemocentro_id}}&';">
+                        <td>{{resultado.get_hemocentro_nome()}}</td>
                         <td>{{resultado.nome}}</td>
                         <td>{{resultado.tipo_sanguineo}}</td>
                     </tr>
