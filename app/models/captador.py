@@ -1,5 +1,6 @@
-from app import db, login_manager
+from app import db, login_manager, flaskApp
 from flask_login import UserMixin
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 from app.models.hemocentro import Hemocentro
 
@@ -48,6 +49,21 @@ class Captador(db.Model, UserMixin):
     
     def get_nome(self):
         return self.nome
+
+
+    def get_reset_token(self, expires_sec=1800):
+        s = Serializer(flaskApp.config['SECRET_KEY'], expires_sec)
+        return s.dumps({'captador_id' : self.id}).decode('utf-8')
+
+
+    @staticmethod
+    def verify_reset_token(token):
+        s = Serializer(flaskApp.config['SECRET_KEY'])
+        try:
+            captador_id = s.loads(token)['captador_id']
+        except:
+            return None
+        return Captador.query.get(captador_id)
 
 
     def __repr__(self):
