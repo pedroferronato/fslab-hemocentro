@@ -2,13 +2,27 @@
 
 {% block conteudo %}
 
-<div class="subtitulo">Alteração de senha</div>
+<div class="subtitulo">Alterar senha</div>
 
-<input class="campoLogin" type="password" id="password1" nome="password1" autocomplete="off" placeholder="Nova senha">
-<input class="campoLogin" type="password" id="password2" nome="password2" autocomplete="off" placeholder="Confirme sua senha">
+{% if invalido %}
+<div class="linhaMRReset descricao">O token inserido é inválido ou está expirado</div>
+{% else %}
+<form method="POST">
 
-<div class="flexivel AlgCenter JstfyCenter btn-recuperar">
-    <a href="/login"><button class="linhaMRReset botao btn-alerta">CONFIRMAR</button></a>
-</div>
+    <div class="linhaMRReset descricao">Os campos a seguir devem ser preenchidos com sua nova senha</div>
 
+    <input class="campoLogin" type="password" id="password1" name="password1" autocomplete="off"
+        placeholder="Nova senha">
+    <input class="campoLogin" type="password" id="password2" name="password2" autocomplete="off"
+        placeholder="Confirme sua senha">
+
+    <div class="flexivel AlgCenter JstfyCenter btn-recuperar">
+        <button id="botao" class="linhaMRReset botao btn-alerta">Confirmar</button>
+    </div>
+</form>
+{% endif %}
+{% endblock %}
+
+{% block codigos %}
+<script src="{{ url_for('static', filename='js/alterarSenha.js') }}"></script>
 {% endblock %}

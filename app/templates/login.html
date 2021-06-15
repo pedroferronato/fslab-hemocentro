@@ -11,6 +11,11 @@
             {{ mensagem }}
         </div>
         {% endif %}
+        {% if sucesso %}
+        <div class="alert alert-info" role="alert">
+            Senha alterada com sucesso, você já pode realizar o login
+        </div>
+        {% endif %}
         <input class="campoLogin" type="text" id="login" name="login" autocomplete="off" placeholder="Usuário">
         <input class="campoLogin" type="password" id="senha" name="senha" autocomplete="off" placeholder="Senha">
         <a href="/recuperar-senha">
@@ -19,7 +24,7 @@
     </div>
 
     <div class="flexivel AlgCenter JstfyCenter">
-        <button class="linhaMRReset botao btn-alerta">ENTRAR</button>
+        <button class="linhaMRReset botao btn-alerta">Entrar</button>
     </div>
 </form>
 

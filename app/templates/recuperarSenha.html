@@ -4,12 +4,24 @@
 
 <div class="subtitulo">Recuperar senha</div>
 
-<div class="linhaMRReset descricao">Insira seu usuário para a recuperação da conta.</div>
-
-<input class="campoLogin" type="text" id="login" nome="login" autocomplete="off" placeholder="Usuário">
+{% if envio %}
+<div class="linhaMRReset descricao">E-mail enviado com instruções, caso não tenha recebido verifique em sua caixa de spam. O envio pode levar alguns minutos</div>
+<div class="flexivel AlgCenter JstfyCenter btn-recuperar">
+    <a href="/login"><button class="linhaMRReset botao btn-alerta">Login</button></a>
+</div>
+{% else %}    
+<div class="linhaMRReset descricao">Insira seu E-mail para a recuperação da conta.</div>
+<form action="/recuperar-senha" method="POST">
+<input class="campoLogin" type="email" id="email" name="email" autocomplete="off" placeholder="E-mail">
 
 <div class="flexivel AlgCenter JstfyCenter btn-recuperar">
-    <a href="/login"><button class="linhaMRReset botao btn-alerta">ENVIAR E-MAIL</button></a>
+    <button id="enviar" class="linhaMRReset botao btn-alerta">Enviar E-mail</button>
 </div>
+</form>
+{% endif %}
 
+{% endblock %}
+
+{% block codigos %}
+<script src="{{ url_for('static', filename='js/recuperarSenha.js') }}"></script>
 {% endblock %}

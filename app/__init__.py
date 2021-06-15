@@ -20,7 +20,7 @@ flaskApp.config['SECRET_KEY'] = os.getenv("SECRET")
 flaskApp.config['JSON_AS_ASCII'] = False
 flaskApp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# logging.basicConfig(filename="registros.log", format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(filename="registros.log", format="%(asctime)s - %(levelname)s - %(message)s")
 
 db = SQLAlchemy(flaskApp)
 migrate = Migrate(flaskApp, db, compare_type=True)

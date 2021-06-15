@@ -8,7 +8,12 @@ from app.models.municipio import Municipio
 from flask import render_template, redirect, request, session, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
 from datetime import timedelta, date
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
 import bcrypt
+import smtplib
+import os
 
 @flaskApp.before_request
 def make_session_permanent():
@@ -20,8 +25,9 @@ def make_session_permanent():
 def login():
 
     if request.method == 'GET':
+        sucesso = request.args.get('sucesso')
         mensagem = request.args.get('mensagem')
-        return render_template("login.html", mensagem=mensagem)
+        return render_template("login.html", mensagem=mensagem, sucesso=sucesso)
 
     elif request.method == 'POST':
 
@@ -56,9 +62,86 @@ def nao_autorizado():
     return redirect('/login')
 
 
+def enviar_email(captador):
+    email_from = str(os.getenv("EMAIL_LOGIN"))
+    email_pass = str(os.getenv("EMAIL_PASS"))
+    email_smtp_server = str(os.getenv("EMAIL_SERVER"))
+
+    destination = [captador.email]
+
+    assunto = 'Alteração de senha'
+
+    msg = MIMEMultipart()
+    msg['From'] = email_from
+    msg['Subject'] = assunto
+
+    token = captador.get_reset_token()
+    texto = f'''Solicitação de senha realizada, para fazer a alteração de sua senha acesse o link:<br> { url_for('recuperar_senha_token', token=token, _external=True) }. <br>Após acessar você será redirecionado para uma página de alteração de senha com um prazo de até 5 minutos para fazer sua alteração de senha.
+<br>
+Por favor não responda ou mande mensagens para este e-mail, não terá nenhuma resposta, entre em contato via telefone.
+<br>
+Atenciosamente,
+<br>
+FSLab & Sawenv.
+    '''
+
+    msg_text = MIMEText(texto, 'html')
+    msg.attach(msg_text)
+
+    smtp = smtplib.SMTP(email_smtp_server, 587)
+
+    try:
+        smtp.ehlo()
+        smtp.starttls()
+        smtp.ehlo()
+        smtp.login(email_from, email_pass)
+        smtp.sendmail(email_from, ','.join(destination), msg.as_string())
+        smtp.quit()
+    except Exception as e:
+        flaskApp.logger.info(f'E-mail - Falha ao enviar E-mail: {e}')
+
+
 @flaskApp.route('/recuperar-senha')
 def recuperar_senha():
     return render_template("recuperarSenha.html")
+
+
+@flaskApp.route('/recuperar-senha', methods=['POST'])
+def recuperar_senha_envio():
+    email = request.form['email']
+    captador = Captador.query.filter_by(email=email).first()
+    if captador:
+        enviar_email(captador)
+        flaskApp.logger.info(f'Recuperar senha - Foi enviado um e-mail de recuperacao de senha para: {email}')
+        return render_template("recuperarSenha.html", envio=True)
+    else:
+        flaskApp.logger.info(f'Recuperar senha - Houve uma tentativa falha de alterar senha em um e-mail, o envio foi: {email}, não existe captador com este e-mail')
+    return redirect(url_for('login'))
+
+
+@flaskApp.route('/recuperar-senha/<token>', methods=['GET','POST'])
+def recuperar_senha_token(token):
+    captador = Captador.verify_reset_token(token)
+    
+    if captador is None:
+        return render_template("alterarSenha.html", invalido=True)
+
+    if request.method == 'GET':
+        return render_template("alterarSenha.html")    
+    
+    if request.method == 'POST':
+        password1 = request.form['password1']
+        password2 = request.form['password2']
+
+        if password1 != password2:
+            return render_template("alterarSenha.html", diferentes=True)
+
+        captador.senha = bcrypt.hashpw(password1.encode('utf-8'), bcrypt.gensalt())
+        
+        db.session.add(captador)
+        db.session.commit()
+
+        return redirect(url_for("login", sucesso=True))
 
 
 @flaskApp.route('/')
@@ -128,11 +211,6 @@ def alterar_perfil():
 
     flaskApp.logger.info(f'Perfil - o captador { current_user.nome } de login: { current_user.login } alterou informações em seu perfil')
     return render_template("perfil.html", mensagem="Alterado")
-
-
-@flaskApp.route('/alterar-senha') # TODO: USAR ALGUMA FORMA DE IDENTIFICAÇÃO
-def alterar_senha():
-    return render_template("alterarSenha.html")
 
 
 @flaskApp.route('/cidades/<estado>')
