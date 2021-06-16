@@ -474,3 +474,20 @@ main {
         display: none !important;
     }
 }
+
+.logosIF {
+    max-width: 100px;
+}
+
+.logosIF:first-child {
+    margin-top: 16px;
+    margin-right: 24px;
+    max-width: 75px;
+    margin-bottom: 16px;
+}
+
+.divLogos{
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}

@@ -168,9 +168,6 @@ def chamada_localidades_externas_resultado():
     telefonados = telefonados.split("&")
     telefonados.pop()
     telefonados = [int(x) for x in telefonados]
-
-    print("Telefonados:")
-    print(telefonados)
     
     if page and page.isdigit():
         page = int(page)
