@@ -102,3 +102,9 @@ body div {
         min-width: 450px;
     }
 }
+
+.divLogos {
+    margin-top: 16px;
+    color: white;
+    text-align: center;
+}
