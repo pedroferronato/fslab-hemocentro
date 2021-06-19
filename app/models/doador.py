@@ -81,6 +81,11 @@ class Doador(db.Model):
     def get_municipio(self):
         return Municipio.query.filter_by(id=self.municipio).first().nome
 
+
     def get_hemocentro_nome(self):
         return Hemocentro.query.filter_by(id=self.hemocentro_id).first().nome
+
+
+    def get_hemocentro_telefone(self):
+        return Hemocentro.query.filter_by(id=self.hemocentro_id).first().telefone
 
