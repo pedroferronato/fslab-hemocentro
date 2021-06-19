@@ -1,5 +1,6 @@
 from dateutil.relativedelta import relativedelta
 from sqlalchemy.sql.elements import Null
+from sqlalchemy.sql.expression import false
 from app import flaskApp, db
 from flask import render_template, request, redirect, url_for
 from flask_login import login_required, current_user
@@ -78,6 +79,7 @@ def nova_doacao():
                 try:
                     doador.ultima_doacao = data
                     doador.contatado = False
+                    doador.avisado = False
                     db.session.add(doador)
                     db.session.add(doacao)
                     db.session.commit()
