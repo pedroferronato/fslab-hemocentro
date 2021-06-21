@@ -35,7 +35,6 @@ def novo_hemocentro():
         estado = request.form['inputEstado']
         municipio = request.form['inputMunicipio']
         municipio = Municipio.query.filter_by(nome=municipio, uf=Estado.query.filter_by(nome=estado).first().id).first().id
-        # img = request.form['img']
 
         img = "hemocentro3.png"
         

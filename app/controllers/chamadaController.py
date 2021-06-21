@@ -68,7 +68,7 @@ def chamada_tipada_resultado():
                 telefonado.contatado = True
                 db.session.add(telefonado)
                 db.session.commit()
-                flaskApp.logger.info(f'Doador Telefonado - o captador { current_user.nome } de login: { current_user.login } contatou o doador { telefonado.nome } de id: { str(telefonado.id) }')
+                flaskApp.logger.info(f'Doador Telefonado - o captador { current_user.nome } de login: { current_user.login } contatou o doador { telefonado.nome } de id: { str(telefonado.numero_registro) }')
             return render_template("convocacaoTipada.html", tipo_sanguineo=tipo, tipo="tipada")
         else:
             paginacao = resultado.paginate(page=page, per_page=itens_pesquisados)
@@ -135,7 +135,7 @@ def chamada_emergencial_resultado():
                 telefonado.contatado = True
                 db.session.add(telefonado)
                 db.session.commit()
-                flaskApp.logger.info(f'Doador Telefonado - o captador { current_user.nome } de login: { current_user.login } contatou o doador { telefonado.nome } de id: { str(telefonado.id) }')
+                flaskApp.logger.info(f'Doador Telefonado - o captador { current_user.nome } de login: { current_user.login } contatou o doador { telefonado.nome } de id: { str(telefonado.numero_registro) }')
             return render_template("convocacaoEmergencial.html", tipo_sanguineo=tipo, tipo="emegencial")
         else:
             paginacao = resultado.paginate(page=page, per_page=itens_pesquisados)
@@ -208,7 +208,7 @@ def chamada_localidades_externas_resultado():
                 telefonado.contatado = True
                 db.session.add(telefonado)
                 db.session.commit()
-                flaskApp.logger.info(f'Doador Telefonado - o captador { current_user.nome } de login: { current_user.login } contatou o doador { telefonado.nome } de id: { str(telefonado.id) }')
+                flaskApp.logger.info(f'Doador Telefonado - o captador { current_user.nome } de login: { current_user.login } contatou o doador { telefonado.nome } de id: { str(telefonado.numero_registro) }')
             return render_template("convocacaoLocalidadesExternas.html", estados=estados , tipo_sanguineo=tipo, cidades=cidade_registradas, cidade_pesquisada=int(municipio))
         else:
             paginacao = resultado.paginate(page=page, per_page=itens_pesquisados)

@@ -128,6 +128,8 @@ def get_aniversariantes():
     filtros.append(Doador.legado == False)
     filtros.append(Doador.ultima_doacao != None)
     filtros.append(and_(Doador.idade < 70, Doador.idade > 15))
+    filtros.append(or_(Doador.contatos_preferidos == 'email', Doador.contatos_preferidos == 'email&sms'))
+    filtros.append(Doador.email != '')
     filtros.append(and_(
             extract('day', Doador.data_de_nascimento) == hoje.day,
             extract('month', Doador.data_de_nascimento) == hoje.month))
@@ -193,7 +195,6 @@ def enviar_parabenizacao_aniversario(lista):
 def enviar_mensagens():
     diaAnterior = open('envioMensagensSP.txt', 'r').readline()
     diaAnterior = datetime.strptime(diaAnterior, '%Y-%m-%d')
-    print(f'{type(diaAnterior)} - {diaAnterior}')
     while True:
         arquivo = open('envioMensagensSP.txt', 'w')
         
