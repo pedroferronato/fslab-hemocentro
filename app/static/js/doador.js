@@ -6,8 +6,6 @@ var municipio = document.getElementById('municipio')
 var estado = document.getElementById('estado')
 
 function validarCampos(evento) {
-    var numRegistro = document.getElementById("numRegistro")
-    var lbNumRegistro = document.getElementById("lbNumRegistro")
     var nome = document.getElementById("nome")
     var lbNome = document.getElementById("lbNome")
     var cpf = document.getElementById("cpf")
@@ -25,13 +23,6 @@ function validarCampos(evento) {
 
     var alerta = false;
 
-    if (numRegistro.value == undefined || numRegistro.value == null || numRegistro.value == "" || numRegistro.value == " ") {
-        if (!numRegistro.classList.contains('borda-alerta')) {
-            numRegistro.classList.add('borda-alerta')
-            lbNumRegistro.classList.add('txt-alerta')
-        }
-        alerta = true;
-    }
     if (nome.value == undefined || nome.value == null || nome.value == "" || nome.value == " ") {
         if (!nome.classList.contains('borda-alerta')) {
             nome.classList.add('borda-alerta')
@@ -156,10 +147,6 @@ function estaContidoNoPadrao(datalist, input) {
 }
 
 function removerClasseAlerta(elemento) {
-    if (numRegistro.classList.contains('borda-alerta') && elemento == 'numRegistro') {
-        numRegistro.classList.remove('borda-alerta')
-        lbNumRegistro.classList.remove('txt-alerta')
-    }
     if (nome.classList.contains('borda-alerta') && elemento == 'nome') {
         nome.classList.remove('borda-alerta')
         lbNome.classList.remove('txt-alerta')
@@ -191,7 +178,6 @@ function removerClasseAlerta(elemento) {
 }
 
 function limpar() {
-    numRegistro.value = ""
     nome.value = ""
     cpf.value = ""
     sexo.value = "selecione"
