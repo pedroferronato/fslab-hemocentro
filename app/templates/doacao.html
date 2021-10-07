@@ -111,7 +111,7 @@
                     <select id="fidelidade" name="fidelidade"
                     onfocus="removerClasseAlerta('fidelidade')">
                     <option value="Selecione" {% if not doador %} selected="select" {% endif %}>Selecione</option>
-                    <option value="Exporádico" {% if doador and doador.fidelidade == "Exporádico" %} selected="select" {% endif %}>Exporádico</option>
+                    <option value="Exporádico" {% if doador and doador.fidelidade == "Exporádico" %} selected="select" {% endif %}>Esporádico</option>
                     <option value="Fidelizado" {% if doador and doador.fidelidade == "Fidelizado" %} selected="select" {% endif %}>Fidelizado</option>
                     </select>
                 </div>

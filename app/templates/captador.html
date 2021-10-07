@@ -57,6 +57,11 @@
                         O <b>banco de dados</b> encontrou uma falha nas informações inseridas, por favor, tente novamente com outros valores.
                     </div>
                     {% endif %}
+                    {% if mensagem == "ErroEmail" %}
+                    <div class="alert2 alert alert-danger" role="alert">
+                        O <b>E-mail</b> inserido já está em uso
+                    </div>
+                    {% endif %}
                     <div class="linhaFormulario formularioResponsivo">
                         <div class="campo" id="divNome">
                             <div class="flexivel">
