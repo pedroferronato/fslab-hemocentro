@@ -23,6 +23,11 @@ def novo_captador():
     if request.method == 'GET':
         return render_template("captador.html", mensagem=mensagem, hemocentros=hemocentros)
     elif request.method == 'POST':
+        validar_email = Captador.query.filter_by(email=request.form['mail']).first()
+
+        if validar_email:
+            return redirect(url_for('novo_captador', mensagem="ErroEmail"))
+
         continuar = False
         if request.form['inserir'] == 'Inserir e continuar':
             continuar = True

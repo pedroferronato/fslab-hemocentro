@@ -36,12 +36,12 @@ def novo_hemocentro():
         municipio = request.form['inputMunicipio']
         municipio = Municipio.query.filter_by(nome=municipio, uf=Estado.query.filter_by(nome=estado).first().id).first().id
 
-        img = "hemocentro3.png"
+        img = "hemojipa3.png"
         
         file = request.files['img']
 
         if file.filename == "":
-            img = "hemocentro3.png"
+            img = "hemojipa3.png"
         if file and allowed_file(file.filename):
             img = uuid.uuid4()
             img = str(img) + '.' + file.filename.rsplit('.', 1)[1].lower()
